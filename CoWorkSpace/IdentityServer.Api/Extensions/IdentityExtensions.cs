@@ -4,7 +4,7 @@ using IdentityServer.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using IdentityServer.Api.Enitities;
 using Microsoft.AspNetCore.Identity;
-
+using System.Reflection;
 
 namespace IdentityServer.Api.Extensions
 {
@@ -30,5 +30,24 @@ namespace IdentityServer.Api.Extensions
 
             return services;
          }
+
+        public static IServiceCollection ConfigureMiscellaneousService(this IServiceCollection services) {
+
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            return services;
+        }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
