@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+  advertising.api:
+    image: ${DOCKER_REGISTRY-}advertisingapi
+    build:
+      context: .
+      dockerfile: Advertising.Api/Dockerfile
+
+  spacesdb:
+    image: mongo
+
+  spaces.api:
+    image: ${DOCKER_REGISTRY-}spacesapi
+    build:
+      context: .
+      dockerfile: Spaces.Api/Dockerfile
+
+  spaces.grpc:
+    image: ${DOCKER_REGISTRY-}spacesgrpc
+    build:
+      context: .
+      dockerfile: Spaces.Grpc/Dockerfile
+
+volumes:
+  mongo_data: 
+
+
