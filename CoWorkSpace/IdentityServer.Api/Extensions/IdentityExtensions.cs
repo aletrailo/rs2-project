@@ -5,6 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using IdentityServer.Api.Enitities;
 using Microsoft.AspNetCore.Identity;
 using System.Reflection;
+using IdentityServer.Api.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace IdentityServer.Api.Extensions
 {
@@ -31,11 +35,46 @@ namespace IdentityServer.Api.Extensions
             return services;
          }
 
+        public static IServiceCollection ConfigureJWT(this IServiceCollection services, IConfiguration configuration)
+        {
+            var jwtSettings = configuration.GetSection("JwtSettings");
+            var secretKey = jwtSettings.GetSection("secretKey").Value;
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+
+                        ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
+                        ValidAudience = jwtSettings.GetSection("validAudience").Value,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                    };
+                });
+
+            return services;
+        }
+
         public static IServiceCollection ConfigureMiscellaneousService(this IServiceCollection services) {
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+
             return services;
         }
+
+
+
+
     }
 
 
