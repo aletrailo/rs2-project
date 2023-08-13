@@ -1,6 +1,9 @@
 version: '3.4'
 
 services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
   advertising.api:
     image: ${DOCKER_REGISTRY-}advertisingapi
     build:
@@ -22,7 +25,15 @@ services:
       context: .
       dockerfile: Spaces.Grpc/Dockerfile
 
+  identityserver.api:
+    image: ${DOCKER_REGISTRY-}identityserverapi
+    build:
+      context: .
+      dockerfile: IdentityServer.Api/Dockerfile
+
 volumes:
   mongo_data: 
+  mssql_data:
+
 
 

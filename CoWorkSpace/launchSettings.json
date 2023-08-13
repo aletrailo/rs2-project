@@ -6,7 +6,8 @@
       "serviceActions": {
         "advertising.api": "StartDebugging",
         "spaces.api": "StartDebugging",
-        "spaces.grpc": "StartDebugging"
+        "spaces.grpc": "StartDebugging",
+        "identityserver.api": "StartDebugging"
       }
     }
   }
