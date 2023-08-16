@@ -8,8 +8,7 @@ namespace IdentityServer.Api.Mapper
     {
         public IdentityProfile() {
             CreateMap<User, NewUserDto>().ReverseMap()
-                .ForMember(x => x.UserName, y => y.MapFrom(user => user.UserNeme))
-                .ForMember(x => x.PasswordHash, y => y.MapFrom(user => user.Password));
+                .ForMember(x => x.UserName, y => y.MapFrom(user => user.UserNeme));
             CreateMap<User, UserDetails>().ReverseMap();
             
         }
