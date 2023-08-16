@@ -16,8 +16,7 @@ namespace IdentityServer.Api.DTOs
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Email" +
-            " is required")]
+        [Required(ErrorMessage = "Email" + " is required")]
         public string Email { get; set; }
 
         public string PhoneNumber { get; set; }
