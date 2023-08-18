@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
+using System.Collections.Generic;
 
 namespace Spaces.Persistance.Entities
 {
@@ -12,6 +13,13 @@ namespace Spaces.Persistance.Entities
         [BsonElement("Name")]
         public string Name { get; set; }
 
+        [BsonElement("Address")]
         public string Address { get; set; }
+
+        [BsonElement("Description")]
+        public string Description { get; set; }
+
+        [BsonElement("Images")]
+        public List<string> Images { get; set; }
     }
 }
