@@ -12,7 +12,7 @@ message Space {
 	string name = 2;
 	string address = 3;
 	string description = 4;
-	repeated string images = 5;
+	string image = 5;
 }
 
 message GetSpacesRequest {

@@ -15,7 +15,7 @@ namespace Spaces.Grpc.Extensions
                 Name = model.Name,
                 Address = model.Address,
                 Description = model.Description,
-                Images = { model.Images }
+                Image =  model.Image
                 //Images = { model.Images.ToArray() }
             };
         }

@@ -19,7 +19,7 @@ namespace Spaces.Persistance.Entities
         [BsonElement("Description")]
         public string Description { get; set; }
 
-        [BsonElement("Images")]
-        public List<string> Images { get; set; }
+        [BsonElement("Image")]
+        public string Image { get; set; }
     }
 }

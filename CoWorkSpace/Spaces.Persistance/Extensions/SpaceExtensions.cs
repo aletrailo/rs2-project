@@ -15,7 +15,7 @@ namespace Spaces.Persistance.Extensions
                 Name = entity.Name,
                 Address = entity.Address,
                 Description= entity.Description,
-                Images = entity.Images
+                Image = entity.Image
             };
         }
 
