@@ -22,5 +22,17 @@ namespace Spaces.Api.Extensions
         {
             return models.Select(model => model.ToDto());
         }
+
+        internal static Space ToSpace(this SpaceDto spacedto)
+        {
+            return new Space
+            {
+                Id = spacedto.Id,
+                Name = spacedto.Name,
+                Address = spacedto.Address,
+                Description = spacedto.Description,
+                Image = spacedto.Image
+            };
+        }
     }
 }

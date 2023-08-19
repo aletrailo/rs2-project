@@ -14,11 +14,31 @@ namespace Spaces.Common.Services
                 this.repository = spaceRepository;
         }
 
+        public Task<bool> DeleteAsync(string Id)
+        {
+            return this.repository.DeleteSpace(Id);
+        }
+
         #region ISpaceService Members
 
         public Task<IEnumerable<Space>> GetAllAsync()
         {
             return this.repository.GetAllSpaces();
+        }
+
+        public Task<Space> GetByIdAsync(string Id)
+        {
+            return this.repository.GetSpaceById(Id);
+        }
+
+        public Task InsertAsync(Space space)
+        {
+            return this.repository.InsertSpace(space);
+        }
+
+        public Task<bool> UpdateAsync(Space space)
+        {
+            return this.repository.UpdateSpace(space);
         }
 
         #endregion
