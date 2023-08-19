@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "advertising.api": "StartDebugging",
+        "spaces.api": "StartDebugging",
+        "spaces.grpc": "StartDebugging",
+        "identityserver.api": "StartDebugging"
+      }
+    }
+  }
+}

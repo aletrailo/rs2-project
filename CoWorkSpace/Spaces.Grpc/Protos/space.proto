@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option csharp_namespace = "Spaces.Grpc.Protos";
+
+service SpaceProtoService {
+	rpc GetSpaces (GetSpacesRequest) returns (GetSpacesResponse);
+}
+
+
+message Space {
+	string id = 1;
+	string name = 2;
+	string address = 3;
+	string description = 4;
+	string image = 5;
+}
+
+message GetSpacesRequest {
+}
+
+message GetSpacesResponse {
+	repeated Space spaces = 1;
+}
