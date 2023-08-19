@@ -1,4 +1,7 @@
-﻿namespace Spaces.Common.Models
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Spaces.Common.Models
 {
     public sealed class Space
     {
@@ -7,5 +10,9 @@
         public string Name { get; set; }
 
         public string Address { get; set; }
+
+        public string Description { get; set; }
+
+        public string Image { get; set; } //url slike prostora
     }
 }

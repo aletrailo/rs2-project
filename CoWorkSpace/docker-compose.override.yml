@@ -40,7 +40,6 @@ services:
     ports:
       - "8001:80"
 
-
   spaces.grpc:
     container_name: spaces.grpc
     environment:

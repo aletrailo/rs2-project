@@ -1,4 +1,5 @@
 ﻿using Spaces.Grpc.Protos;
+using System.Collections.Generic;
 
 using SpaceModel = Spaces.Common.Models.Space;
 
@@ -12,7 +13,10 @@ namespace Spaces.Grpc.Extensions
             {
                 Id = model.Id,
                 Name = model.Name,
-                Address = model.Address
+                Address = model.Address,
+                Description = model.Description,
+                Image =  model.Image
+                //Images = { model.Images.ToArray() }
             };
         }
 

@@ -11,7 +11,10 @@ namespace Spaces.Api.Extensions
             {
                 Id = model.Id,
                 Name = model.Name,
-                Address = model.Address
+                Address = model.Address,
+                Description = model.Description,
+                Image = model.Image
+
             };
         }
 
