@@ -13,13 +13,27 @@ namespace Spaces.Persistance.Extensions
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                Address = entity.Address
+                Address = entity.Address,
+                Description= entity.Description,
+                Image = entity.Image
             };
         }
 
         public static IEnumerable<Space> ToModel(this IEnumerable<SpaceEntity> entities)
         {
             return entities.Select(entity => entity.ToModel());
+        }
+
+        public static SpaceEntity FromModel(this Space space)
+        {
+            return new SpaceEntity
+            {
+                Id = space.Id,
+                Name = space.Name,
+                Address = space.Address,
+                Description = space.Description,
+                Image = space.Image
+            };
         }
     }
 }

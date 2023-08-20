@@ -21,5 +21,40 @@ namespace Spaces.Api.Controllers
         {
             return (await this.service.GetAllAsync()).ToDto();
         }
+
+        [HttpPost("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task InsertAsync(SpaceDto spaceDto)
+        {
+            spaceDto.Id=MongoDB.Bson.ObjectId.GenerateNewId().ToString();
+            await service.InsertAsync(spaceDto.ToSpace());
+
+        }
+
+        [HttpPut("[action]")]
+        [ProducesResponseType(typeof(bool),StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateAsync(SpaceDto spaceDto)
+        {
+            return Ok(await service.UpdateAsync(spaceDto.ToSpace()));
+
+        }
+
+        //getbyid
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(SpaceDto), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetByIdAsync(String Id)
+        {
+            return Ok(await service.GetByIdAsync(Id));
+
+        }
+        
+        [HttpDelete("[action]")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteAsync(SpaceDto spaceDto)
+        {
+            return Ok(await service.DeleteAsync(spaceDto.ToSpace().Id));
+
+        }
+
     }
 }

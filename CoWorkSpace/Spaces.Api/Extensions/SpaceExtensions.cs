@@ -11,13 +11,28 @@ namespace Spaces.Api.Extensions
             {
                 Id = model.Id,
                 Name = model.Name,
-                Address = model.Address
+                Address = model.Address,
+                Description = model.Description,
+                Image = model.Image
+
             };
         }
 
         internal static IEnumerable<SpaceDto> ToDto(this IEnumerable<Space> models)
         {
             return models.Select(model => model.ToDto());
+        }
+
+        internal static Space ToSpace(this SpaceDto spacedto)
+        {
+            return new Space
+            {
+                Id = spacedto.Id,
+                Name = spacedto.Name,
+                Address = spacedto.Address,
+                Description = spacedto.Description,
+                Image = spacedto.Image
+            };
         }
     }
 }
