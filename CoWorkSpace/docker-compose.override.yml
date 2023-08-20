@@ -3,14 +3,15 @@ version: '3.4'
 services:
   mssql:
     container_name: mssql
+    user: root
     environment:
-     - SA_PASSWORD = RS2MADproject123
+     - SA_PASSWORD=RS2MADproject123
      - ACCEPT_EULA=Y
     restart: always
     ports:
      - "1433:1433"
     volumes:
-     - mssql_data:/var/opt/mssql/data 
+     - mssql_data:/var/opt/mssql/data
 
   spacesdb:
     container_name: spacesdb
