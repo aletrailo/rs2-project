@@ -31,14 +31,14 @@ namespace Spaces.Common.Services
             return this.repository.GetSpaceById(Id);
         }
 
-        public Task InsertAsync(Space space)
+        public Task InsertAsync(CreationInfo creationInfo)
         {
-            return this.repository.InsertSpace(space);
+            return this.repository.InsertSpace(creationInfo);
         }
 
-        public Task<bool> UpdateAsync(Space space)
+        public Task<bool> UpdateAsync(CreationInfo creationInfo)
         {
-            return this.repository.UpdateSpace(space);
+            return this.repository.UpdateSpace(creationInfo);
         }
 
         #endregion

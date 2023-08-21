@@ -9,7 +9,7 @@ namespace Spaces.Common.Interfaces
         Task<IEnumerable<Space>> GetAllAsync();
         Task<bool> DeleteAsync(string Id);
         Task<Space> GetByIdAsync(string Id);
-        Task InsertAsync(Space space);
-        Task<bool> UpdateAsync(Space space);
+        Task InsertAsync(CreationInfo creationInfo);
+        Task<bool> UpdateAsync(CreationInfo creationInfo);
     }
 }

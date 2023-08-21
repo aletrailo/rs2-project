@@ -39,14 +39,15 @@ namespace Spaces.Persistance.Repositories
 
         }
 
-        public async Task InsertSpace(Space space)
+        public async Task InsertSpace(CreationInfo creationinfo)
         {
-            await context.GetCollection().InsertOneAsync(space.FromModel());
+            var spaceEntity = creationinfo.ToSpaceEntity();
+            await context.GetCollection().InsertOneAsync(spaceEntity);
         }
 
-        public async Task<bool> UpdateSpace(Space spaceN)
+        public async Task<bool> UpdateSpace(CreationInfo creationinfo)
         {
-            var space=spaceN.FromModel();
+            var space=creationinfo.ToSpaceEntity();
             var updateResult = await context.GetCollection().ReplaceOneAsync(p => p.Id == space.Id, space);
             return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
 

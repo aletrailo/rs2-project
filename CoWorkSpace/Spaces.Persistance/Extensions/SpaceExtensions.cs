@@ -24,16 +24,6 @@ namespace Spaces.Persistance.Extensions
             return entities.Select(entity => entity.ToModel());
         }
 
-        public static SpaceEntity FromModel(this Space space)
-        {
-            return new SpaceEntity
-            {
-                Id = space.Id,
-                Name = space.Name,
-                Address = space.Address,
-                Description = space.Description,
-                Image = space.Image
-            };
-        }
+
     }
 }

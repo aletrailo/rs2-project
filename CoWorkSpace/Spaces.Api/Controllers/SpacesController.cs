@@ -24,18 +24,19 @@ namespace Spaces.Api.Controllers
 
         [HttpPost("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task InsertAsync(SpaceDto spaceDto)
+        public async Task InsertAsync(CreationInfoDto Dto)
         {
-            spaceDto.Id=MongoDB.Bson.ObjectId.GenerateNewId().ToString();
-            await service.InsertAsync(spaceDto.ToSpace());
+            var creationInfo = Dto.ToCreationInfo();
+            await service.InsertAsync(creationInfo);
 
         }
 
         [HttpPut("[action]")]
         [ProducesResponseType(typeof(bool),StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateAsync(SpaceDto spaceDto)
+        public async Task<IActionResult> UpdateAsync(CreationInfoDto Dto)
         {
-            return Ok(await service.UpdateAsync(spaceDto.ToSpace()));
+            var creationInfo = Dto.ToCreationInfo();
+            return Ok(await service.UpdateAsync(creationInfo));
 
         }
 
