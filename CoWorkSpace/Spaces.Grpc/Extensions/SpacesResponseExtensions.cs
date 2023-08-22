@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using SpaceModel = Spaces.Common.Models.Space;
+using CreationInfo = Spaces.Common.Models.CreationInfo;
 
 namespace Spaces.Grpc.Extensions
 {
@@ -16,13 +17,24 @@ namespace Spaces.Grpc.Extensions
                 Address = model.Address,
                 Description = model.Description,
                 Image =  model.Image
-                //Images = { model.Images.ToArray() }
+                
             };
         }
 
         internal static IEnumerable<Space> ToGrpsModel(this IEnumerable<SpaceModel> models)
         {
             return models.Select(model => model.ToGrpsModel());
+        }
+
+        internal static CreationInfo ToCreationInfo(this SpaceInfo space)
+        {
+            return new CreationInfo
+            {
+                Name = space.Name,
+                Address = space.Address,
+                Description = space.Description,
+                Image = space.Image
+            };
         }
     }
 }

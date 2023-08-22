@@ -4,6 +4,7 @@ option csharp_namespace = "Spaces.Grpc.Protos";
 
 service SpaceProtoService {
 	rpc GetSpaces (GetSpacesRequest) returns (GetSpacesResponse);
+	rpc InsertSpace (InsertSpaceRequest) returns (InsertSpaceResponse);
 }
 
 
@@ -15,9 +16,24 @@ message Space {
 	string image = 5;
 }
 
+message SpaceInfo{
+	string name = 1;
+	string address = 2;
+	string description = 3;
+	string image = 4;
+}
+
 message GetSpacesRequest {
 }
 
 message GetSpacesResponse {
 	repeated Space spaces = 1;
+}
+
+message InsertSpaceRequest{
+	SpaceInfo space = 1;
+}
+
+message InsertSpaceResponse{
+	bool response = 1;
 }

@@ -1,5 +1,6 @@
 ﻿using Advertising.Common.Interfaces;
 using Advertising.Common.Models;
+using Grpc.Core;
 using Spaces.Grpc.Protos;
 
 namespace Advertising.Api.Services
@@ -27,6 +28,28 @@ namespace Advertising.Api.Services
                 adSpaces.Add(new AdSpace { Name = space.Name, Address = space.Address , Description=space.Description, Image=space.Image});
 
             return adSpaces;
+        }
+
+        public async Task<bool> AddAsync(AdSpace adSpace)
+        {
+
+            try
+            {
+                var space = new SpaceInfo { Name = adSpace.Name, Address = adSpace.Address, Description = adSpace.Description, Image = adSpace.Image };
+                var request = new InsertSpaceRequest
+                {
+                    Space = space
+                };
+                InsertSpaceResponse insertSpaceResponse = await this.spaceProtoServiceClient.InsertSpaceAsync(request);
+
+                return insertSpaceResponse.Response;
+            }
+            catch (RpcException ex)
+            {
+                Console.WriteLine($"Greška prilikom ubacivanja prostora: {ex.Status}");
+                return false; 
+            }
+
         }
 
         #endregion
