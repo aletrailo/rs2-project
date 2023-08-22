@@ -1,22 +1,34 @@
-import { createStore } from 'vuex'
+
+import { createStore, Store } from 'vuex';
+import authModule from './modules/auth';
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/';
-export default createStore({
-  state: {
-  },
-  getters: {
-  },
-  mutations: {
+const headers = { "Content-Type": "application/json" }
+
+export interface RootState {
+  User: string
+}
+
+const store: Store<RootState> = createStore({
+  modules: {
+    auth: authModule,
   },
   actions: {
-    logIn({ commit, state }, { username, password }) {
-      const url = baseUrl + ''
-      const data_to_post = {
-        username: username,
-        password: password
+    singIn({ commit, state }, { firstName, lastName, userNeme, password, email, phoneNumber }) {
+      const url = baseUrl + 'api/v1/Authentication/RegisterUser'
+
+      const data_to_post =
+      {
+        firstName: firstName,
+        lastName: lastName,
+        userNeme: userNeme,
+        password: password,
+        email: email,
+        phoneNumber: phoneNumber
       }
 
+
       fetch(url, {
-        method: 'POST', credentials: 'include', mode: 'cors', body: JSON.stringify(data_to_post)
+        method: 'POST', mode: 'cors', headers: headers, body: JSON.stringify(data_to_post)
       })
         .then((response) => {
           if (!response.ok)
@@ -25,10 +37,10 @@ export default createStore({
         })
         .then(data => { console.log(data) })
         .catch(error => {
-          error.json().then((data: any) => { console.log(data) })
+          console.error(error)
         })
     }
-  },
-  modules: {
   }
-})
+});
+
+export default store;
