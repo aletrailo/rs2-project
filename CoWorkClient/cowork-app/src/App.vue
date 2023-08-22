@@ -2,7 +2,7 @@
   <nav>
     <router-link to="/"></router-link>
   </nav>
-  <router-view/>
+  <router-view :key="$route.fullPath"/>
 </template>
 
 <style>
