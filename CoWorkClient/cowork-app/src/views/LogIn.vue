@@ -26,22 +26,25 @@
 </template>
 
 <script>
+
 export default {
     name: 'LogIn',
     data() {
         return {
-            username: '',
-            password: ''
+            username: 'AdminAdmin123',
+            password: 'AdminAdmin123'
         }
 
     },
     methods: {
         login() {
-            this.$store.dispatch('logIn', {
+            this.$store.dispatch('auth/logIn', {
                 username: this.username,
                 password: this.password
             })
         }
+    },
+    computed:{
     }
 
 }
