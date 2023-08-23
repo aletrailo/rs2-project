@@ -31,8 +31,8 @@ export default {
     name: 'LogIn',
     data() {
         return {
-            username: 'AdminAdmin123',
-            password: 'AdminAdmin123'
+            username: '',
+            password: ''
         }
 
     },
