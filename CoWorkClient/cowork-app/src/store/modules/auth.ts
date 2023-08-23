@@ -34,6 +34,7 @@ const authModule: Module<AuthState, RootState> = {
                 state.refreshToken = refreshToken;
             }
         },
+
     },
     actions: {
         initializeAuth({ commit }) {
@@ -71,6 +72,31 @@ const authModule: Module<AuthState, RootState> = {
                 }
             } catch (error) {
                 console.error('An error occurred during login:', error);
+            }
+        },
+        async singIn({ commit }, { firstName, lastName, userNeme, password, email, phoneNumber }) {
+            const url = baseUrl + 'api/v1/Authentication/RegisterUser'
+            const singInData =
+            {
+              firstName: firstName,
+              lastName: lastName,
+              userNeme: userNeme,
+              password: password,
+              email: email,
+              phoneNumber: phoneNumber
+            }
+            try {
+                const response = await fetch(url, {method: 'POST',body: JSON.stringify(singInData),headers: headers});
+
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log(data)
+                    console.log("Uspesno ste se registovali")
+                } else {
+                    console.error('Registration failed.');
+                }
+            } catch (error) {
+                console.error('An error occurred during registration:', error);
             }
         },
     },

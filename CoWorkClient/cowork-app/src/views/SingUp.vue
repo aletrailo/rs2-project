@@ -53,8 +53,9 @@ export default {
         }
     },
     methods: {
+
         singIn() {
-            this.$store.dispatch('singIn', {
+            this.$store.dispatch('auth/singIn', {
                 firstName: this.firstName,
                 lastName: this.lastName,
                 userNeme: this.userNeme,
