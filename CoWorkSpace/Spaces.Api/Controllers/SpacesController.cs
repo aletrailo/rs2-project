@@ -24,18 +24,18 @@ namespace Spaces.Api.Controllers
 
         [HttpPost("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task InsertAsync(CreationInfoDto Dto)
+        public async Task AddAsync(CreationInfoDto creationInfoDto)
         {
-            var creationInfo = Dto.ToCreationInfo();
-            await service.InsertAsync(creationInfo);
+            var creationInfo = creationInfoDto.ToModel();
+            await service.AddAsync(creationInfo);
 
         }
 
         [HttpPut("[action]")]
         [ProducesResponseType(typeof(bool),StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateAsync(CreationInfoDto Dto)
+        public async Task<IActionResult> UpdateAsync(CreationInfoDto creationInfoDto)
         {
-            var creationInfo = Dto.ToCreationInfo();
+            var creationInfo = creationInfoDto.ToModel();
             return Ok(await service.UpdateAsync(creationInfo));
 
         }
@@ -53,7 +53,7 @@ namespace Spaces.Api.Controllers
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteAsync(SpaceDto spaceDto)
         {
-            return Ok(await service.DeleteAsync(spaceDto.ToSpace().Id));
+            return Ok(await service.DeleteAsync(spaceDto.ToModel().Id));
 
         }
 

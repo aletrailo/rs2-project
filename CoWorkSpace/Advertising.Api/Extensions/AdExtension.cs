@@ -6,9 +6,9 @@ namespace Advertising.Api.Extensions
     internal static class AdExtension
     {
 
-        internal static AdSpace ToAd(this AdInfoDto adInfoDto)
+        internal static AdSpaceInfo ToModel(this AdInfoDto adInfoDto)
         {
-            return new AdSpace
+            return new AdSpaceInfo
             {
                 Name = adInfoDto.Name,
                 Address = adInfoDto.Address,

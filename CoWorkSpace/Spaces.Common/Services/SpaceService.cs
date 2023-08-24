@@ -16,7 +16,7 @@ namespace Spaces.Common.Services
 
         public Task<bool> DeleteAsync(string Id)
         {
-            return this.repository.DeleteSpace(Id);
+            return this.repository.DeleteSpaceAsync(Id);
         }
 
         #region ISpaceService Members
@@ -28,17 +28,17 @@ namespace Spaces.Common.Services
 
         public Task<Space> GetByIdAsync(string Id)
         {
-            return this.repository.GetSpaceById(Id);
+            return this.repository.GetSpaceByIdAsync(Id);
         }
 
-        public Task InsertAsync(CreationInfo creationInfo)
+        public Task AddAsync(CreationInfo creationInfo)
         {
-            return this.repository.InsertSpace(creationInfo);
+            return this.repository.AddSpaceAsync(creationInfo);
         }
 
         public Task<bool> UpdateAsync(CreationInfo creationInfo)
         {
-            return this.repository.UpdateSpace(creationInfo);
+            return this.repository.UpdateSpaceAsync(creationInfo);
         }
 
         #endregion

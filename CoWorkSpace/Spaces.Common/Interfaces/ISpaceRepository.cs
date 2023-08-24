@@ -7,9 +7,9 @@ namespace Spaces.Common.Interfaces
     public interface ISpaceRepository
     {
         Task<IEnumerable<Space>> GetAllSpaces();
-        Task InsertSpace(CreationInfo creationinfo);
-        Task<bool> UpdateSpace(CreationInfo creationinfo); 
-        Task<bool> DeleteSpace(string Id);
-        Task<Space> GetSpaceById(string Id);
+        Task AddSpaceAsync(CreationInfo creationinfo);
+        Task<bool> UpdateSpaceAsync(CreationInfo creationinfo); 
+        Task<bool> DeleteSpaceAsync(string Id);
+        Task<Space> GetSpaceByIdAsync(string Id);
     }
 }

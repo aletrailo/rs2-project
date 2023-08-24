@@ -33,16 +33,16 @@ namespace Spaces.Grpc.Services
         public override async Task<InsertSpaceResponse> InsertSpace(InsertSpaceRequest request,ServerCallContext context)
         {
 
-            var ci=request.Space.ToCreationInfo();
+            var ci=request.Space.ToModel();
 
             try
             {
-                await this.spaceService.InsertAsync(ci);
+                await this.spaceService.AddAsync(ci);
                 return new InsertSpaceResponse { Response = true };
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Greška prilikom ubacivanja prostora: {ex.Message}");
+                
                 return new InsertSpaceResponse { Response = false };
             }
         }

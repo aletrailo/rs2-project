@@ -25,10 +25,10 @@ namespace Advertising.Api.Controllers
 
         [HttpPost("[action]")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        public async Task<IActionResult> AddAnAdAsync(AdInfoDto adDto)
+        public async Task<IActionResult> AddAnAdAsync(AdInfoDto adInfoDto)
         {
-            var adInfo = adDto.ToAd();
-            return Ok(await service.AddAsync(adInfo));
+            AdSpaceInfo adSpaceInfo = adInfoDto.ToModel();
+            return Ok(await service.AddAsync(adSpaceInfo));
         }
     }
 }

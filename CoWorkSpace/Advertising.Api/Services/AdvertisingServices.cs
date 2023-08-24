@@ -30,15 +30,15 @@ namespace Advertising.Api.Services
             return adSpaces;
         }
 
-        public async Task<bool> AddAsync(AdSpace adSpace)
+        public async Task<bool> AddAsync(AdSpaceInfo adSpaceInfo)
         {
 
             try
             {
-                var space = new SpaceInfo { Name = adSpace.Name, Address = adSpace.Address, Description = adSpace.Description, Image = adSpace.Image };
+                var spaceInfo = new SpaceInfo { Name = adSpaceInfo.Name, Address = adSpaceInfo.Address, Description = adSpaceInfo.Description, Image = adSpaceInfo.Image };
                 var request = new InsertSpaceRequest
                 {
-                    Space = space
+                    Space = spaceInfo
                 };
                 InsertSpaceResponse insertSpaceResponse = await this.spaceProtoServiceClient.InsertSpaceAsync(request);
 
@@ -46,7 +46,7 @@ namespace Advertising.Api.Services
             }
             catch (RpcException ex)
             {
-                Console.WriteLine($"Greška prilikom ubacivanja prostora: {ex.Status}");
+                
                 return false; 
             }
 

@@ -26,15 +26,6 @@ namespace Spaces.Grpc.Extensions
             return models.Select(model => model.ToGrpsModel());
         }
 
-        internal static CreationInfo ToCreationInfo(this SpaceInfo space)
-        {
-            return new CreationInfo
-            {
-                Name = space.Name,
-                Address = space.Address,
-                Description = space.Description,
-                Image = space.Image
-            };
-        }
+
     }
 }

@@ -26,29 +26,39 @@ namespace Spaces.Persistance.Repositories
             return (await this.context.GetCollection().Find(_ => true).ToListAsync()).ToModel();
         }
         
-        public async Task<bool> DeleteSpace(string Id)
+        public async Task<bool> DeleteSpaceAsync(string Id)
         {
             var deleteResult = await context.GetCollection().DeleteOneAsync(p => p.Id == Id);
             return deleteResult.IsAcknowledged && deleteResult.DeletedCount > 0;
 
         }
 
-        public async Task<Space> GetSpaceById(string Id)
+        public async Task<Space> GetSpaceByIdAsync(string Id)
         {
             return (await context.GetCollection().Find(p => p.Id == Id).FirstOrDefaultAsync()).ToModel();
 
         }
 
-        public async Task InsertSpace(CreationInfo creationinfo)
+        public async Task AddSpaceAsync(CreationInfo creationInfo)
         {
-            var spaceEntity = creationinfo.ToSpaceEntity();
+            SpaceEntity spaceEntity =  new SpaceEntity
+                {
+                    Id = MongoDB.Bson.ObjectId.GenerateNewId().ToString(),
+                    Name = creationInfo.Name,
+                    Address = creationInfo.Address,
+                    Description = creationInfo.Description,
+                    Image = creationInfo.Image
+                };
+
+
             await context.GetCollection().InsertOneAsync(spaceEntity);
         }
 
-        public async Task<bool> UpdateSpace(CreationInfo creationinfo)
+        public async Task<bool> UpdateSpaceAsync(Space space)
         {
-            var space=creationinfo.ToSpaceEntity();
-            var updateResult = await context.GetCollection().ReplaceOneAsync(p => p.Id == space.Id, space);
+            var spaceEntity = space.ToEntity();
+            
+            var updateResult = await context.GetCollection().ReplaceOneAsync(p => p.Id == spaceEntity.Id, spaceEntity);
             return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
 
         }

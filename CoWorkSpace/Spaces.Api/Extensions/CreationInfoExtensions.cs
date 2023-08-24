@@ -6,7 +6,7 @@ namespace Spaces.Api.Extensions
     internal static class CreationInfoExtensions
     {
 
-        internal static CreationInfo ToCreationInfo(this CreationInfoDto Dto)
+        internal static CreationInfo ToModel(this CreationInfoDto Dto)
         {
             return new CreationInfo
             {
