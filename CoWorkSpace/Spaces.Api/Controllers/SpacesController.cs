@@ -33,10 +33,10 @@ namespace Spaces.Api.Controllers
 
         [HttpPut("[action]")]
         [ProducesResponseType(typeof(bool),StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateAsync(CreationInfoDto creationInfoDto)
+        public async Task<IActionResult> UpdateAsync(SpaceDto spaceDto)
         {
-            var creationInfo = creationInfoDto.ToModel();
-            return Ok(await service.UpdateAsync(creationInfo));
+            var space = spaceDto.ToModel();
+            return Ok(await service.UpdateAsync(space));
 
         }
 

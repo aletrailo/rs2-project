@@ -8,7 +8,7 @@ namespace Spaces.Common.Interfaces
     {
         Task<IEnumerable<Space>> GetAllSpaces();
         Task AddSpaceAsync(CreationInfo creationinfo);
-        Task<bool> UpdateSpaceAsync(CreationInfo creationinfo); 
+        Task<bool> UpdateSpaceAsync(Space space); 
         Task<bool> DeleteSpaceAsync(string Id);
         Task<Space> GetSpaceByIdAsync(string Id);
     }

@@ -36,9 +36,9 @@ namespace Spaces.Common.Services
             return this.repository.AddSpaceAsync(creationInfo);
         }
 
-        public Task<bool> UpdateAsync(CreationInfo creationInfo)
+        public Task<bool> UpdateAsync(Space space)
         {
-            return this.repository.UpdateSpaceAsync(creationInfo);
+            return this.repository.UpdateSpaceAsync(space);
         }
 
         #endregion
