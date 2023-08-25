@@ -24,7 +24,7 @@ namespace Spaces.Persistance.Extensions
             return entities.Select(entity => entity.ToModel());
         }
 
-        public static SpaceEntity FromModel(this Space space)
+        public static SpaceEntity ToEntity(this Space space)
         {
             return new SpaceEntity
             {
@@ -35,5 +35,6 @@ namespace Spaces.Persistance.Extensions
                 Image = space.Image
             };
         }
+
     }
 }

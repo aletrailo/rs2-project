@@ -1,6 +1,10 @@
-﻿namespace Advertising.Common.Models
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Advertising.Common.Models
 {
-    public sealed class AdSpace
+    public sealed class AdSpaceInfo
     {
         public string Name { get; set; }
 

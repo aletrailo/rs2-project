@@ -7,5 +7,6 @@ namespace Advertising.Common.Interfaces
     public interface IAdvertisingService
     {
         Task<IEnumerable<AdSpace>> GetAllAsync();
+        Task<bool> AddAsync(AdSpaceInfo adSpaceInfo);
     }
 }

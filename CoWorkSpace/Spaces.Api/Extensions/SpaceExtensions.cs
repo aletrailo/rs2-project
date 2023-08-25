@@ -23,7 +23,7 @@ namespace Spaces.Api.Extensions
             return models.Select(model => model.ToDto());
         }
 
-        internal static Space ToSpace(this SpaceDto spacedto)
+        internal static Space ToModel(this SpaceDto spacedto)
         {
             return new Space
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 using SpaceModel = Spaces.Common.Models.Space;
+using CreationInfo = Spaces.Common.Models.CreationInfo;
 
 namespace Spaces.Grpc.Extensions
 {
@@ -16,7 +17,7 @@ namespace Spaces.Grpc.Extensions
                 Address = model.Address,
                 Description = model.Description,
                 Image =  model.Image
-                //Images = { model.Images.ToArray() }
+                
             };
         }
 
@@ -24,5 +25,7 @@ namespace Spaces.Grpc.Extensions
         {
             return models.Select(model => model.ToGrpsModel());
         }
+
+
     }
 }

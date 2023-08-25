@@ -10,11 +10,11 @@ namespace Spaces.Persistance.Context
     {
         private readonly MongoClient client;
         private readonly SpacesDbSettings settings;
-
+        
         public SpaceContext(IOptions<SpacesDbSettings> settings)
         {
             this.settings = settings.Value;
-            this.settings.ConnectionString = "mongodb://spacesdb:27017";
+            this.settings.ConnectionString = "mongodb://spacesdb:27017"; //kada se pokrece van dokera zakomentarisi ovu liniju
             this.client = new MongoClient(this.settings.ConnectionString);
         }
 

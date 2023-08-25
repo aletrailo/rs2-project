@@ -1,6 +1,6 @@
-﻿namespace Advertising.Common.Models
+﻿namespace Spaces.Api.Dtos
 {
-    public sealed class AdSpace
+    public class CreationInfoDto
     {
         public string Name { get; set; }
 
