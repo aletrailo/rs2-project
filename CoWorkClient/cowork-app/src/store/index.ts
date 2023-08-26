@@ -1,8 +1,7 @@
-
+/* eslint-disable */
 import { createStore, Store } from 'vuex';
 import authModule from './modules/auth';
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/';
-const headers = { "Content-Type": "application/json" }
 
 export interface RootState {
   User: string
@@ -15,7 +14,7 @@ const store: Store<RootState> = createStore({
   actions: {
     singIn({ commit, state }, { firstName, lastName, userNeme, password, email, phoneNumber }) {
       const url = baseUrl + 'api/v1/Authentication/RegisterUser'
-
+      const headers = { "Content-Type": "application/json" }
       const data_to_post =
       {
         firstName: firstName,
@@ -39,8 +38,9 @@ const store: Store<RootState> = createStore({
         .catch(error => {
           console.error(error)
         })
-    }
+    },
   }
+
 });
 
 export default store;
