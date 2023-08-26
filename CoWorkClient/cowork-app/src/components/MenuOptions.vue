@@ -3,60 +3,56 @@
     <nav style="display: flex; padding: 1rem; justify-content: space-between; align-items: center; ">
         <div style="display: flex;" @click="openSideMenu = true">
             <button type="button" style="display: inline-flex; padding: 0.625rem; margin: -0.625rem; justify-content: center; align-items: center; border-radius: 0.375rem; color: #374151; ">
-                <Bars3Icon style="width: 1.5rem; " />
+                <i class="bi bi-list"></i>
+                <!--i class="bi-alarm" style="font-size: 2rem; color: cornflowerblue;"></i-->
+      
             </button>
         </div>
-        <div class="display: flex; ">
+      <div class="display: flex; ">
 
             LOGO
-            <span class="display: inline-block; font-weight: 600; color: #4B5563; ">Kardioserb</span>
+            <span class="display: inline-block; font-weight: 600; color: #4B5563; ">CoWorkSpace</span>
         </div>
     </nav>
-    <!-- Mobile menu, show/hide based on menu open state. -->
-
-    <!--Transition duration="550" name="nested">
-        <div v-if="openSideMenu" role="dialog" class="fixed z-50 inset-0">
-            <div class="outer fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" @click="openSideMenu = false" aria-hidden="true"></div>
-            <div class="inner fixed inset-y-0 z-50 w-64 overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-                <div class="flex items-center justify-between">
+    
+    <Transition duration="550" name="nested">
+        <div v-if="openSideMenu" role="dialog" style="position: fixed; z-index: 50; top:0; right:0; bottom:0; left:0;">
+            <div style="position: fixed; top: 0;right: 0;bottom: 0;left: 0; background-color: #6B7280; --bg-opacity: 0.75; transition-property: opacity; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 300ms; " @click="openSideMenu = false" aria-hidden="true"></div>
+            <div style="overflow-y: auto; position: fixed; top: 0; bottom: 0; z-index: 50; padding-top: 1.5rem; padding-bottom: 1.5rem; padding-left: 1.5rem; padding-right: 1.5rem; width: 16rem; background-color: #ffffff; ">
+                <div style="display: flex; justify-content: space-between; align-items: center; ">
                     <a tabindex="-1">
-                      LOGI
-                        <span>Kardioserb</span>
+                      LOGIN
+                        <span>CoWorkSpace</span>
                     </a>
-                    <button @click="openSideMenu = false" type="button" tabindex="-1" class="-m-2.5 rounded-md p-2.5 text-gray-700">
-                        <span class="sr-only">Close menu</span>
-                        <XMarkIcon class="w-6" />
+                    <button @click="openSideMenu = false" type="button" tabindex="-1" style="padding: 0.625rem; margin: -0.625rem; border-radius: 0.375rem; color: #374151; ">
+                        <span style="position: absolute; width: 1px; height: 1px;padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; ">Close menu</span>
                     </button>
                 </div>
-                <div class="mt-6 flow-root">
-                    <div class="divide-y divide-gray-500/10">
+                <div style="display: flow-root; margin-top: 1.5rem; ">
+                    <div style="border-top-width: 1px; ">
                         <div>
-                            <router-link :to="{ name:'user', params: {id: loggedUser.id}}" class="text-gray-700 hover:text-indigo-500 group rounded-md px-3 py-2 flex items-center text-sm font-medium">
-                                <UserIcon class="flex-shrink-0 -ml-1 mr-3 h-6 w-6" />
-                                <span>{{ loggedUser.username }}</span>
-                            </router-link>
+                            <a style="display: flex; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 0.75rem; padding-right: 0.75rem; align-items: center; border-radius: 0.375rem; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: #374151; :hover { color: #6366F1; }">
+                    
+                            </a>
                         </div>
                         <div>
-                            <router-link :to="{name: 'search'}" class="text-gray-700 hover:text-indigo-500 group rounded-md px-3 py-2 flex items-center text-sm font-medium">
-                                <UserGroupIcon class="flex-shrink-0 -ml-1 mr-3 h-6 w-6" />
-                                <span class="truncate">Pretraga pacijenata</span>
-                            </router-link>
+                            <a style="display: flex; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 0.75rem; padding-right: 0.75rem; align-items: center; border-radius: 0.375rem; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: #374151; :hover {color: #6366F1;  }">
+
+                            </a>
                         </div>
                         <div>
-                            <router-link v-if="loggedUser.role === 'admin'" :to="{name: 'users'}" class="text-gray-700 hover:text-indigo-500 group rounded-md px-3 py-2 flex items-center text-sm font-medium">
-                                <UserGroupIcon class="flex-shrink-0 -ml-1 mr-3 h-6 w-6" />
-                                <span class="truncate">Spisak korisnika</span>
-                            </router-link>
+                            <a style="display: flex; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 0.75rem; padding-right: 0.75rem; align-items: center; border-radius: 0.375rem; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: #374151; :hover {color: #6366F1;  }">
+                                
+                            </a>
                         </div>
                         <div>
-                            <router-link v-if="loggedUser.role === 'admin'" :to="{name: 'reports'}" class="text-gray-700 hover:text-indigo-500 group rounded-md px-3 py-2 flex items-center text-sm font-medium">
-                                <DocumentTextIcon class="flex-shrink-0 -ml-1 mr-3 h-6 w-6" />
-                                <span class="truncate">Izveštaji</span>
-                            </router-link>
+                            <a style="display: flex; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 0.75rem; padding-right: 0.75rem; align-items: center; border-radius: 0.375rem; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: #374151; :hover {color: #6366F1;  }">
+                               
+                            </a>
                         </div>
-                        <div class="absolute bottom-0 w-52">
-                            <a @click="logOut" class="text-gray-700 hover:text-indigo-500 group rounded-md px-3 py-2 flex items-center text-sm font-medium cursor-pointer">
-                                <ArrowRightOnRectangleIcon class="flex-shrink-0 -ml-1 mr-3 h-6 w-6" />
+                        <div style="position: absolute; bottom: 0; width: 13rem;">
+                            <a @click="logOut" style="display: flex; padding-top: 0.5rem; padding-bottom: 0.5rem; padding-left: 0.75rem; padding-right: 0.75rem; align-items: center; border-radius: 0.375rem; font-size: 0.875rem; line-height: 1.25rem; font-weight: 500; color: #374151; cursor: pointer; :hover {color: #6366F1;  }">
+                                <ArrowRightOnRectangleIcon style="margin-right: 0.75rem; margin-left: -0.25rem; width: 1.5rem; height: 1.5rem; " />
                                 <span class="truncate"> Odjavite se</span>
                             </a>
                         </div>
@@ -64,7 +60,7 @@
                 </div>
             </div>
         </div>
-    </Transition-->
+    </Transition>
 
 </header>
 </template>
@@ -73,28 +69,9 @@
 import {
     defineComponent
 } from 'vue';
-/*
-import {
-    Cog8ToothIcon,
-    ArrowRightOnRectangleIcon,
-    UserGroupIcon,
-    UserIcon,
-    DocumentTextIcon,
-    Bars3Icon,
-    XMarkIcon
-} from '@heroicons/vue/24/outline'
-*/
+
 export default defineComponent({
     name: "MenuOptions",
-    components: {
-        /*  Cog8ToothIcon,
-          ArrowRightOnRectangleIcon,
-          UserGroupIcon,
-          UserIcon,
-          DocumentTextIcon,
-          Bars3Icon,
-          XMarkIcon*/
-    },
     data() {
         return {
             openSideMenu: true
@@ -105,30 +82,6 @@ export default defineComponent({
             this.$store.dispatch('logOut')
         },
     },
-    computed: {
-        /*  loggedUser() {
-              return this.$store.state.users.loggedUser
-          },
-          institutions() {
-              return this.$store.state.institutions
-          },
-          selectedInstitution: {
-              get() {
-                  return this.$store.state.users.selectedInstitution
-              },
-              set(value) {
-                  this.$store.state.users.selectedInstitution = value
-              }
-          },
-          openSideMenu: {
-              get() {
-                  return this.$store.state.openSideMenu
-              },
-              set(value) {
-                  this.$store.state.openSideMenu = value
-              }
-          }*/
-    }
 
 });
 </script>
@@ -145,7 +98,7 @@ export default defineComponent({
     opacity: 0;
 }
 
-/* we can also transition nested elements using nested selectors */
+
 .nested-enter-active .inner,
 .nested-leave-active .inner {
     transition: all 0.5s ease-in-out;

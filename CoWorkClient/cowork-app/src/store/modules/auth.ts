@@ -149,6 +149,7 @@ const authModule: Module<AuthState, RootState> = {
             const url = baseUrl + 'api/v1/User/' + state.auth.username
 
             const headers = { Authorization: `Bearer ${state.accessToken}`, }
+
             fetch(url, {
                 method: 'GET', mode: 'cors', headers: headers
             })
