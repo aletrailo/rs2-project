@@ -12,24 +12,23 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header">LogIn strana</div>
                         <div class="card-body">
                             <form @submit.prevent="login">
                                 <div class="mb-3">
                                     <label for="username" class="form-label"></label>
-                                    <input v-model="username" type="text" id="username" placeholder="Username"
+                                    <input v-model="username" type="text" id="username" placeholder="Korisnicko ime"
                                         class="form-control" required />
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label"></label>
-                                    <input v-model="password" type="password" id="password" placeholder="Password"
+                                    <input v-model="password" type="password" id="password" placeholder="Lozinka"
                                         class="form-control" required />
                                 </div>
-                                <button type="submit" class="btn btn-primary">Login</button>
+                                <button type="submit" class="btn btn-primary">Prijavi se</button>
                             </form>
                             Nemate nalog?
                             <button class="btn btn-default"><router-link :to="{ name: 'SingUp' }"
-                                    class="text-warning">KREIRAJ
+                                    class="text-warning" style="font-weight: bolder;">KREIRAJ
                                     NALOG</router-link></button>
                         </div>
                     </div>
@@ -77,7 +76,6 @@ export default {
 }
 
 .card {
-    background-image: url('@/assets//image.png');
     background-size: 160%;
     background-position: center;
     position: absolute;
@@ -110,7 +108,5 @@ export default {
 
 
 .card-body {
-    padding: 60px;
-    margin-top: 150px;
     transform: scale(0.75);
 }</style>
