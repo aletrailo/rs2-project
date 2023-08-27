@@ -121,13 +121,13 @@ const authModule: Module<AuthState, RootState> = {
                 console.error('An error occurred during login:', error);
             }
         },
-        async singIn({ commit }, { firstName, lastName, userNeme, password, email, phoneNumber }) {
+        async singIn({ commit }, { firstName, lastName, userName, password, email, phoneNumber }) {
             const url = baseUrl + 'api/v1/Authentication/RegisterUser'
             const singInData =
             {
                 firstName: firstName,
                 lastName: lastName,
-                userNeme: userNeme,
+                userName: userName,
                 password: password,
                 email: email,
                 phoneNumber: phoneNumber

@@ -16,8 +16,8 @@
                                     <input v-model="lastName" type="text" id="lastName" class="form-control" required />
                                 </div>
                                 <div class="mb-3">
-                                    <label for="userNeme" class="form-label text-white">Korisnicko ime</label>
-                                    <input v-model="userNeme" type="text" id="userNeme" class="form-control" required />
+                                    <label for="userName" class="form-label text-white">Korisnicko ime</label>
+                                    <input v-model="userName" type="text" id="userName" class="form-control" required />
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label text-white">Lozinka</label>
@@ -50,7 +50,7 @@ export default {
         return {
             firstName: "",
             lastName: "",
-            userNeme: "",
+            userName: "",
             password: "",
             email: "",
             phoneNumber: ""
@@ -62,7 +62,7 @@ export default {
             this.$store.dispatch('auth/singIn', {
                 firstName: this.firstName,
                 lastName: this.lastName,
-                userNeme: this.userNeme,
+                userName: this.userName,
                 password: this.password,
                 email: this.email,
                 phoneNumber: this.phoneNumber
