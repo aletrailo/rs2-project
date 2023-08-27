@@ -33,8 +33,7 @@ namespace IdentityServer.Api.Controllers
 
         }
 
-        [Authorize(Roles = "Admin")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin,User")]
         [HttpGet("{username}")]
         [ProducesResponseType(typeof(UserDetails), StatusCodes.Status200OK)]
         public async Task<ActionResult<UserDetails>> GetUser(string username)
