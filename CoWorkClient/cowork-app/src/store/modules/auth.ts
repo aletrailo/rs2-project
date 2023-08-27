@@ -136,8 +136,6 @@ const authModule: Module<AuthState, RootState> = {
                 const response = await fetch(url, { method: 'POST', body: JSON.stringify(singInData), headers: headers });
 
                 if (response.ok) {
-                    const data = await response.json();
-                    console.log("Uspesno ste se registovali")
                 } else {
                     console.error('Registration failed.');
                 }
