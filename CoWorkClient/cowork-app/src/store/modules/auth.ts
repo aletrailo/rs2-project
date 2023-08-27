@@ -139,8 +139,9 @@ const authModule: Module<AuthState, RootState> = {
             }
             try {
                 const response = await fetch(url, { method: 'POST', body: JSON.stringify(singInData), headers: headers });
-
+                console.log(response)
                 if (response.ok) {
+                   this.dispatch('auth/logIn', {username: userName, password: password})
                 } else {
                     console.error('Registration failed.');
                 }
