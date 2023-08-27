@@ -25,7 +25,8 @@ interface AuthState {
     accessToken: string | null;
     refreshToken: string | null;
     user: User,
-    auth: Auth
+    auth: Auth,
+    users: User[]
 }
 
 function parsePayload(jwtString: string): IJwtPayload {
@@ -40,7 +41,8 @@ const authModule: Module<AuthState, RootState> = {
         accessToken: null,
         refreshToken: null,
         user: {} as User,
-        auth: {} as Auth
+        auth: {} as Auth,
+        users: [] as User[]
     },
     mutations: {
         setAccessToken(state, token: string) {
@@ -77,12 +79,15 @@ const authModule: Module<AuthState, RootState> = {
             if (email) {
                 state.auth.email = email;
             }
-            //if (role) {
-             //   state.auth.role = JSON.parse(role)
-           // }
+            if(role && role!==null){
+                state.auth.role =JSON.parse(role)
+            }
         },
         SET_DATA(state, data) {
             state.user = data
+        },
+        SET_USERS( state, data){
+            state.users = data
         }
 
     },
@@ -160,8 +165,55 @@ const authModule: Module<AuthState, RootState> = {
                 .catch(error => {
                     console.error(error)
                 })
+        },
+        async logOut({ commit, state }) {
+            const url = baseUrl + 'api/v1/Authentication/Logout'
+
+            const logOutData ={
+                "userName": state.auth.username,
+                "refreshToken": state.refreshToken
+            }
+
+            const headers = {
+                 "Content-Type": "application/json",
+                 Authorization: `Bearer ${state.accessToken}`
+             }
+
+
+            try {
+                const response = await fetch(url, { method: 'POST', body: JSON.stringify(logOutData), headers: headers });
+                if (response.status === 202) {
+                    const keys = Object.keys(localStorage)
+                    for(const key of keys){
+                        localStorage.removeItem(key);
+                    }
+
+                    router.push({ name: 'LogIn' })
+                } else {
+                    console.error('Neuspesno  odjavljivanje.');
+                }
+            } catch (error) {
+                console.error('An error occurred during logout:', error);
+            }
+        },
+        getAllUsers({commit, state}){
+            console.log('getAllUsers')
+            const url= baseUrl +  'api/v1/User'
+            const headers = { Authorization: `Bearer ${state.accessToken}`, }
+             fetch(url, {
+              method: 'GET', mode: 'cors', headers: headers
+             })
+              .then((response) => {
+                  if (!response.ok)
+                      throw response
+                  return response.json()
+              })
+              .then(data => { commit('SET_USERS', data)})
+              .catch(error => {
+                  console.error(error)
+              })
+          }
         }
-    },
 };
 
 export default authModule;
