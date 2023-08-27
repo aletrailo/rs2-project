@@ -47,7 +47,8 @@ namespace Spaces.Persistance.Repositories
                     Name = creationInfo.Name,
                     Address = creationInfo.Address,
                     Description = creationInfo.Description,
-                    Image = creationInfo.Image
+                    Image = creationInfo.Image,
+                    IsFree = creationInfo.IsFree
                 };
 
 

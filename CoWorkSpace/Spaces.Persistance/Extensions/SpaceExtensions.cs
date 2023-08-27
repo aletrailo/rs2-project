@@ -15,7 +15,8 @@ namespace Spaces.Persistance.Extensions
                 Name = entity.Name,
                 Address = entity.Address,
                 Description= entity.Description,
-                Image = entity.Image
+                Image = entity.Image,
+                IsFree = entity.IsFree
             };
         }
 
@@ -32,7 +33,8 @@ namespace Spaces.Persistance.Extensions
                 Name = space.Name,
                 Address = space.Address,
                 Description = space.Description,
-                Image = space.Image
+                Image = space.Image,
+                IsFree = space.IsFree
             };
         }
 

@@ -14,6 +14,7 @@ message Space {
 	string address = 3;
 	string description = 4;
 	string image = 5;
+	bool isfree = 6;
 }
 
 message SpaceInfo{
@@ -21,6 +22,7 @@ message SpaceInfo{
 	string address = 2;
 	string description = 3;
 	string image = 4;
+	bool isfree = 5;
 }
 
 message GetSpacesRequest {

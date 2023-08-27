@@ -21,5 +21,8 @@ namespace Spaces.Persistance.Entities
 
         [BsonElement("Image")]
         public string Image { get; set; }
+
+        [BsonElement("IsFree")]
+        public bool IsFree { get; set; } = true;
     }
 }

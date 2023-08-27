@@ -13,7 +13,8 @@ namespace Advertising.Api.Extensions
                 Name = adInfoDto.Name,
                 Address = adInfoDto.Address,
                 Description = adInfoDto.Description,
-                Image = adInfoDto.Image
+                Image = adInfoDto.Image,
+                IsFree = adInfoDto.IsFree
             };
 
         }

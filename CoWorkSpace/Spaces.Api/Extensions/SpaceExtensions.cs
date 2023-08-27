@@ -13,7 +13,8 @@ namespace Spaces.Api.Extensions
                 Name = model.Name,
                 Address = model.Address,
                 Description = model.Description,
-                Image = model.Image
+                Image = model.Image,
+                IsFree = model.IsFree
 
             };
         }
@@ -31,7 +32,8 @@ namespace Spaces.Api.Extensions
                 Name = spacedto.Name,
                 Address = spacedto.Address,
                 Description = spacedto.Description,
-                Image = spacedto.Image
+                Image = spacedto.Image,
+                IsFree = spacedto.IsFree
             };
         }
     }

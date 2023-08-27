@@ -16,7 +16,8 @@ namespace Spaces.Grpc.Extensions
                 Name = model.Name,
                 Address = model.Address,
                 Description = model.Description,
-                Image =  model.Image
+                Image =  model.Image,
+                Isfree = model.IsFree
                 
             };
         }

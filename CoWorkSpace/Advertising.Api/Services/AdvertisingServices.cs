@@ -25,7 +25,7 @@ namespace Advertising.Api.Services
             var adSpaces = new List<AdSpace>();
 
             foreach(var space in getSpacesResponse.Spaces)
-                adSpaces.Add(new AdSpace { Name = space.Name, Address = space.Address , Description=space.Description, Image=space.Image});
+                adSpaces.Add(new AdSpace { Name = space.Name, Address = space.Address , Description=space.Description, Image=space.Image, IsFree=space.Isfree});
 
             return adSpaces;
         }
@@ -35,7 +35,7 @@ namespace Advertising.Api.Services
 
             try
             {
-                var spaceInfo = new SpaceInfo { Name = adSpaceInfo.Name, Address = adSpaceInfo.Address, Description = adSpaceInfo.Description, Image = adSpaceInfo.Image };
+                var spaceInfo = new SpaceInfo { Name = adSpaceInfo.Name, Address = adSpaceInfo.Address, Description = adSpaceInfo.Description, Image = adSpaceInfo.Image, Isfree = adSpaceInfo.IsFree };
                 var request = new InsertSpaceRequest
                 {
                     Space = spaceInfo
