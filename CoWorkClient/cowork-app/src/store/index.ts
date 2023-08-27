@@ -8,6 +8,9 @@ export interface RootState {
 }
 
 const store: Store<RootState> = createStore({
+  state:{
+    User: ''
+  },
   modules: {
     auth: authModule,
   },
