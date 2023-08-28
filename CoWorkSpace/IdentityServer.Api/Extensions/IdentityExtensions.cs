@@ -68,13 +68,12 @@ namespace IdentityServer.Api.Extensions
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            Console.Write("CORS ");
+
             services.AddCors(options =>
             {   
                 options.AddPolicy("CorsPolicy", builder =>
                     builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             });
-            Console.Write("CORS2 ");
 
             return services;
         }
