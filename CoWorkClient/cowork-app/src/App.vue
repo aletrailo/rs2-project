@@ -12,7 +12,7 @@ import { onMounted } from 'vue';
 const store = useStore();
 
 onMounted(() => {
-  store.dispatch('auth/initializeAuth');
+  store.dispatch('initializeAuth');
 });
 </script>
 

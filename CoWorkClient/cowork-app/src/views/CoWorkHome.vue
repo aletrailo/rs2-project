@@ -2,6 +2,8 @@
 <MenuOptions />
 <div>POCETNA STRANICA</div>
 WELCOME {{user.firstName}}
+
+<router-link :to="{name: 'SpaceAdvertisement'}"><button type="button">Dodajte oglas</button></router-link>
 </template>
 
 <script>
@@ -12,7 +14,7 @@ export default {
         MenuOptions
     },
     created() {
-        this.$store.dispatch('auth/getUser')
+        this.$store.dispatch('getUser')
     },
     computed: {
         user() {

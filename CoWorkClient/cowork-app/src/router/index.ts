@@ -4,6 +4,7 @@ import SingUp from '../views/SingUp.vue'
 import CoWorkHome from '../views/CoWorkHome.vue'
 import UsersList from '../views/UsersList.vue'
 import UserProfile from '../views/UserProfile.vue'
+import SpaceAdvertisement from '../views/SpaceAdvertisement.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -30,6 +31,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/user',
     name: 'UserProfile',
     component: UserProfile
+  },
+  {
+    path: '/space-advertisement',
+    name: 'SpaceAdvertisement',
+    component: SpaceAdvertisement
   },
 
 ]

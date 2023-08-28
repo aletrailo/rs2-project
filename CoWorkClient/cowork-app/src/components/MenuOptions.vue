@@ -56,7 +56,7 @@ export default defineComponent({
     },
     methods: {
         logOut() {
-            this.$store.dispatch('auth/logOut')
+            this.$store.dispatch('logOut')
         },
     },
     computed: {

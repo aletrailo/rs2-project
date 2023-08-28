@@ -60,7 +60,7 @@ export default {
     methods: {
 
         singIn() {
-            this.$store.dispatch('auth/singIn', {
+            this.$store.dispatch('singIn', {
                 firstName: this.firstName,
                 lastName: this.lastName,
                 userName: this.userName,
