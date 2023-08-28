@@ -42,7 +42,7 @@ const mutations = {
 const actions= {
         async addAd({ commit, state }: {commit: Commit, state: AdState}){
             const url = baseUrl +'api/Advertising/AddAnAd'
-
+            console.log(auth.state.accessToken)
             const headers = {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth.state.accessToken}`
