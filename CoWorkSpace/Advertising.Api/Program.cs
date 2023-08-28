@@ -42,6 +42,10 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+builder.Services.AddCors(options =>{
+        options.AddPolicy("AdCors", builder =>
+            builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
 // Add common services to the container.
 builder.Services.AddServices();
 
@@ -53,6 +57,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AdCors");
 
 app.UseRouting();
 
