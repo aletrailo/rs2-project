@@ -3,9 +3,12 @@ using Advertising.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Advertising.Api.Dtos;
 using Advertising.Api.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Advertising.Api.Controllers
 {
+    [Authorize(Roles ="User")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdvertisingController : ControllerBase
@@ -27,7 +30,9 @@ namespace Advertising.Api.Controllers
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<IActionResult> AddAnAdAsync(AdInfoDto adInfoDto)
         {
-            AdSpaceInfo adSpaceInfo = adInfoDto.ToModel();
+            var username = User.FindFirst(ClaimTypes.Name).Value;
+
+            AdSpaceInfo adSpaceInfo = adInfoDto.ToModel(username);
             return Ok(await service.AddAsync(adSpaceInfo));
         }
     }

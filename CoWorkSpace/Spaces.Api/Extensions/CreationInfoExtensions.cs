@@ -14,7 +14,10 @@ namespace Spaces.Api.Extensions
                 Address=creationInfoDto.Address,
                 Description=creationInfoDto.Description,
                 Image=creationInfoDto.Image,
-                IsFree=creationInfoDto.IsFree
+                IsFree=creationInfoDto.IsFree,
+                PricePerHour=creationInfoDto.PricePerHour,
+                Owner=creationInfoDto.Owner,
+
             };
 
 

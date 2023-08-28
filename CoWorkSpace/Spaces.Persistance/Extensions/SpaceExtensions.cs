@@ -16,7 +16,10 @@ namespace Spaces.Persistance.Extensions
                 Address = entity.Address,
                 Description= entity.Description,
                 Image = entity.Image,
-                IsFree = entity.IsFree
+                IsFree = entity.IsFree,
+                PricePerHour = entity.PricePerHour,
+                Owner = entity.Owner,
+                ReservedBy = entity.ReservedBy
             };
         }
 
@@ -34,7 +37,10 @@ namespace Spaces.Persistance.Extensions
                 Address = space.Address,
                 Description = space.Description,
                 Image = space.Image,
-                IsFree = space.IsFree
+                IsFree = space.IsFree,
+                PricePerHour = space.PricePerHour,
+                Owner = space.Owner,
+                ReservedBy = space.ReservedBy
             };
         }
 

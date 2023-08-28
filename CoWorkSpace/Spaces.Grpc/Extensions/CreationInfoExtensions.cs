@@ -13,7 +13,9 @@ namespace Spaces.Grpc.Extensions
                 Address = spaceInfo.Address,
                 Description = spaceInfo.Description,
                 Image = spaceInfo.Image,
-                IsFree = spaceInfo.Isfree
+                IsFree = spaceInfo.Isfree,
+                PricePerHour = spaceInfo.Priceperhour,
+                Owner = spaceInfo.Owner
             };
         }
     }

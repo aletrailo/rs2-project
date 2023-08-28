@@ -15,6 +15,7 @@ message Space {
 	string description = 4;
 	string image = 5;
 	bool isfree = 6;
+	int32 Priceperhour = 7;
 }
 
 message SpaceInfo{
@@ -23,6 +24,8 @@ message SpaceInfo{
 	string description = 3;
 	string image = 4;
 	bool isfree = 5;
+	int32 Priceperhour = 6;
+	string Owner = 7;
 }
 
 message GetSpacesRequest {

@@ -12,6 +12,8 @@
         public string Image { get; set; }
 
         public bool IsFree { get; set; } = true;
+
+        public int PricePerHour { get; set; }
   
     }
 }

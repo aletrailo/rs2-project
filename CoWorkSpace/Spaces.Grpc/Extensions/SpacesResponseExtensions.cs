@@ -17,7 +17,8 @@ namespace Spaces.Grpc.Extensions
                 Address = model.Address,
                 Description = model.Description,
                 Image =  model.Image,
-                Isfree = model.IsFree
+                Isfree = model.IsFree,
+                Priceperhour = model.PricePerHour
                 
             };
         }

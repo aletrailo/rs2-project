@@ -14,7 +14,10 @@ namespace Spaces.Api.Extensions
                 Address = model.Address,
                 Description = model.Description,
                 Image = model.Image,
-                IsFree = model.IsFree
+                IsFree = model.IsFree,
+                PricePerHour = model.PricePerHour,
+                Owner = model.Owner,
+                ReservedBy = model.ReservedBy
 
             };
         }
@@ -33,7 +36,10 @@ namespace Spaces.Api.Extensions
                 Address = spacedto.Address,
                 Description = spacedto.Description,
                 Image = spacedto.Image,
-                IsFree = spacedto.IsFree
+                IsFree = spacedto.IsFree,
+                PricePerHour = spacedto.PricePerHour,
+                Owner = spacedto.Owner,
+                ReservedBy = spacedto.ReservedBy
             };
         }
     }
