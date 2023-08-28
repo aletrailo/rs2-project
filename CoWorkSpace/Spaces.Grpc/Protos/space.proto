@@ -17,6 +17,7 @@ message Space {
 	string image = 5;
 	bool isfree = 6;
 	int32 Priceperhour = 7;
+	string Owner = 8;
 }
 
 message SpaceInfo{

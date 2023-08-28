@@ -2,6 +2,8 @@
 {
     public sealed class AdSpace
     {
+        public string SpaceId { get; set; }
+
         public string Name { get; set; }
 
         public string Address { get; set; }
@@ -13,5 +15,7 @@
         public bool IsFree { get; set; }
 
         public int PricePerHour { get; set; }
+
+        public string Owner { get; set; }
     }
 }
