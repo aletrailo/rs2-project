@@ -51,9 +51,8 @@ export default defineComponent({
         handleFileChange(event) {
             this.selectedImage = event.target.files[0];
             this.previewImage = URL.createObjectURL(this.selectedImage);
-            const formData = new FormData();
-            formData.append('image', this.selectedImage);
-            this.$store.commit('SET_IMAGE',formData)
+            console.log( URL.createObjectURL(this.selectedImage))
+            this.$store.commit('SET_IMAGE',this.previewImage)
         },
         addAd(){
             this.$store.dispatch('addAd')
