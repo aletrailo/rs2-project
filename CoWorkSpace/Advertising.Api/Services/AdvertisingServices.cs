@@ -52,6 +52,25 @@ namespace Advertising.Api.Services
 
         }
 
+        public async Task<bool> BookASpaceAsync(ReservationInfo reservationInfo)
+        {
+            try
+            {
+                var reservation = new Reservation { Spaceid = reservationInfo.spaceId, Username = reservationInfo.username };
+                var request = new BookASpaceRequest
+                {
+                    Reservation = reservation
+                };
+                BookASpaceResponse bookASpaceResponse = await this.spaceProtoServiceClient.BookASpaceAsync(request);
+
+                return bookASpaceResponse.Response;
+
+            }catch (RpcException ex)
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 }

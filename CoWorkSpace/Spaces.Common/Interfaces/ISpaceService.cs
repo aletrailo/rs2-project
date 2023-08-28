@@ -11,5 +11,6 @@ namespace Spaces.Common.Interfaces
         Task<Space> GetByIdAsync(string Id);
         Task AddAsync(CreationInfo creationInfo);
         Task<bool> UpdateAsync(Space space);
+
     }
 }
