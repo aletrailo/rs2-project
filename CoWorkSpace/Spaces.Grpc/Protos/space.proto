@@ -5,6 +5,7 @@ option csharp_namespace = "Spaces.Grpc.Protos";
 service SpaceProtoService {
 	rpc GetSpaces (GetSpacesRequest) returns (GetSpacesResponse);
 	rpc InsertSpace (InsertSpaceRequest) returns (InsertSpaceResponse);
+	rpc BookASpace (BookASpaceRequest) returns (BookASpaceResponse);
 }
 
 
@@ -28,6 +29,11 @@ message SpaceInfo{
 	string Owner = 7;
 }
 
+message Reservation{
+	string spaceid = 1;
+	string username = 2;
+}
+
 message GetSpacesRequest {
 }
 
@@ -40,5 +46,13 @@ message InsertSpaceRequest{
 }
 
 message InsertSpaceResponse{
+	bool response = 1;
+}
+
+message BookASpaceRequest{
+	Reservation reservation = 1;
+}
+
+message BookASpaceResponse{
 	bool response = 1;
 }
