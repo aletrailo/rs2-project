@@ -41,10 +41,23 @@ namespace Advertising.Api.Controllers
         public async Task<IActionResult> BookASpaceAsync(string spaceId)
         {
             var username = User.FindFirst(ClaimTypes.Name).Value;
-            
-            ReservationInfo reservationInfo=new ReservationInfo(username, spaceId);
-            return Ok(await service.BookASpaceAsync(reservationInfo));
+
+            UsernameSpaceIdInfo usernameSpaceIdInfo = new UsernameSpaceIdInfo(username, spaceId);
+            return Ok(await service.BookASpaceAsync(usernameSpaceIdInfo));
 
         }
+
+        [HttpDelete("[action]")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteAdAsync(string spaceId)
+        {
+            //var username = User.FindFirst(ClaimTypes.Name).Value;
+            var username = "Admin1234";
+            UsernameSpaceIdInfo usernameSpaceIdInfo = new UsernameSpaceIdInfo(username, spaceId);
+            return Ok(await service.DeleteAdAsync(usernameSpaceIdInfo));
+
+
+        }
+
     }
 }

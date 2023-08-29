@@ -52,11 +52,11 @@ namespace Advertising.Api.Services
 
         }
 
-        public async Task<bool> BookASpaceAsync(ReservationInfo reservationInfo)
+        public async Task<bool> BookASpaceAsync(UsernameSpaceIdInfo usernameSpaceIdInfo)
         {
             try
             {
-                var reservation = new Reservation { Spaceid = reservationInfo.spaceId, Username = reservationInfo.username };
+                var reservation = new UsernameSpaceId { Spaceid = usernameSpaceIdInfo.spaceId, Username = usernameSpaceIdInfo.username };
                 var request = new BookASpaceRequest
                 {
                     Reservation = reservation
@@ -71,6 +71,25 @@ namespace Advertising.Api.Services
             }
         }
 
+        public async Task<bool> DeleteAdAsync(UsernameSpaceIdInfo usernameSpaceIdInfo)
+        {
+            try
+            {
+                var deleteInfo = new UsernameSpaceId { Spaceid = usernameSpaceIdInfo.spaceId, Username = usernameSpaceIdInfo.username };
+                var request = new DeleteAdRequest
+                {
+                    Deleteinfo = deleteInfo
+                };
+                DeleteAdResponse deleteAdResponse = await this.spaceProtoServiceClient.DeleteAdAsync(request);
+
+                return deleteAdResponse.Response;
+
+            }
+            catch (RpcException ex)
+            {
+                return false;
+            }
+        }
         #endregion
     }
 }
