@@ -15,9 +15,9 @@
 <div class="container">
 
     <div class="row row-cols-1 row-cols-md-4 g-8 py-4">
-        <div class="col" v-for="ad in advertisements" :key="ad">
+        <div class="col py-2" v-for="ad in advertisements" :key="ad">
             <div class="card" style="height: 100%;">
-                <img src="../assets/novo.png" class="card-img-top" alt="...">
+                <img v-if="ad.image!==null" :src="ad.image" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title fw-bolder">{{ ad.name }}</h5>
                     <div class="card-text">
