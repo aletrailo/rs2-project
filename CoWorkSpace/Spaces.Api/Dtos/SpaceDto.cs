@@ -11,5 +11,13 @@
         public string Description { get; set; }
 
         public string Image { get; set; }
+
+        public bool IsFree { get; set; }
+
+        public int PricePerHour { get; set; }
+
+        public string Owner { get; set; } = string.Empty;
+
+        public string ReservedBy { get; set; } = string.Empty;
     }
 }

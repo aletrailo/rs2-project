@@ -12,7 +12,10 @@ namespace Spaces.Grpc.Extensions
                 Name = spaceInfo.Name,
                 Address = spaceInfo.Address,
                 Description = spaceInfo.Description,
-                Image = spaceInfo.Image
+                Image = spaceInfo.Image,
+                IsFree = spaceInfo.Isfree,
+                PricePerHour = spaceInfo.Priceperhour,
+                Owner = spaceInfo.Owner
             };
         }
     }

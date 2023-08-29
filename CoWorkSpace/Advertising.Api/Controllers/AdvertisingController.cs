@@ -3,6 +3,7 @@ using Advertising.Common.Models;
 using Microsoft.AspNetCore.Mvc;
 using Advertising.Api.Dtos;
 using Advertising.Api.Extensions;
+using System.Security.Claims;
 
 namespace Advertising.Api.Controllers
 {
@@ -27,8 +28,23 @@ namespace Advertising.Api.Controllers
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<IActionResult> AddAnAdAsync(AdInfoDto adInfoDto)
         {
-            AdSpaceInfo adSpaceInfo = adInfoDto.ToModel();
+
+
+            string username = User.FindFirst(ClaimTypes.Name).Value;
+
+            AdSpaceInfo adSpaceInfo = adInfoDto.ToModel(username);
             return Ok(await service.AddAsync(adSpaceInfo));
+        }
+
+        [HttpPost("[action]")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<IActionResult> BookASpaceAsync(string spaceId)
+        {
+            var username = User.FindFirst(ClaimTypes.Name).Value;
+            
+            ReservationInfo reservationInfo=new ReservationInfo(username, spaceId);
+            return Ok(await service.BookASpaceAsync(reservationInfo));
+
         }
     }
 }

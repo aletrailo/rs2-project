@@ -25,7 +25,7 @@ namespace Advertising.Api.Services
             var adSpaces = new List<AdSpace>();
 
             foreach(var space in getSpacesResponse.Spaces)
-                adSpaces.Add(new AdSpace { Name = space.Name, Address = space.Address , Description=space.Description, Image=space.Image});
+                adSpaces.Add(new AdSpace { SpaceId=space.Id ,Name = space.Name, Address = space.Address , Description=space.Description, Image=space.Image, IsFree=space.Isfree , PricePerHour = space.Priceperhour, Owner=space.Owner });
 
             return adSpaces;
         }
@@ -35,7 +35,7 @@ namespace Advertising.Api.Services
 
             try
             {
-                var spaceInfo = new SpaceInfo { Name = adSpaceInfo.Name, Address = adSpaceInfo.Address, Description = adSpaceInfo.Description, Image = adSpaceInfo.Image };
+                var spaceInfo = new SpaceInfo { Name = adSpaceInfo.Name, Address = adSpaceInfo.Address, Description = adSpaceInfo.Description, Image = adSpaceInfo.Image, Isfree = adSpaceInfo.IsFree , Priceperhour = adSpaceInfo.PricePerHour, Owner = adSpaceInfo.Owner};
                 var request = new InsertSpaceRequest
                 {
                     Space = spaceInfo
@@ -50,6 +50,25 @@ namespace Advertising.Api.Services
                 return false; 
             }
 
+        }
+
+        public async Task<bool> BookASpaceAsync(ReservationInfo reservationInfo)
+        {
+            try
+            {
+                var reservation = new Reservation { Spaceid = reservationInfo.spaceId, Username = reservationInfo.username };
+                var request = new BookASpaceRequest
+                {
+                    Reservation = reservation
+                };
+                BookASpaceResponse bookASpaceResponse = await this.spaceProtoServiceClient.BookASpaceAsync(request);
+
+                return bookASpaceResponse.Response;
+
+            }catch (RpcException ex)
+            {
+                return false;
+            }
         }
 
         #endregion

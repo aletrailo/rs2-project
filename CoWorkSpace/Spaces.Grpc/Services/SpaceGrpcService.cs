@@ -47,6 +47,24 @@ namespace Spaces.Grpc.Services
             }
         }
 
+        public override async Task<BookASpaceResponse> BookASpace(BookASpaceRequest request, ServerCallContext context)
+        {
+            string username = request.Reservation.Username;
+            string spaceId = request.Reservation.Spaceid;
+
+            try
+            {
+                SpaceModel space = await this.spaceService.GetByIdAsync(spaceId);
+                space.IsFree = false;
+                space.ReservedBy = username;
+                await this.spaceService.UpdateAsync(space);
+                return new BookASpaceResponse { Response = true };
+            }catch(Exception ex)
+            {
+                return new BookASpaceResponse { Response = false };
+            }
+        }
+
         #endregion
     }
 }

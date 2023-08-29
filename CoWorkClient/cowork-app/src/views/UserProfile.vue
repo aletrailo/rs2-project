@@ -50,7 +50,7 @@ export default defineComponent({
         MenuOptions
     },
     created() {
-        this.$store.dispatch('auth/getUser');
+        this.$store.dispatch('getUser');
     },
     computed: {
         user() {

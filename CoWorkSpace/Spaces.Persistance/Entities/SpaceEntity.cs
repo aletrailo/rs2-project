@@ -21,5 +21,17 @@ namespace Spaces.Persistance.Entities
 
         [BsonElement("Image")]
         public string Image { get; set; }
+
+        [BsonElement("IsFree")]
+        public bool IsFree { get; set; } = true;
+
+        [BsonElement("PricePerHour")]
+        public int PricePerHour { get; set; }
+
+        [BsonElement("Owner")]
+        public string Owner { get; set; } = string.Empty;
+
+        [BsonElement("ReservedBy")]
+        public string ReservedBy { get; set; } = string.Empty;
     }
 }
