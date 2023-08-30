@@ -51,8 +51,8 @@ namespace Advertising.Api.Controllers
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteAdAsync(string spaceId)
         {
-            //var username = User.FindFirst(ClaimTypes.Name).Value;
-            var username = "Admin1234";
+            var username = User.FindFirst(ClaimTypes.Name).Value;
+         
             UsernameSpaceIdInfo usernameSpaceIdInfo = new UsernameSpaceIdInfo(username, spaceId);
             return Ok(await service.DeleteAdAsync(usernameSpaceIdInfo));
 

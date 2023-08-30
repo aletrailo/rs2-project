@@ -2,6 +2,7 @@
 using Spaces.Api.Dtos;
 using Spaces.Api.Extensions;
 using Spaces.Common.Interfaces;
+using System.Security.Claims;
 
 namespace Spaces.Api.Controllers
 {
@@ -59,15 +60,19 @@ namespace Spaces.Api.Controllers
 
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(IEnumerable<SpaceDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllReservedByAsync(string username)
+        public async Task<IActionResult> GetAllReservedByAsync()
         {
+            string username = User.FindFirst(ClaimTypes.Name).Value;
+
             return Ok((await service.GetAllReservedByAsync(username)).ToDto());
         }
 
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(IEnumerable<SpaceDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllOwnedByAsync(string username)
+        public async Task<IActionResult> GetAllOwnedByAsync()
         {
+            string username = User.FindFirst(ClaimTypes.Name).Value;
+
             return Ok((await service.GetAllOwnedByAsync(username)).ToDto());
         }
 
