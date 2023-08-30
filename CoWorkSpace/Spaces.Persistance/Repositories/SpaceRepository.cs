@@ -67,6 +67,16 @@ namespace Spaces.Persistance.Repositories
 
         }
 
+        public async Task<IEnumerable<Space>> GetAllReservedByAsync(string username)
+        {
+            return (await this.context.GetCollection().Find(p => p.ReservedBy == username).ToListAsync()).ToModel();
+        }
+
+        public async Task<IEnumerable<Space>> GetAllOwnedByAsync(string username)
+        {
+            return (await this.context.GetCollection().Find(p => p.Owner == username).ToListAsync()).ToModel();
+        }
+
         #endregion
     }
 }

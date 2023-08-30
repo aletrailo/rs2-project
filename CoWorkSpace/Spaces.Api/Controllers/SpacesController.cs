@@ -32,7 +32,7 @@ namespace Spaces.Api.Controllers
         }
 
         [HttpPut("[action]")]
-        [ProducesResponseType(typeof(bool),StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateAsync(SpaceDto spaceDto)
         {
             var space = spaceDto.ToModel();
@@ -48,13 +48,27 @@ namespace Spaces.Api.Controllers
             return Ok(await service.GetByIdAsync(Id));
 
         }
-        
+
         [HttpDelete("[action]")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<IActionResult> DeleteAsync(SpaceDto spaceDto)
         {
             return Ok(await service.DeleteAsync(spaceDto.ToModel().Id));
 
+        }
+
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<SpaceDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllReservedByAsync(string username)
+        {
+            return Ok((await service.GetAllReservedByAsync(username)).ToDto());
+        }
+
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<SpaceDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllOwnedByAsync(string username)
+        {
+            return Ok((await service.GetAllOwnedByAsync(username)).ToDto());
         }
 
     }

@@ -11,6 +11,8 @@ namespace Spaces.Common.Interfaces
         Task<Space> GetByIdAsync(string Id);
         Task AddAsync(CreationInfo creationInfo);
         Task<bool> UpdateAsync(Space space);
+        Task<IEnumerable<Space>> GetAllReservedByAsync(string username);
+        Task<IEnumerable<Space>> GetAllOwnedByAsync(string username);
 
     }
 }
