@@ -37,6 +37,11 @@ builder.Services.AddAuthentication(options =>
                 });
 
 
+builder.Services.AddCors(options => {
+    options.AddPolicy("ProgramCors", builder =>
+        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
 
 // Add services to the container.
 builder.Services.AddServices(builder.Configuration);
@@ -49,6 +54,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseCors("ProgramCors");
 
 app.UseAuthorization();
 
