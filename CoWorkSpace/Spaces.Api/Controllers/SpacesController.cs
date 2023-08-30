@@ -18,23 +18,24 @@ namespace Spaces.Api.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<IEnumerable<SpaceDto>> GetAllAsync()
+        [ProducesResponseType(typeof(IEnumerable<SpaceDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<SpaceDto>>> GetAllAsync()
         {
-            return (await this.service.GetAllAsync()).ToDto();
+            return Ok((await this.service.GetAllAsync()).ToDto());
         }
 
         [HttpPost("[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task AddAsync(CreationInfoDto creationInfoDto)
+        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        public async Task<IActionResult> AddAsync(CreationInfoDto creationInfoDto)
         {
             var creationInfo = creationInfoDto.ToModel();
             await service.AddAsync(creationInfo);
-
+            return Ok();
         }
 
         [HttpPut("[action]")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateAsync(SpaceDto spaceDto)
+        public async Task<ActionResult<bool>> UpdateAsync(SpaceDto spaceDto)
         {
             var space = spaceDto.ToModel();
             return Ok(await service.UpdateAsync(space));
@@ -44,7 +45,7 @@ namespace Spaces.Api.Controllers
         //getbyid
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(SpaceDto), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetByIdAsync(String Id)
+        public async Task<ActionResult<SpaceDto>> GetByIdAsync(String Id)
         {
             return Ok(await service.GetByIdAsync(Id));
 
@@ -52,15 +53,15 @@ namespace Spaces.Api.Controllers
 
         [HttpDelete("[action]")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteAsync(SpaceDto spaceDto)
+        public async Task<ActionResult<bool>> DeleteAsync(string Id)
         {
-            return Ok(await service.DeleteAsync(spaceDto.ToModel().Id));
+            return Ok(await service.DeleteAsync(Id));
 
         }
 
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(IEnumerable<SpaceDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllReservedByAsync()
+        public async Task<ActionResult<IEnumerable<SpaceDto>>> GetAllReservedByAsync()
         {
             string username = User.FindFirst(ClaimTypes.Name).Value;
 
@@ -69,7 +70,7 @@ namespace Spaces.Api.Controllers
 
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(IEnumerable<SpaceDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllOwnedByAsync()
+        public async Task<ActionResult<IEnumerable<SpaceDto>>> GetAllOwnedByAsync()
         {
             string username = User.FindFirst(ClaimTypes.Name).Value;
 
