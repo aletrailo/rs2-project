@@ -1,4 +1,4 @@
-import { Commit } from 'vuex';
+import { Commit, Dispatch } from 'vuex';
 import auth from './auth';
 import router from '@/router';
 
@@ -93,6 +93,29 @@ const actions = {
             if (response.status === 200) {
                 const data = await response.json();
                 commit('SET_RESERVED_BY_ME', data)
+
+            } else {
+                console.error('Neuspesno ucitavanje svih oglasa.');
+            }
+        } catch (error) {
+            console.error('An error occurred during adding ad:', error);
+        }
+
+
+    },
+    async  deleteSpace ({ commit, state, dispatch }: { commit: Commit, state: SpaceState , dispatch: Dispatch}, {spaceId}: any) {
+        const url = 'http://localhost:8000/' + 'api/Advertising/DeleteAd?' + new URLSearchParams({ spaceId: spaceId })
+        console.log(url)
+
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.state.accessToken}`
+        }
+
+        try {
+            const response = await fetch(url, { method: 'DELETE', headers: headers });
+            if (response.status === 200) {
+                dispatch('getMySpaces');
 
             } else {
                 console.error('Neuspesno ucitavanje svih oglasa.');

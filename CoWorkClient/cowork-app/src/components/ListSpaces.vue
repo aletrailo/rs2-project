@@ -13,6 +13,7 @@
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-outline-secondary">Izmeni</button>
+            <button type="button" class="btn  btn-danger" @click="deleteSpace(space.id)">Obrisi</button>
         </div>
     </div>
 </div>
@@ -29,10 +30,16 @@ export default defineComponent({
     created() {
         this.$store.dispatch('getMySpaces')
     },
-    computed:{
-        spaces(){
-            return this.$store.state.spaces.spaces
+    methods:{
+        deleteSpace(spaceId){
+        console.log(spaceId)
+          this.$store.dispatch('deleteSpace', {spaceId: spaceId})  
         }
+    },
+    computed: {
+        spaces() {
+            return this.$store.state.spaces.spaces
+        },
     }
 })
 </script>
