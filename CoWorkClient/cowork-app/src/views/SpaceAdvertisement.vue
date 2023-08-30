@@ -12,8 +12,10 @@
         <div class="col col-md-8 py-2">
             <div class=" row" style="height: 100%;">
                 <div class="col-sm-6">
-                    <div class="mb-2" style="width: 300px; height: 300px; background-color: gray;">
-                        <img :src="this.previewImage" v-if="this.previewImage" style="max-width: 300px;" />
+                    <div v-if="this.previewImage"  class="mb-2"  style="width: 300px;">
+                        <img :src="this.previewImage" style="max-width: 300px;"/>
+                    </div>
+                    <div v-else class="mb-2" style="width: 300px; height: 300px; background-color: gray;">
                     </div>
                     <input type="file" @change="handleFileChange" />
                 </div>
@@ -51,7 +53,6 @@
 <script>
 const convertBase64 = (file) => {
     return new Promise((resolve, reject) => {
-        console.log('aaaaaaaaa')
         const fileReader = new FileReader();
         fileReader.readAsDataURL(file);
 

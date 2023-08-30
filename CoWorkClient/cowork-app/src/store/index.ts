@@ -2,6 +2,7 @@
 import { createStore, Store } from 'vuex';
 import authModule from './modules/auth';
 import advertisement from './modules/advertisement';
+import spaces from './modules/spaces';
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/';
 
 export interface RootState {
@@ -11,7 +12,8 @@ export interface RootState {
 const store: Store<RootState> = createStore({
   modules: {
     auth: authModule,
-    advertisement: advertisement
+    advertisement: advertisement,
+    spaces: spaces
   },
 
 });
