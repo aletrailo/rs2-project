@@ -28,7 +28,6 @@ namespace Spaces.Api.Controllers
         {
             var creationInfo = creationInfoDto.ToModel();
             await service.AddAsync(creationInfo);
-
         }
 
         [HttpPut("[action]")]
@@ -37,7 +36,6 @@ namespace Spaces.Api.Controllers
         {
             var space = spaceDto.ToModel();
             return Ok(await service.UpdateAsync(space));
-
         }
 
         //getbyid
@@ -46,7 +44,6 @@ namespace Spaces.Api.Controllers
         public async Task<IActionResult> GetByIdAsync(String Id)
         {
             return Ok(await service.GetByIdAsync(Id));
-
         }
         
         [HttpDelete("[action]")]
@@ -54,7 +51,6 @@ namespace Spaces.Api.Controllers
         public async Task<IActionResult> DeleteAsync(SpaceDto spaceDto)
         {
             return Ok(await service.DeleteAsync(spaceDto.ToModel().Id));
-
         }
 
     }

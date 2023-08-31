@@ -2,6 +2,7 @@
 using Spaces.Common.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Spaces.Common.Services
@@ -17,21 +18,16 @@ namespace Spaces.Common.Services
             this.cdnImageService = cdnImageService;
         }
 
-        public Task<bool> DeleteAsync(string Id)
-        {
-            return this.repository.DeleteSpaceAsync(Id);
-        }
-
         #region ISpaceService Members
 
-        public Task<IEnumerable<Space>> GetAllAsync()
+        public async Task<IEnumerable<Space>> GetAllAsync()
         {
-            return this.repository.GetAllSpaces();
-        }
+            List<Space> spaces = (await this.repository.GetAllSpaces()).ToList();
 
-        public Task<Space> GetByIdAsync(string Id)
-        {
-            return this.repository.GetSpaceByIdAsync(Id);
+            foreach (Space space in spaces)
+                space.Image = this.cdnImageService.GetAsync(space.ImageId).Blob;
+
+            return spaces;
         }
 
         public Task AddAsync(CreationInfo creationInfo)
@@ -43,12 +39,28 @@ namespace Spaces.Common.Services
             };
 
             this.cdnImageService.AddAsync(cdnImageCreationInfo);
-            return this.repository.AddSpaceAsync(creationInfo);
+            return this.repository.AddSpaceAsync(creationInfo, cdnImageCreationInfo.BlobId);
+        }
+
+        public async Task<Space> GetByIdAsync(string Id)
+        {
+            Space space = await this.repository.GetSpaceByIdAsync(Id);
+            space.Image = this.cdnImageService.GetAsync(space.ImageId).Blob;
+
+            return space;
         }
 
         public Task<bool> UpdateAsync(Space space)
         {
+            //Add update on CDN.Grpc
             return this.repository.UpdateSpaceAsync(space);
+        }
+
+
+        public Task<bool> DeleteAsync(string Id)
+        {
+            //Add delete on CDN.Grpc
+            return this.repository.DeleteSpaceAsync(Id);
         }
 
         #endregion

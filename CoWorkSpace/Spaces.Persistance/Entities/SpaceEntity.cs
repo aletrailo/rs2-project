@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson;
 using System.Collections.Generic;
+using System;
 
 namespace Spaces.Persistance.Entities
 {
@@ -19,8 +20,10 @@ namespace Spaces.Persistance.Entities
         [BsonElement("Description")]
         public string Description { get; set; }
 
-        [BsonElement("Image")]
-        public string Image { get; set; }
+        [BsonElement("ImageId")]
+        [BsonRepresentation(BsonType.String)]
+        public Guid ImageId { get; set; }
+
 
         [BsonElement("IsFree")]
         public bool IsFree { get; set; } = true;
