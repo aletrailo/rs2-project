@@ -1,5 +1,6 @@
 ﻿using Spaces.Common.Interfaces;
 using Spaces.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -8,10 +9,12 @@ namespace Spaces.Common.Services
     public class SpaceService : ISpaceService
     {
         private readonly ISpaceRepository repository;
+        private readonly ICDNImageService cdnImageService;
 
-        public SpaceService(ISpaceRepository spaceRepository)
+        public SpaceService(ISpaceRepository spaceRepository, ICDNImageService cdnImageService)
         {
-                this.repository = spaceRepository;
+            this.repository = spaceRepository;
+            this.cdnImageService = cdnImageService;
         }
 
         public Task<bool> DeleteAsync(string Id)
@@ -33,6 +36,13 @@ namespace Spaces.Common.Services
 
         public Task AddAsync(CreationInfo creationInfo)
         {
+            var cdnImageCreationInfo = new CDNImageCreationInfo
+            {
+                BlobId = Guid.NewGuid(),
+                Blob = creationInfo.Image
+            };
+
+            this.cdnImageService.AddAsync(cdnImageCreationInfo);
             return this.repository.AddSpaceAsync(creationInfo);
         }
 
