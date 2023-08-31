@@ -38,14 +38,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-4">
-            <h3>Moji oglasi</h3>
+        <div class="col-1"></div>
+        <div class="col-3">
+            <h3>Moji oglasi <router-link :to="{ name: 'SpaceAdvertisement' }"><button type="button" class="btn btn-outline-secondary">Dodaj oglas</button></router-link></h3>
             <div style="border-radius: 4px; padding: 10px; background-color: #e9ecec;">
             <ListSpaces />
             </div>
 
         </div>
-        <div class="col-4">
+        <div class="col-1"></div>
+        <div class="col-3">
             <h3>Prostori koji koristim</h3>
             <div style="border-radius: 4px; padding: 10px; background-color: #f2ede9;">
                 <ReservedByMe />

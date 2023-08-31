@@ -13,7 +13,7 @@
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-outline-secondary">Izmeni</button>
-            <button type="button" class="btn  btn-danger" @click="deleteSpace(space.id)">Obrisi</button>
+            <button type="button" class="btn  btn-danger" @click="deleteSpace(space.id)" style="float: right;">Obrisi</button>
         </div>
     </div>
 </div>
@@ -32,7 +32,6 @@ export default defineComponent({
     },
     methods:{
         deleteSpace(spaceId){
-        console.log(spaceId)
           this.$store.dispatch('deleteSpace', {spaceId: spaceId})  
         }
     },
