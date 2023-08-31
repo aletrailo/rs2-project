@@ -1,10 +1,10 @@
 import { Commit } from 'vuex';
 import auth from './auth';
 import router from '@/router';
+import axiosInstance from '../axiosInstance';
 
 
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/' : '/';
-const headers = { "Content-Type": "application/json" }
 
 
 interface ad {
@@ -69,9 +69,8 @@ const actions = {
         }
 
         try {
-            const response = await fetch(url, { method: 'POST', body: JSON.stringify(state.ad), headers: headers });
+            const response = await axiosInstance.post(url, JSON.stringify(state.ad), {headers: headers });
             if (response.status === 200) {
-                console.log('usepesno')
                 router.push({ name: 'CoWorkHome' })
             } else {
                 console.error('Neuspesno  dodavanje oglasa.');
@@ -89,9 +88,9 @@ const actions = {
         }
 
         try {
-            const response = await fetch(url, { method: 'GET', headers: headers });
+            const response = await axiosInstance.get(url, {headers: headers });
             if (response.status === 200) {
-                const data = await response.json();
+                const data = await response.data
                 commit('SET_ADVERTISEMENTS', data)
 
             } else {

@@ -1,23 +1,11 @@
 import { Commit, Dispatch } from 'vuex';
 import auth from './auth';
-import router from '@/router';
+import axiosInstance from '../axiosInstance';
 
 
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8001/' : '/';
-const headers = { "Content-Type": "application/json" }
-
-
-interface ad {
-    name: string,
-    address: string,
-    description: string,
-    image: string,
-    isFree: boolean,
-    pricePerHour: number,
-}
 
 interface spaces {
-
     spaceId: string,
     name: string,
     address: string,
@@ -26,7 +14,6 @@ interface spaces {
     isFree: boolean,
     pricePerHour: number,
     owner: string
-
 }
 
 
@@ -56,7 +43,6 @@ const actions = {
     async getMySpaces({ commit, state }: { commit: Commit, state: SpaceState }) {
         const username = auth.state.auth.username
         const url = baseUrl + 'api/Spaces/GetAllOwnedBy?' + new URLSearchParams({ username: username })
-        console.log(url)
 
         const headers = {
             "Content-Type": "application/json",
@@ -64,9 +50,9 @@ const actions = {
         }
 
         try {
-            const response = await fetch(url, { method: 'GET', headers: headers });
+            const response = await axiosInstance.get(url, { headers: headers });
             if (response.status === 200) {
-                const data = await response.json();
+                const data = await response.data;
                 commit('SET_USER_SPACES', data)
 
             } else {
@@ -81,7 +67,6 @@ const actions = {
     async getAllReservedBy({ commit, state }: { commit: Commit, state: SpaceState }) {
         const username = auth.state.auth.username
         const url = baseUrl + 'api/Spaces/GetAllReservedBy?' + new URLSearchParams({ username: username })
-        console.log(url)
 
         const headers = {
             "Content-Type": "application/json",
@@ -89,9 +74,9 @@ const actions = {
         }
 
         try {
-            const response = await fetch(url, { method: 'GET', headers: headers });
+            const response = await axiosInstance.get(url, { headers: headers });
             if (response.status === 200) {
-                const data = await response.json();
+                const data = await response.data;
                 commit('SET_RESERVED_BY_ME', data)
 
             } else {
@@ -105,7 +90,6 @@ const actions = {
     },
     async  deleteSpace ({ commit, state, dispatch }: { commit: Commit, state: SpaceState , dispatch: Dispatch}, {spaceId}: any) {
         const url = 'http://localhost:8000/' + 'api/Advertising/DeleteAd?' + new URLSearchParams({ spaceId: spaceId })
-        console.log(url)
 
         const headers = {
             "Content-Type": "application/json",
@@ -113,18 +97,15 @@ const actions = {
         }
 
         try {
-            const response = await fetch(url, { method: 'DELETE', headers: headers });
+            const response = await axiosInstance.delete(url, { headers: headers });
             if (response.status === 200) {
                 dispatch('getMySpaces');
-
             } else {
                 console.error('Neuspesno ucitavanje svih oglasa.');
             }
         } catch (error) {
             console.error('An error occurred during adding ad:', error);
         }
-
-
     },
 }
 

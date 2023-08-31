@@ -5,6 +5,7 @@ const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/
 const headers = { "Content-Type": "application/json" }
 import { IJwtPayload } from '../shared/jwt-payload';
 import { Role } from '../shared/role';
+import axiosInstance from '../axiosInstance';
 
 
 interface User {
@@ -46,6 +47,8 @@ const state: AuthState = {
 const mutations = {
     setAccessToken(state: AuthState, token: string) {
         state.accessToken = token;
+        console.log(state.accessToken)
+        localStorage.setItem('access_token', state.accessToken);
         const payload = parsePayload(state.accessToken)
         state.auth.username = payload[JwtPayloadKeys.Username]
         state.auth.email = payload[JwtPayloadKeys.Email];
@@ -89,28 +92,27 @@ const mutations = {
 
 }
 
-const actions= {
-    initializeAuth({ commit }:{commit: Commit}) {
+const actions = {
+    initializeAuth({ commit }: { commit: Commit }) {
         commit('initializeTokensFromLocalStorage');
     },
-    setTokens({ commit }:{commit: Commit}, { accessToken, refreshToken }: any) {
+    setTokens({ commit }: { commit: Commit }, { accessToken, refreshToken }: any) {
         commit('setAccessToken', accessToken);
         commit('setRefreshToken', refreshToken);
         localStorage.setItem('access_token', accessToken);
         localStorage.setItem('refresh_token', refreshToken);
     },
-        async logIn({ commit, state, dispatch }:{commit: Commit, state: AuthState, dispatch: Dispatch}, { username, password }:any) {
+    async logIn({ commit, state, dispatch }: { commit: Commit, state: AuthState, dispatch: Dispatch }, { username, password }: any) {
         const url = baseUrl + 'api/v1/Authentication/LogIn'
         const loginData = {
             userName: username,
             password: password
         }
         try {
-            const response = await fetch(url, { method: 'POST', body: JSON.stringify(loginData), headers: headers });
-            if (response.ok) {
-                const data = await response.json();
+            const response = await axiosInstance.post(url, JSON.stringify(loginData), { headers: headers })
+            if (response.status === 200) {
+                const data = await response.data;
                 const { accessToken, refreshToken } = data;
-                // Save tokens in the store
                 dispatch('setTokens', { accessToken, refreshToken });
                 router.push({ name: 'CoWorkHome' })
 
@@ -121,7 +123,29 @@ const actions= {
             console.error('An error occurred during login:', error);
         }
     },
-        async singIn({ commit, state, dispatch }:{commit: Commit, state: AuthState, dispatch: Dispatch}, { firstName, lastName, userName, password, email, phoneNumber }: any) {
+    async getRefreshToken({ commit, state, dispatch }: { commit: Commit, state: AuthState, dispatch: Dispatch }){
+        const url = baseUrl + 'api/v1/Authentication/Refresh'
+        const refreshTokenData = {
+            userName: state.auth.username,
+            refreshToken: state.refreshToken
+          }
+
+          try {
+            const response = await axiosInstance.post(url, JSON.stringify(refreshTokenData), { headers: headers })
+            if (response.status === 200) {
+                const data = await response.data;
+                const { accessToken, refreshToken } = data;
+                dispatch('setTokens', { accessToken, refreshToken });
+               
+                console.log("Uspesno postavljen REFRESH token")
+            } else {
+                console.error('Login failed.');
+            }
+        } catch (error) {
+            console.error('An error occurred during registration:', error);
+        }
+    },
+    async singIn({ commit, state, dispatch }: { commit: Commit, state: AuthState, dispatch: Dispatch }, { firstName, lastName, userName, password, email, phoneNumber }: any) {
         const url = baseUrl + 'api/v1/Authentication/RegisterUser'
         const singInData =
         {
@@ -133,9 +157,8 @@ const actions= {
             phoneNumber: phoneNumber
         }
         try {
-            const response = await fetch(url, { method: 'POST', body: JSON.stringify(singInData), headers: headers });
-
-            if (response.ok) {
+            const response = await axiosInstance.post(url, JSON.stringify(singInData), {headers: headers });
+            if (response.status === 201) {
                 dispatch('logIn', { username: userName, password: password })
             } else {
                 console.error('Registration failed.');
@@ -144,25 +167,25 @@ const actions= {
             console.error('An error occurred during registration:', error);
         }
     },
-    getUser({ commit, state }: {commit: Commit, state: AuthState}) {
+    async getUser({ commit, state }: { commit: Commit, state: AuthState }) {
         const url = baseUrl + 'api/v1/User/' + state.auth.username
 
         const headers = { Authorization: `Bearer ${state.accessToken}`, }
 
-        fetch(url, {
-            method: 'GET', mode: 'cors', headers: headers
-        })
-            .then((response) => {
-                if (!response.ok)
-                    throw response
-                return response.json()
-            })
-            .then(data => { commit('SET_DATA', data) })
-            .catch(error => {
-                console.error(error)
-            })
+
+        try {
+            const response = await axiosInstance.get(url, {headers: headers });
+            if (response.status === 200) {
+                const data = await response.data;
+                commit('SET_DATA', data)
+            } else {
+                console.error('Registration failed.');
+            }
+        } catch (error) {
+            console.error('An error occurred during registration:', error);
+        }
     },
-        async logOut({ commit, state }: {commit: Commit, state: AuthState}) {
+    async logOut({ commit, state }: { commit: Commit, state: AuthState }) {
         const url = baseUrl + 'api/v1/Authentication/Logout'
 
         const logOutData = {
@@ -177,13 +200,12 @@ const actions= {
 
 
         try {
-            const response = await fetch(url, { method: 'POST', body: JSON.stringify(logOutData), headers: headers });
+            const response = await axiosInstance.post(url, JSON.stringify(logOutData),{headers: headers});
             if (response.status === 202) {
                 const keys = Object.keys(localStorage)
                 for (const key of keys) {
                     localStorage.removeItem(key);
                 }
-
                 router.push({ name: 'LogIn' })
             } else {
                 console.error('Neuspesno  odjavljivanje.');
@@ -192,31 +214,30 @@ const actions= {
             console.error('An error occurred during logout:', error);
         }
     },
-    getAllUsers({ commit, state }: {commit: Commit, state: AuthState}) {
+    async getAllUsers({ commit, state }: { commit: Commit, state: AuthState }) {
         const url = baseUrl + 'api/v1/User'
-        const headers = { Authorization: `Bearer ${state.accessToken}`, }
-        fetch(url, {
-            method: 'GET', mode: 'cors', headers: headers
-        })
-            .then((response) => {
-                if (!response.ok)
-                    throw response
-                return response.json()
-            })
-            .then(data => { commit('SET_USERS', data) })
-            .catch(error => {
-                console.error(error)
-            })
-    }
+        const headers = { Authorization: `Bearer ${state.accessToken}`}
+        try {
+            const response = await axiosInstance.get(url, {headers: headers});
+            if (response.status === 200) {
+                const data = await response.data;
+                commit('SET_USERS', data)
+            } else {
+                console.error('Neuspesno  odjavljivanje.');
+            }
+        } catch (error) {
+            console.error('An error occurred during logout:', error);
+        }
+    }, 
 }
 
 
 export default {
-    namespace : true,
+    namespace: true,
     state,
     mutations,
     actions
-  }
+}
 
 
 
