@@ -5,6 +5,7 @@ import CoWorkHome from '../views/CoWorkHome.vue'
 import UsersList from '../views/UsersList.vue'
 import UserProfile from '../views/UserProfile.vue'
 import SpaceAdvertisement from '../views/SpaceAdvertisement.vue'
+import NotFound from '../views/NotFound.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -36,6 +37,10 @@ const routes: Array<RouteRecordRaw> = [
     path: '/space-advertisement',
     name: 'SpaceAdvertisement',
     component: SpaceAdvertisement
+  },
+  { path: '/:pathMatch(.*)*', 
+    name: 'NotFound', 
+    component: NotFound 
   },
 
 ]
