@@ -1,6 +1,7 @@
 import { Commit, Dispatch } from 'vuex';
 import auth from './auth';
 import axiosInstance from '../axiosInstance';
+import { notify } from "@kyvg/vue3-notification";
 
 
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8001/' : '/';
@@ -29,10 +30,10 @@ const state: SpaceState = {
 }
 
 const mutations = {
-    'SET_USER_SPACES'( state: SpaceState , data: spaces[]){
+    'SET_USER_SPACES'(state: SpaceState, data: spaces[]) {
         state.spaces = data
     },
-    'SET_RESERVED_BY_ME'( state: SpaceState , data: spaces[]){
+    'SET_RESERVED_BY_ME'(state: SpaceState, data: spaces[]) {
         state.reservedByMe = data
     },
 
@@ -42,7 +43,7 @@ const actions = {
 
     async getMySpaces({ commit }: { commit: Commit }) {
         const username = auth.state.auth.userName
-        const url = baseUrl + 'api/Spaces/GetAllOwnedBy?' + new URLSearchParams({ username: username? username:'' })
+        const url = baseUrl + 'api/Spaces/GetAllOwnedBy?' + new URLSearchParams({ username: username ? username : '' })
 
         const headers = {
             "Content-Type": "application/json",
@@ -56,17 +57,27 @@ const actions = {
                 commit('SET_USER_SPACES', data)
 
             } else {
-                console.error('Neuspesno ucitavanje svih oglasa.');
+                notify({
+                    title: "Greška!",
+                    text: 'Neuspesno ucitavanje svih oglasa.',
+                    duration: 2000,
+                    type: 'error'
+                });
             }
         } catch (error) {
-            console.error('An error occurred during adding ad:', error);
+            notify({
+                title: "Greška!",
+                text: String(error),
+                duration: 2000,
+                type: 'error'
+            });
         }
 
 
     },
     async getAllReservedBy({ commit }: { commit: Commit }) {
         const username = auth.state.auth.userName
-        const url = baseUrl + 'api/Spaces/GetAllReservedBy?' + new URLSearchParams({ username: username? username:'' })
+        const url = baseUrl + 'api/Spaces/GetAllReservedBy?' + new URLSearchParams({ username: username ? username : '' })
 
         const headers = {
             "Content-Type": "application/json",
@@ -80,15 +91,26 @@ const actions = {
                 commit('SET_RESERVED_BY_ME', data)
 
             } else {
-                console.error('Neuspesno ucitavanje svih oglasa.');
+                notify({
+                    title: "Greška!",
+                    text: 'Neuspesno ucitavanje svih oglasa.',
+                    duration: 2000,
+                    type: 'error'
+                });
+
             }
         } catch (error) {
-            console.error('An error occurred during adding ad:', error);
+            notify({
+                title: "Greška!",
+                text: String(error),
+                duration: 2000,
+                type: 'error'
+            });
         }
 
 
     },
-    async  deleteSpace ({ dispatch }: { dispatch: Dispatch}, {spaceId}: any) {
+    async deleteSpace({ dispatch }: { dispatch: Dispatch }, { spaceId }: any) {
         const url = 'http://localhost:8000/' + 'api/Advertising/DeleteAd?' + new URLSearchParams({ spaceId: spaceId })
 
         const headers = {
@@ -100,11 +122,27 @@ const actions = {
             const response = await axiosInstance.delete(url, { headers: headers });
             if (response.status === 200) {
                 dispatch('getMySpaces');
+                notify({
+                    title: "",
+                    text: 'Uspesno obrisan prostor!',
+                    duration: 2000,
+                    type: 'success'
+                });
             } else {
-                console.error('Neuspesno ucitavanje svih oglasa.');
+                notify({
+                    title: "Greška!",
+                    text: 'Problem sa brisanjem prostora',
+                    duration: 2000,
+                    type: 'error'
+                });
             }
         } catch (error) {
-            console.error('An error occurred during adding ad:', error);
+            notify({
+                title: "Greška!",
+                text: String(error),
+                duration: 2000,
+                type: 'error'
+            });
         }
     },
 }

@@ -2,6 +2,7 @@ import { Commit } from 'vuex';
 import auth from './auth';
 import router from '@/router';
 import axiosInstance from '../axiosInstance';
+import { notify } from "@kyvg/vue3-notification";
 
 
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8000/' : '/';
@@ -70,11 +71,27 @@ const actions = {
             const response = await axiosInstance.post(url, JSON.stringify(state.ad), {headers: headers });
             if (response.status === 200) {
                 router.push({ name: 'CoWorkHome' })
+                notify({
+                    title: "",
+                    text: "Uspesno dodat oglas",
+                    duration: 2000,
+                    type: 'success'
+                });
             } else {
-                console.error('Neuspesno  dodavanje oglasa.');
+                notify({
+                    title: "Greška!",
+                    text: "Problem prilikom dodavanja oglasa",
+                    duration: 2000,
+                    type: 'error'
+                });
             }
         } catch (error) {
-            console.error('An error occurred during adding ad:', error);
+            notify({
+                title: "Greška!",
+                text: String(error),
+                duration: 2000,
+                type: 'error'
+            });
         }
     },
     async getAllAd({ commit }: { commit: Commit }) {
@@ -92,10 +109,20 @@ const actions = {
                 commit('SET_ADVERTISEMENTS', data)
 
             } else {
-                console.error('Neuspesno ucitavanje svih oglasa.');
+                notify({
+                    title: "Greška!",
+                    text: "Neuspesno ucitavanje svih oglasa",
+                    duration: 2000,
+                    type: 'error'
+                });
             }
         } catch (error) {
-            console.error('An error occurred during adding ad:', error);
+            notify({
+                title: "Greška!",
+                text: String(error),
+                duration: 2000,
+                type: 'error'
+            });
         }
     },
 }

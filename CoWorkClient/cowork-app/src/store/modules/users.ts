@@ -2,6 +2,7 @@ import { Commit } from 'vuex';
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/';
 import axiosInstance from '../axiosInstance';
 import auth from './auth';
+import { notify } from "@kyvg/vue3-notification";
 
 interface User {
     id?: string,
@@ -10,15 +11,15 @@ interface User {
     email?: string,
 }
 
-interface UserState{
+interface UserState {
     user: User,
     users: User[]
 }
 
 const state: UserState = {
     user: {} as User,
-    users: [] as  User[]
-} 
+    users: [] as User[]
+}
 
 const mutations = {
     SET_DATA(state: UserState, data: any) {
@@ -31,7 +32,7 @@ const mutations = {
 }
 
 const actions = {
-    async getUser({ commit }: { commit: Commit}) {
+    async getUser({ commit }: { commit: Commit }) {
         const headers = { Authorization: `Bearer ${auth.state.accessToken}`, }
         const url = baseUrl + 'api/v1/User/' + auth.state.auth.userName
 
@@ -41,13 +42,23 @@ const actions = {
                 const data = await response.data;
                 commit('SET_DATA', data)
             } else {
-                console.error('Registration failed.');
+                notify({
+                    title: "Greška!",
+                    text: 'Neuspesno dohvatanje informacija o korisniku',
+                    duration: 2000,
+                    type: 'error'
+                });
             }
         } catch (error) {
-            console.error('An error occurred during registration:', error);
+            notify({
+                title: "Greška!",
+                text: String(error),
+                duration: 2000,
+                type: 'error'
+            });
         }
     },
-    async getAllUsers({ commit }: { commit: Commit}) {
+    async getAllUsers({ commit }: { commit: Commit }) {
         const headers = { Authorization: `Bearer ${auth.state.accessToken}` }
         const url = baseUrl + 'api/v1/User'
 
@@ -57,10 +68,20 @@ const actions = {
                 const data = await response.data;
                 commit('SET_USERS', data)
             } else {
-                console.error('Neuspesno  odjavljivanje.');
+                notify({
+                    title: "Greška!",
+                    text: 'Neuspesno dohvatanje informacija o korisnicima',
+                    duration: 2000,
+                    type: 'error'
+                });
             }
         } catch (error) {
-            console.error('An error occurred during logout:', error);
+            notify({
+                title: "Greška!",
+                text: String(error),
+                duration: 2000,
+                type: 'error'
+            });
         }
     },
 }
