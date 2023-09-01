@@ -5,6 +5,7 @@ import CoWorkHome from '../views/CoWorkHome.vue'
 import UsersList from '../views/UsersList.vue'
 import UserProfile from '../views/UserProfile.vue'
 import SpaceAdvertisement from '../views/SpaceAdvertisement.vue'
+import AdInfo from '../views/AdInfo.vue'
 import NotFound from '../views/NotFound.vue'
 import store from '@/store'
 import { Role } from '@/store/shared/role'
@@ -63,6 +64,14 @@ const routes: Array<RouteRecordRaw> = [
     component: SpaceAdvertisement,
     meta: {
       title: 'Postavljanje oglasa'
+    }
+  },
+  {
+    path: '/space-details/:id',
+    name: 'AdInfo',
+    component: AdInfo,
+    meta: {
+      title: 'Informacije o prostoru'
     }
   },
   { path: '/:pathMatch(.*)*', 

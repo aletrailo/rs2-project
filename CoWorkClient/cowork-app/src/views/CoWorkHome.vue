@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="button" class="btn btn-outline-secondary">pogledajte detalje</button>
+                    <router-link :to="{name: 'AdInfo', params: {id:ad.spaceId  }}"><button type="button" class="btn btn-outline-secondary">pogledajte detalje</button></router-link>
                 </div>
             </div>
         </div>
