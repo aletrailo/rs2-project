@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Advertising.Api.Dtos;
 using Advertising.Api.Extensions;
 using System.Security.Claims;
+using System.ComponentModel.DataAnnotations;
 
 namespace Advertising.Api.Controllers
 {
@@ -25,9 +26,10 @@ namespace Advertising.Api.Controllers
             return Ok(await this.service.GetAllAsync());
         }
 
+
         [HttpPost("[action]")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        public async Task<ActionResult<bool>> AddAnAdAsync(AdInfoDto adInfoDto)
+        public async Task<ActionResult<bool>> AddAnAdAsync([Required]  AdInfoDto adInfoDto)
         {
 
             var username = User.FindFirst(ClaimTypes.Name).Value;
