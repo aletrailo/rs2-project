@@ -89,7 +89,21 @@ const mutations = {
     SET_USERS(state: AuthState, data: any) {
         state.users = data
     }
+}
 
+const getters = {
+    hasRole: (state: AuthState) => (role: Role) => {
+        console.log(state.auth.roles)
+        if (!state.auth.roles)
+            return false
+        if (typeof state.auth.roles === 'string') {
+            return state.auth.roles === role
+        }
+        return state.auth.roles.find((registeredRole: Role) => registeredRole === role) !== undefined;
+    },
+    isAuthenticated(): boolean {
+        return state.accessToken !== undefined && state.refreshToken !== undefined && state.auth.userName !== undefined && state.auth.roles !== undefined && state.auth.email !== undefined
+    }
 }
 
 const actions = {
@@ -236,7 +250,8 @@ export default {
     namespace: true,
     state,
     mutations,
-    actions
+    actions,
+    getters,
 }
 
 
