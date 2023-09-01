@@ -13,17 +13,26 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'CoWorkHome',
-    component: CoWorkHome
+    component: CoWorkHome,
+    meta: {
+      title: 'CoWrok'
+    }
   },
   {
     path: '/login',
     name: 'LogIn',
-    component: LogIn
+    component: LogIn,
+    meta: {
+      title: 'CoWrok pijava'
+    }
   },
   {
     path: '/sing-up',
     name: 'SingUp',
-    component: SingUp
+    component: SingUp,
+    meta: {
+      title: 'CoWrok registracija'
+    }
   },
   {
     path: '/users',
@@ -36,20 +45,32 @@ const routes: Array<RouteRecordRaw> = [
         next({ path: String(from.path) });
       }
     },
+    meta: {
+      title: 'Spisak korisnika'
+    }
   },
   {
     path: '/user',
     name: 'UserProfile',
-    component: UserProfile
+    component: UserProfile,
+    meta: {
+      title: 'Profil'
+    }
   },
   {
     path: '/space-advertisement',
     name: 'SpaceAdvertisement',
-    component: SpaceAdvertisement
+    component: SpaceAdvertisement,
+    meta: {
+      title: 'Postavljanje oglasa'
+    }
   },
   { path: '/:pathMatch(.*)*', 
     name: 'NotFound', 
-    component: NotFound 
+    component: NotFound,
+    meta: {
+      title: '404'
+    }
   },
 
 ]
@@ -60,6 +81,11 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
+  const title = to.meta.title
+  if(title){
+    document.title = String(title)
+  }
+
   const isAuthenticated =store.getters.isAuthenticated
   
   if(to.name === 'SingUp'){
