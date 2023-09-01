@@ -52,7 +52,7 @@ export default {
     },
     computed: {
         user() {
-            return this.$store.state.auth.user
+            return this.$store.state.users.user
         },
         advertisements() {
             return this.$store.state.advertisement.advertisements

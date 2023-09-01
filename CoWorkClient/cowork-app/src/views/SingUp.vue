@@ -6,30 +6,30 @@
                     <div class="card bg-dark">
                         <div class="card-header custom-bg-warning">Registracija</div>
                         <div class="card-body">
-                            <form @submit.prevent="singIn">
+                            <form @submit.prevent="singUp">
                                 <div class="mb-3">
                                     <label for="firstName" class="form-label text-white">Ime</label>
-                                    <input v-model="firstName" type="text" id="firstName" class="form-control" required />
+                                    <input v-model="data.firstName" type="text" id="firstName" class="form-control" required />
                                 </div>
                                 <div class="mb-3">
                                     <label for="lastName" class="form-label text-white">Prezime</label>
-                                    <input v-model="lastName" type="text" id="lastName" class="form-control" required />
+                                    <input v-model="data.lastName" type="text" id="lastName" class="form-control" required />
                                 </div>
                                 <div class="mb-3">
                                     <label for="userName" class="form-label text-white">Korisnicko ime</label>
-                                    <input v-model="userName" type="text" id="userName" class="form-control" required />
+                                    <input v-model="data.userName" type="text" id="userName" class="form-control" required />
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label text-white">Lozinka</label>
-                                    <input v-model="password" type="password" id="password" class="form-control" required />
+                                    <input v-model="data.password" type="password" id="password" class="form-control" required />
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label text-white">Email</label>
-                                    <input v-model="email" type="text" id="email" class="form-control" required />
+                                    <input v-model="data.email" type="text" id="email" class="form-control" required />
                                 </div>
                                 <div class="mb-3">
                                     <label for="phoneNumber" class="form-label text-white">Broj telefona</label>
-                                    <input v-model="phoneNumber" type="text" id="phoneNumber" class="form-control"
+                                    <input v-model="data.phoneNumber" type="text" id="phoneNumber" class="form-control"
                                         required />
                                 </div>
                                 <button type="submit" class="btn btn-primary custom-bg-warning custom-btn">Kreiraj
@@ -47,27 +47,14 @@
 <script>
 export default {
     name: 'SingUp',
-    data() {
-        return {
-            firstName: "",
-            lastName: "",
-            userName: "",
-            password: "",
-            email: "",
-            phoneNumber: ""
+    methods: {
+        singUp() {
+            this.$store.dispatch('singUp')
         }
     },
-    methods: {
-
-        singIn() {
-            this.$store.dispatch('singIn', {
-                firstName: this.firstName,
-                lastName: this.lastName,
-                userName: this.userName,
-                password: this.password,
-                email: this.email,
-                phoneNumber: this.phoneNumber
-            })
+    computed: {
+        data(){
+            return this.$store.state.singUp.singUpData
         }
     }
 

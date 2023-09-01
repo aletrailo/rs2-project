@@ -30,8 +30,6 @@ const routes: Array<RouteRecordRaw> = [
     name: 'UsersList',
     component: UsersList,
     beforeEnter: (to, from, next) => {
-      console.log(to)
-      console.log(from)
       if (store.getters.hasRole(Role.Admin)) {
         next();
       } else {
@@ -63,17 +61,14 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const isAuthenticated =store.getters.isAuthenticated
-  console.log(to)
+  
   if(to.name === 'SingUp'){
-    console.log('1')
     next()
   }
   else if ( !isAuthenticated && to.name !== 'LogIn') {
-    console.log('2')
     next({ name: 'LogIn' });
   }
   else{
-    console.log('3')
     next()
   }
 })

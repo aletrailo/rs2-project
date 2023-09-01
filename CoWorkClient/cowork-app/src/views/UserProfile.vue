@@ -77,7 +77,7 @@ export default defineComponent({
     },
     computed: {
         user() {
-            return this.$store.state.auth.user
+            return this.$store.state.users.user
         }
     }
 

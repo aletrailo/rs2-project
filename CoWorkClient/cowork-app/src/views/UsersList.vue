@@ -74,7 +74,7 @@ export default defineComponent({
     },
     computed: {
         users() {
-            return this.$store.state.auth.users.filter((user) =>{
+            return this.$store.state.users.users.filter((user) =>{
                 for (const i in user) {
                     if (user[i].toString().toLowerCase().indexOf(this.query.toLowerCase()) >= 0)
                         return true

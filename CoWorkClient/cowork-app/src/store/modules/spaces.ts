@@ -40,9 +40,9 @@ const mutations = {
 
 const actions = {
 
-    async getMySpaces({ commit, state }: { commit: Commit, state: SpaceState }) {
-        const username = auth.state.auth.username
-        const url = baseUrl + 'api/Spaces/GetAllOwnedBy?' + new URLSearchParams({ username: username })
+    async getMySpaces({ commit }: { commit: Commit }) {
+        const username = auth.state.auth.userName
+        const url = baseUrl + 'api/Spaces/GetAllOwnedBy?' + new URLSearchParams({ username: username? username:'' })
 
         const headers = {
             "Content-Type": "application/json",
@@ -64,9 +64,9 @@ const actions = {
 
 
     },
-    async getAllReservedBy({ commit, state }: { commit: Commit, state: SpaceState }) {
-        const username = auth.state.auth.username
-        const url = baseUrl + 'api/Spaces/GetAllReservedBy?' + new URLSearchParams({ username: username })
+    async getAllReservedBy({ commit }: { commit: Commit }) {
+        const username = auth.state.auth.userName
+        const url = baseUrl + 'api/Spaces/GetAllReservedBy?' + new URLSearchParams({ username: username? username:'' })
 
         const headers = {
             "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const actions = {
 
 
     },
-    async  deleteSpace ({ commit, state, dispatch }: { commit: Commit, state: SpaceState , dispatch: Dispatch}, {spaceId}: any) {
+    async  deleteSpace ({ dispatch }: { dispatch: Dispatch}, {spaceId}: any) {
         const url = 'http://localhost:8000/' + 'api/Advertising/DeleteAd?' + new URLSearchParams({ spaceId: spaceId })
 
         const headers = {

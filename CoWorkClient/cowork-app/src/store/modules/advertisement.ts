@@ -58,10 +58,8 @@ const mutations = {
 }
 
 const actions = {
-    async addAd({ commit, state }: { commit: Commit, state: AdState }) {
+    async addAd({ state }: {  state: AdState }) {
         const url = baseUrl + 'api/Advertising/AddAnAd'
-
-        console.log(state.ad.image)
 
         const headers = {
             "Content-Type": "application/json",
@@ -79,7 +77,7 @@ const actions = {
             console.error('An error occurred during adding ad:', error);
         }
     },
-    async getAllAd({ commit, state }: { commit: Commit, state: AdState }) {
+    async getAllAd({ commit }: { commit: Commit }) {
         const url = baseUrl + 'api/Advertising/all'
 
         const headers = {
