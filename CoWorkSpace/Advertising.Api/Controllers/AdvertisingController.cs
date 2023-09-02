@@ -40,7 +40,7 @@ namespace Advertising.Api.Controllers
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<ActionResult<bool>> BookASpaceAsync(string spaceId)
         {
-            var username = User.FindFirst(ClaimTypes.Name).Value;
+            string username = User.FindFirst(ClaimTypes.Name).Value;
 
             UsernameSpaceIdInfo usernameSpaceIdInfo = new UsernameSpaceIdInfo(username, spaceId);
             return Ok(await service.BookASpaceAsync(usernameSpaceIdInfo));

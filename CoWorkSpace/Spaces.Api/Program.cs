@@ -56,6 +56,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors("ProgramCors");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

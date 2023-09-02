@@ -28,7 +28,6 @@ const state: SpaceState = {
     space: {} as space,
     spaces: [] as space[],
     reservedByMe: [] as space[]
-
 }
 
 const mutations = {
@@ -41,7 +40,6 @@ const mutations = {
     'SET_SPACE'( state: SpaceState, data: space){
         state.space = data
     }
-
 }
 
 const actions = {
@@ -77,8 +75,6 @@ const actions = {
                 type: 'error'
             });
         }
-
-
     },
     async getAllReservedBy({ commit }: { commit: Commit }) {
         const username = auth.state.auth.userName
@@ -193,7 +189,7 @@ const actions = {
         }
 
         try {
-            const response = await axiosInstance.post(url, { headers: headers });
+            const response = await axiosInstance.post(url, {}, { headers: headers });
             if (response.status === 200) {
                 notify({
                     title: "",
@@ -206,6 +202,45 @@ const actions = {
                 notify({
                     title: "Greška!",
                     text: 'Neuspesno rezervisanje prostora.',
+                    duration: 2000,
+                    type: 'error'
+                });
+
+            }
+        } catch (error) {
+            notify({
+                title: "Greška!",
+                text: String(error),
+                duration: 2000,
+                type: 'error'
+            });
+        }
+    },
+    async editSpace( { dispatch }: { dispatch: Dispatch}, {space}: {space: space}){
+      
+        const url = baseUrl + 'api/Spaces/Update'
+
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.state.accessToken}`
+        }
+
+        try {
+            const response = await axiosInstance.put(url,JSON.stringify(space), { headers: headers });
+            if (response.status === 200) {
+                dispatch('getMySpaces')
+                notify({
+                    title: "",
+                    text: 'Izmena je uspesna!',
+                    duration: 2000,
+                    type: 'success'
+                })
+            
+
+            } else {
+                notify({
+                    title: "Greška!",
+                    text: 'Neuspesna izmena.',
                     duration: 2000,
                     type: 'error'
                 });

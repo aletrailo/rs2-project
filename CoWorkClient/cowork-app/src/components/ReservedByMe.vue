@@ -1,4 +1,5 @@
 <template>
+<div v-if="reservedByMe.length">
     <div class="col py-2" v-for="space in reservedByMe" :key="space.spaceId">
         <div class="card" style="height: 100%;">
             <img v-if="space.image!==null" :src="space.image" class="card-img-top" alt="...">
@@ -16,23 +17,27 @@
             </div>
         </div>
     </div>
-    </template>
-    
-    <script>
-    import {
-        defineComponent
-    } from 'vue';
-    
-    export default defineComponent({
-        name: "ListSpaces",
-    
-        created() {
-            this.$store.dispatch('getAllReservedBy')
-        },
-        computed:{
-            spaces(){
-                return this.$store.state.spaces.reservedByMe
-            }
+</div>
+<div v-else>
+    Ne protoji prostor koji ste vi rezervisali za koriscenje
+</div>
+</template>
+
+<script>
+import {
+    defineComponent
+} from 'vue';
+
+export default defineComponent({
+    name: "ListSpaces",
+
+    created() {
+        this.$store.dispatch('getAllReservedBy')
+    },
+    computed: {
+        reservedByMe() {
+            return this.$store.state.spaces.reservedByMe
         }
-    })
-    </script>
+    }
+})
+</script>
