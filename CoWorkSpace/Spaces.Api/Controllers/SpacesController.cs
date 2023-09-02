@@ -63,7 +63,12 @@ namespace Spaces.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<SpaceDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<SpaceDto>>> GetAllReservedByAsync()
         {
-            string username = User.FindFirst(ClaimTypes.Name).Value;
+            var username = User.FindFirst(ClaimTypes.Name).Value;
+
+            if (username is null)
+            {
+                return Unauthorized();
+            }
 
             return Ok((await service.GetAllReservedByAsync(username)).ToDto());
         }
@@ -72,7 +77,11 @@ namespace Spaces.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<SpaceDto>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<SpaceDto>>> GetAllOwnedByAsync()
         {
-            string username = User.FindFirst(ClaimTypes.Name).Value;
+            var username = User.FindFirst(ClaimTypes.Name).Value;
+
+            if (username is null){
+                return Unauthorized();
+            }
 
             return Ok((await service.GetAllOwnedByAsync(username)).ToDto());
         }

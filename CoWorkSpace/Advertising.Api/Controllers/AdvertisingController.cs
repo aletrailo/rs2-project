@@ -30,7 +30,11 @@ namespace Advertising.Api.Controllers
         public async Task<ActionResult<bool>> AddAnAdAsync(AdInfoDto adInfoDto)
         {
 
-            string username = User.FindFirst(ClaimTypes.Name).Value;
+            var username = User.FindFirst(ClaimTypes.Name).Value;
+
+            if (username is null) {
+                return Unauthorized();
+            }
             
             AdSpaceInfo adSpaceInfo = adInfoDto.ToModel(username);
             return Ok(await service.AddAsync(adSpaceInfo));
@@ -40,7 +44,11 @@ namespace Advertising.Api.Controllers
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<ActionResult<bool>> BookASpaceAsync(string spaceId)
         {
-            string username = User.FindFirst(ClaimTypes.Name).Value;
+            var username = User.FindFirst(ClaimTypes.Name).Value;
+
+            if (username is null) {
+                return Unauthorized();
+            }
 
             UsernameSpaceIdInfo usernameSpaceIdInfo = new UsernameSpaceIdInfo(username, spaceId);
             return Ok(await service.BookASpaceAsync(usernameSpaceIdInfo));
@@ -52,6 +60,11 @@ namespace Advertising.Api.Controllers
         public async Task<ActionResult<bool>> DeleteAdAsync(string spaceId)
         {
             var username = User.FindFirst(ClaimTypes.Name).Value;
+
+            if (username is null)
+            {
+                return Unauthorized();
+            }
 
             UsernameSpaceIdInfo usernameSpaceIdInfo = new UsernameSpaceIdInfo(username, spaceId);
             return Ok(await service.DeleteAdAsync(usernameSpaceIdInfo));
