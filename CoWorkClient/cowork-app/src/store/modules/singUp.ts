@@ -2,7 +2,8 @@ import { Dispatch } from 'vuex';
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/';
 import axiosInstance from '../axiosInstance';
 import auth from './auth';
-import { notify } from "@kyvg/vue3-notification";
+import { errorMessage } from '../shared/message'
+
 
 const headers = { Authorization: `Bearer ${auth.state.accessToken}`, }
 
@@ -32,20 +33,10 @@ const actions = {
             if (response.status === 201) {
                 dispatch('logIn', { username: state.singUpData.userName, password: state.singUpData.password })
             } else {
-                notify({
-                    title: "Greška!",
-                    text: 'Neuspesna regisracija.',
-                    duration: 2000,
-                    type: 'error'
-                });
+                errorMessage('Neuspesna regisracija.')
             }
         } catch (error) {
-            notify({
-                title: "Greška!",
-                text: String(error),
-                duration: 2000,
-                type: 'error'
-            });
+            errorMessage(String(error))
         }
     },
 }

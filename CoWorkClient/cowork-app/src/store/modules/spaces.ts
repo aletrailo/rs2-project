@@ -1,8 +1,7 @@
 import { Commit, Dispatch } from 'vuex';
 import auth from './auth';
 import axiosInstance from '../axiosInstance';
-import { notify } from "@kyvg/vue3-notification";
-
+import { successMessage, errorMessage } from '../shared/message'
 
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8001/' : '/';
 
@@ -37,7 +36,7 @@ const mutations = {
     'SET_RESERVED_BY_ME'(state: SpaceState, data: space[]) {
         state.reservedByMe = data
     },
-    'SET_SPACE'( state: SpaceState, data: space){
+    'SET_SPACE'(state: SpaceState, data: space) {
         state.space = data
     }
 }
@@ -60,20 +59,10 @@ const actions = {
                 commit('SET_USER_SPACES', data)
 
             } else {
-                notify({
-                    title: "Greška!",
-                    text: 'Neuspesno ucitavanje svih oglasa.',
-                    duration: 2000,
-                    type: 'error'
-                });
+                errorMessage('Neuspesno ucitavanje svih oglasa.')
             }
         } catch (error) {
-            notify({
-                title: "Greška!",
-                text: String(error),
-                duration: 2000,
-                type: 'error'
-            });
+            errorMessage(String(error))
         }
     },
     async getAllReservedBy({ commit }: { commit: Commit }) {
@@ -92,21 +81,10 @@ const actions = {
                 commit('SET_RESERVED_BY_ME', data)
 
             } else {
-                notify({
-                    title: "Greška!",
-                    text: 'Neuspesno ucitavanje svih oglasa.',
-                    duration: 2000,
-                    type: 'error'
-                });
-
+                errorMessage('Neuspesno ucitavanje svih oglasa.')
             }
         } catch (error) {
-            notify({
-                title: "Greška!",
-                text: String(error),
-                duration: 2000,
-                type: 'error'
-            });
+            errorMessage(String(error))
         }
 
 
@@ -123,31 +101,16 @@ const actions = {
             const response = await axiosInstance.delete(url, { headers: headers });
             if (response.status === 200) {
                 dispatch('getMySpaces');
-                notify({
-                    title: "",
-                    text: 'Uspesno obrisan prostor!',
-                    duration: 2000,
-                    type: 'success'
-                });
+                successMessage('Uspesno obrisan prostor!')
             } else {
-                notify({
-                    title: "Greška!",
-                    text: 'Problem sa brisanjem prostora',
-                    duration: 2000,
-                    type: 'error'
-                });
+                errorMessage('Problem sa brisanjem prostora')
             }
         } catch (error) {
-            notify({
-                title: "Greška!",
-                text: String(error),
-                duration: 2000,
-                type: 'error'
-            });
+            errorMessage(String(error))
         }
     },
-    async getAddById( { commit, state }: { commit: Commit , state: any}, {id}: {id: string}){
-      
+    async getAddById({ commit }: { commit: Commit }, { id }: { id: string }) {
+
         const url = baseUrl + 'api/Spaces/GetById?' + new URLSearchParams({ id: id })
 
         const headers = {
@@ -162,25 +125,14 @@ const actions = {
                 commit('SET_SPACE', data)
 
             } else {
-                notify({
-                    title: "Greška!",
-                    text: 'Neuspesno ucitavanje ovog oglasa.',
-                    duration: 2000,
-                    type: 'error'
-                });
-
+                errorMessage( 'Neuspesno ucitavanje ovog oglasa.');
             }
         } catch (error) {
-            notify({
-                title: "Greška!",
-                text: String(error),
-                duration: 2000,
-                type: 'error'
-            });
+            errorMessage(String(error))
         }
     },
-    async bookSpace( { commit }: { commit: Commit}, {id}: {id: string}){
-      
+    async bookSpace({ commit }: { commit: Commit }, { id }: { id: string }) {
+
         const url = 'http://localhost:8000/' + 'api/Advertising/BookASpace?' + new URLSearchParams({ spaceId: id })
 
         const headers = {
@@ -191,33 +143,36 @@ const actions = {
         try {
             const response = await axiosInstance.post(url, {}, { headers: headers });
             if (response.status === 200) {
-                notify({
-                    title: "",
-                    text: 'Uspesno rezervisan prostor!',
-                    duration: 2000,
-                    type: 'success'
-                })
-
+                successMessage('Uspesno rezervisan prostor!');
             } else {
-                notify({
-                    title: "Greška!",
-                    text: 'Neuspesno rezervisanje prostora.',
-                    duration: 2000,
-                    type: 'error'
-                });
-
+                errorMessage('Neuspesno rezervisanje prostora.')
             }
         } catch (error) {
-            notify({
-                title: "Greška!",
-                text: String(error),
-                duration: 2000,
-                type: 'error'
-            });
+            errorMessage(String(error))
         }
     },
-    async editSpace( { dispatch }: { dispatch: Dispatch}, {space}: {space: space}){
-      
+    async cancelReservation({ dispatch }: { dispatch: Dispatch }, { spaceId }: { spaceId: number }) {
+        const url = baseUrl + 'url'
+
+        const headers = {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth.state.accessToken}`
+        }
+
+        try {
+            const response = await axiosInstance.put(url, spaceId, { headers: headers });
+            if (response.status === 200) {
+                dispatch('getAllReservedBy')
+                successMessage('Izmena je uspesna!')
+            } else {
+                errorMessage('Neuspesna izmena.')
+            }
+        } catch (error) {
+            errorMessage(String(error))
+        }
+    },
+    async editSpace({ dispatch }: { dispatch: Dispatch }, { space }: { space: space }) {
+
         const url = baseUrl + 'api/Spaces/Update'
 
         const headers = {
@@ -226,33 +181,15 @@ const actions = {
         }
 
         try {
-            const response = await axiosInstance.put(url,JSON.stringify(space), { headers: headers });
+            const response = await axiosInstance.put(url, JSON.stringify(space), { headers: headers });
             if (response.status === 200) {
                 dispatch('getMySpaces')
-                notify({
-                    title: "",
-                    text: 'Izmena je uspesna!',
-                    duration: 2000,
-                    type: 'success'
-                })
-            
-
+                successMessage('Izmena je uspesna!')
             } else {
-                notify({
-                    title: "Greška!",
-                    text: 'Neuspesna izmena.',
-                    duration: 2000,
-                    type: 'error'
-                });
-
+                errorMessage('Neuspesna izmena.')
             }
         } catch (error) {
-            notify({
-                title: "Greška!",
-                text: String(error),
-                duration: 2000,
-                type: 'error'
-            });
+            errorMessage(String(error))
         }
     },
 }

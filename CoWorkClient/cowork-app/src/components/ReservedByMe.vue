@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                DUGME OTKAZI?
+                <button type="button" @click="cancelReservation(space.spaceId)" class="btn btn-outline-secondary" style="width: 100%;">Otkazi rezervaciju</button>
             </div>
         </div>
     </div>
@@ -34,10 +34,15 @@ export default defineComponent({
     created() {
         this.$store.dispatch('getAllReservedBy')
     },
+    methods:{
+        cancelReservation(spaceId){
+            this.$store.dispatch('cancelReservation', {spaceId: spaceId})
+        }
+    },
     computed: {
         reservedByMe() {
             return this.$store.state.spaces.reservedByMe
-        }
+        },
     }
 })
 </script>

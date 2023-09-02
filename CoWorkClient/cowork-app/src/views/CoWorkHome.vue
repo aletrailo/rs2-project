@@ -1,6 +1,5 @@
 <template>
 <MenuOptions />
-
 <section class="text-center" style="background-color: #f4f4f4;">
     <div class="row">
         <div class="col-lg-6 col-md-8 mx-auto py-2">
@@ -13,7 +12,6 @@
     </div>
 </section>
 <div class="container">
-
     <div class="row row-cols-1 row-cols-md-4 g-8 py-4">
         <div class="col py-2" v-for="ad in advertisements" :key="ad">
             <div class="card" style="height: 100%;">

@@ -2,7 +2,7 @@ import { Commit } from 'vuex';
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/';
 import axiosInstance from '../axiosInstance';
 import auth from './auth';
-import { notify } from "@kyvg/vue3-notification";
+import { errorMessage } from '../shared/message';
 
 interface User {
     id?: string,
@@ -42,20 +42,10 @@ const actions = {
                 const data = await response.data;
                 commit('SET_DATA', data)
             } else {
-                notify({
-                    title: "Greška!",
-                    text: 'Neuspesno dohvatanje informacija o korisniku',
-                    duration: 2000,
-                    type: 'error'
-                });
+                errorMessage('Neuspesno dohvatanje informacija o korisniku')
             }
         } catch (error) {
-            notify({
-                title: "Greška!",
-                text: String(error),
-                duration: 2000,
-                type: 'error'
-            });
+            errorMessage(String(error))
         }
     },
     async getAllUsers({ commit }: { commit: Commit }) {
@@ -68,20 +58,10 @@ const actions = {
                 const data = await response.data;
                 commit('SET_USERS', data)
             } else {
-                notify({
-                    title: "Greška!",
-                    text: 'Neuspesno dohvatanje informacija o korisnicima',
-                    duration: 2000,
-                    type: 'error'
-                });
+                errorMessage('Neuspesno dohvatanje informacija o korisnicima')
             }
         } catch (error) {
-            notify({
-                title: "Greška!",
-                text: String(error),
-                duration: 2000,
-                type: 'error'
-            });
+            errorMessage(String(error))
         }
     },
 }

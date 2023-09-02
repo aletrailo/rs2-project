@@ -4,7 +4,7 @@ import router from '@/router';
 import { IJwtPayload } from '../shared/jwt-payload';
 import { Role } from '../shared/role';
 import axiosInstance from '../axiosInstance';
-import { notify } from "@kyvg/vue3-notification";
+import { errorMessage } from '../shared/message'
 
 
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/';
@@ -110,20 +110,10 @@ const actions = {
                 dispatch('setTokens', { accessToken, refreshToken });
                 router.push({ name: 'CoWorkHome' })
             } else {
-                notify({
-                    title: "Greška!",
-                    text: "Problem prilikom prijavljivanja",
-                    duration: 2000,
-                    type: 'error'
-                });
+                errorMessage("Problem prilikom prijavljivanja")
             }
         } catch (error) {
-            notify({
-                title: "Greška!",
-                text: String(error),
-                duration: 2000,
-                type: 'error'
-            });
+            errorMessage(String(error))
         }
     },
     async getRefreshToken({ state, dispatch }: { state: AuthState, dispatch: Dispatch }) {
@@ -142,20 +132,10 @@ const actions = {
 
                 console.log("Uspesno postavljen REFRESH token")
             } else {
-                notify({
-                    title: "Greška!",
-                    text: "Problem prilikom dobijanja refresh tokena",
-                    duration: 2000,
-                    type: 'error'
-                });
+                console.error("Problem prilikom dobijanja refresh tokena")
             }
         } catch (error) {
-            notify({
-                title: "Greška!",
-                text: String(error),
-                duration: 2000,
-                type: 'error'
-            });
+            console.error(String(error))
         }
     },
     async logOut({ state }: { state: AuthState }) {
@@ -181,20 +161,10 @@ const actions = {
                 }
                 router.push({ name: 'LogIn' })
             } else {
-                notify({
-                    title: "Greška!",
-                    text: "Neuspesno odjavljivanje",
-                    duration: 2000,
-                    type: 'error'
-                });
+                errorMessage("Neuspesno odjavljivanje")
             }
         } catch (error) {
-            notify({
-                title: "Greška!",
-                text: String(error),
-                duration: 2000,
-                type: 'error'
-            });
+            errorMessage(String(error))
         }
     },
 }
