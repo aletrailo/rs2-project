@@ -30,10 +30,6 @@ import {
 
 export default defineComponent({
     name: "ListSpaces",
-
-    created() {
-        this.$store.dispatch('getAllReservedBy')
-    },
     methods:{
         cancelReservation(spaceId){
             this.$store.dispatch('cancelReservation', {spaceId: spaceId})

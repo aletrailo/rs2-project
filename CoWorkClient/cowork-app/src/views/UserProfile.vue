@@ -74,6 +74,8 @@ export default defineComponent({
     },
     created() {
         this.$store.dispatch('getUser');
+        this.$store.dispatch('getMySpaces');
+        this.$store.dispatch('getAllReservedBy');
     },
     computed: {
         user() {

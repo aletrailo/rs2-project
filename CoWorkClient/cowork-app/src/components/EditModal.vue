@@ -59,20 +59,8 @@
 </template>
 
 <script>
-const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(file);
+import { convertBase64 } from '@/store/shared/convertBase64'
 
-        fileReader.onload = () => {
-            resolve(fileReader.result);
-        };
-
-        fileReader.onerror = (error) => {
-            reject(error);
-        };
-    });
-};
 export default {
     props: {
         ad: Object,

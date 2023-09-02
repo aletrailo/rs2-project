@@ -1,4 +1,3 @@
-// axiosInstance.ts
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import store from '@/store';
 import auth from './modules/auth';
@@ -16,10 +15,10 @@ class TokenRefresher {
       if (!this.isRefreshing) {
         this.isRefreshing = true;
         try {
-          await store.dispatch('getRefreshToken'); // Ovde pozivamo refreshToken akciju
+          await store.dispatch('getRefreshToken');
           this.isRefreshing = false;
           const newAccessToken = auth.state.accessToken;
-          if(newAccessToken) // Pretpostavimo da accessToken getter vraća novi token
+          if(newAccessToken)
             this.onAccessTokenRefreshed(newAccessToken, baseURL);
         } catch (refreshError) {
           this.isRefreshing = false;
@@ -73,12 +72,11 @@ class TokenRefresher {
 
 const createAxiosInstance = (baseURL: string): AxiosInstance => {
   const instance = axios.create({
-    baseURL: baseURL || 'https://api.example.com', // Postavite osnovnu URL adresu API-ja
+    baseURL: baseURL || 'http://localhost:4000/' || 'http://localhost:8000/' || 'http://localhost:8001/'
   });
 
   const tokenRefresher = new TokenRefresher();
 
-  // Interceptor za odgovor
   instance.interceptors.response.use(
     (response) => response,
     (error) => tokenRefresher.interceptResponseError(error)

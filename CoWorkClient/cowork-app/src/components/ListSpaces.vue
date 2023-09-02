@@ -41,9 +41,6 @@ export default defineComponent({
             selectedAd: null
         }
     },
-    created() {
-        this.$store.dispatch('getMySpaces')
-    },
     methods: {
         deleteSpace(spaceId) {
             this.$store.dispatch('deleteSpace', {

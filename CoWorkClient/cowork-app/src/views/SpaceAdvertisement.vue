@@ -51,21 +51,7 @@
 </template>
 
 <script>
-const convertBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(file);
-
-        fileReader.onload = () => {
-            resolve(fileReader.result);
-        };
-
-        fileReader.onerror = (error) => {
-            reject(error);
-        };
-    });
-};
-
+import { convertBase64 } from '@/store/shared/convertBase64'
 import {
     defineComponent
 } from 'vue';
