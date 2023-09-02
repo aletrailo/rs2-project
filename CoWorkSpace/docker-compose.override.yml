@@ -21,6 +21,14 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  imagesdb:
+    container_name: imagesdb
+    restart: always
+    ports:
+      - "27018:27017"
+    volumes:
+      - imagesmongo_data:/data/db
+
   advertising.api:
     container_name: advertising.api
     environment:
@@ -37,6 +45,7 @@ services:
       - "DatabaseSettings:ConnectionString=mongodb://spacesdb:27017"
     depends_on:
       - spacesdb
+      - cdn.grpc
     ports:
       - "8001:80"
 
@@ -47,9 +56,29 @@ services:
       - "DatabaseSettings:ConnectionString=mongodb://spacesdb:27017"
     depends_on:
       - spacesdb
+      - cdn.grpc
+      
     ports:
       - "8002:80"
 
+  cdn.api:
+    container_name: cdn.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - imagesdb
+    ports:
+      - "7001:80"
+
+  cdn.grpc:
+    container_name: cdn.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - imagesdb
+      - cdn.api
+    ports:
+      - "7002:80"
 
   identityserver.api:
     container_name: identityserver.api

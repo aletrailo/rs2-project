@@ -24,7 +24,6 @@ namespace Spaces.Persistance.Entities
         [BsonRepresentation(BsonType.String)]
         public Guid ImageId { get; set; }
 
-
         [BsonElement("IsFree")]
         public bool IsFree { get; set; } = true;
 

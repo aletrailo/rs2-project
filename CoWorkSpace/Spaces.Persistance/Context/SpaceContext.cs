@@ -14,7 +14,6 @@ namespace Spaces.Persistance.Context
         public SpaceContext(IOptions<SpacesDbSettings> settings)
         {
             this.settings = settings.Value;
-            this.settings.ConnectionString = "mongodb://spacesdb:27017"; //kada se pokrece van dokera zakomentarisi ovu liniju
             this.client = new MongoClient(this.settings.ConnectionString);
         }
 

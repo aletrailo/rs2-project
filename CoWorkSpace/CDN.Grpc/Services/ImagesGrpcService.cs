@@ -2,7 +2,6 @@
 using CDN.Grpc.Protos;
 using Grpc.Core;
 using Spaces.Grpc.Extensions;
-
 using ImageModel = CDN.Common.Models.Image;
 
 namespace CDN.Grpc.Services
@@ -16,17 +15,7 @@ namespace CDN.Grpc.Services
             this.imageService = imageService;
         }
 
-        #region SpaceProtoServiceBase Overrides
-
-        public override async Task<GetImagesResponse> GetImages(GetImagesRequest request, ServerCallContext context)
-        {
-            IEnumerable<ImageModel> mageModels = await this.imageService.GetAllAsync();
-
-            var response = new GetImagesResponse();
-            response.Images.AddRange(mageModels.ToGrpcModel());
-
-            return response;
-        }
+        #region ImageProtoServiceBase Overrides
 
         public override async Task<GetImageResponse> GetImage(GetImageRequest request, ServerCallContext context)
         {
@@ -34,6 +23,16 @@ namespace CDN.Grpc.Services
 
             var response = new GetImageResponse();
             response.Image = imageModel.ToGrpcModel();
+
+            return response;
+        }
+
+        public override async Task<GetImagesResponse> GetImages(GetImagesRequest request, ServerCallContext context)
+        {
+            IEnumerable<ImageModel> mageModels = await this.imageService.GetAllAsync();
+
+            var response = new GetImagesResponse();
+            response.Images.AddRange(mageModels.ToGrpcModel());
 
             return response;
         }

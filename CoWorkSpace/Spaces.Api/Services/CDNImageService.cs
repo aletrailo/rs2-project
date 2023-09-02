@@ -16,7 +16,7 @@ namespace Spaces.Api.Services
 
         #region ICDNImageService Members
 
-        public void AddAsync(CDNImageCreationInfo cdnImageCreationInfo)
+        public async Task AddAsync(CDNImageCreationInfo cdnImageCreationInfo)
         {
             var request = new InsertImageRequest
             {
@@ -27,14 +27,15 @@ namespace Spaces.Api.Services
                 }
             };
 
-            this.imageProtoServiceClient.InsertImage(request);
+            await this.imageProtoServiceClient.InsertImageAsync(request);
         }
 
-        public CDNImage GetAsync(Guid id)
+        public async Task<CDNImage> GetAsync(Guid id)
         {
             var request = new GetImageRequest();
+            request.BlobId = id.ToString();
 
-            GetImageResponse response = this.imageProtoServiceClient.GetImage(request);
+            GetImageResponse response = await this.imageProtoServiceClient.GetImageAsync(request);
 
             return response.Image.ToModel();
         }

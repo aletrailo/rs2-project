@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Spaces.Api\Spaces.Api.csproj" />
     <ProjectReference Include="..\Spaces.Common\Spaces.Common.csproj" />
     <ProjectReference Include="..\Spaces.Persistance\Spaces.Persistance.csproj" />
   </ItemGroup>

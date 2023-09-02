@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.55.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.5" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
@@ -21,9 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\CDN.Grpc\Protos\image.proto" GrpcServices="Client">
-      <Link>Protos\image.proto</Link>
-    </Protobuf>
+	  <Protobuf Include="..\CDN.Grpc\Protos\image.proto" GrpcServices="Client">
+		  <Link>Protos\image.proto</Link>
+	  </Protobuf>
   </ItemGroup>
 
 </Project>

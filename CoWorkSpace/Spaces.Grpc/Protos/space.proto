@@ -10,14 +10,15 @@ service SpaceProtoService {
 
 
 message Space {
-	string id = 1;
-	string name = 2;
-	string address = 3;
-	string description = 4;
-	string image = 5;
-	bool isfree = 6;
-	int32 Priceperhour = 7;
-	string Owner = 8;
+	string Id = 1;
+	string Name = 2;
+	string Address = 3;
+	string Description = 4;
+	string ImageId = 5;
+	string Image = 6;
+	bool Isfree = 7;
+	int32 Priceperhour = 8;
+	string Owner = 9;
 }
 
 message SpaceInfo{

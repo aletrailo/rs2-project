@@ -1,12 +1,13 @@
 ﻿using Spaces.Common.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace Spaces.Common.Interfaces
 {
     public interface ICDNImageService
     {
-        CDNImage GetAsync(Guid id);
+        Task<CDNImage> GetAsync(Guid id);
 
-        void AddAsync(CDNImageCreationInfo cdnImageCreationInfo);
+        Task AddAsync(CDNImageCreationInfo cdnImageCreationInfo);
     }
 }
