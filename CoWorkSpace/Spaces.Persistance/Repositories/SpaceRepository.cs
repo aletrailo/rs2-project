@@ -24,7 +24,7 @@ namespace Spaces.Persistance.Repositories
 
         public async Task<IEnumerable<Space>> GetAllSpaces()
         {
-            return (await this.context.GetCollection().Find(_ => true).ToListAsync()).ToModel();
+            return (await this.context.GetCollection().Find<SpaceEntity>(_ => true).ToListAsync()).ToModel();
         }
         
         public async Task<bool> DeleteSpaceAsync(string Id)
@@ -66,6 +66,11 @@ namespace Spaces.Persistance.Repositories
             var updateResult = await context.GetCollection().ReplaceOneAsync(p => p.Id == spaceEntity.Id, spaceEntity);
             return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
 
+        }
+
+        public void DeleteAllromDatabase()
+        {
+            this.context.GetCollection().DeleteMany(_ => true);
         }
 
         #endregion

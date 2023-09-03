@@ -13,5 +13,7 @@ namespace Spaces.Common.Interfaces
         Task<bool> DeleteSpaceAsync(string Id);
         Task<Space> GetSpaceByIdAsync(string Id);
 
+        void DeleteAllromDatabase();
+
     }
 }

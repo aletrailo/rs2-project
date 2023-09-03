@@ -33,5 +33,12 @@ namespace CDN.Api.Controllers
         {
             return (await this.service.AddAsync(imageCreationInfoDto.ToModel())).ToDto();
         }
+
+        [HttpDelete("drop-database")]
+        public Task Dropdatabase()
+        {
+            //Use this only from swagger
+            return Task.Run(() => this.service.DeleteAllFromDatabase());
+        }
     }
 }

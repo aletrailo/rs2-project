@@ -13,5 +13,7 @@ namespace Spaces.Common.Interfaces
         Task AddAsync(CreationInfo creationInfo, Guid imageId);
         Task<bool> UpdateAsync(Space space);
 
+
+        void DeleteAllFromDatabase();
     }
 }

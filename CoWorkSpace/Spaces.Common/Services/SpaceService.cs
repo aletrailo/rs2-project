@@ -44,6 +44,11 @@ namespace Spaces.Common.Services
             return this.repository.DeleteSpaceAsync(Id);
         }
 
+        public void DeleteAllFromDatabase()
+        {
+            this.repository.DeleteAllromDatabase();
+        }
+
         #endregion
     }
 }

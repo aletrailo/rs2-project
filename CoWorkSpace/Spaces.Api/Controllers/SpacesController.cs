@@ -87,5 +87,11 @@ namespace Spaces.Api.Controllers
             return Ok(await service.DeleteAsync(spaceDto.ToModel().Id));
         }
 
+        [HttpDelete("drop-database")]
+        public Task Dropdatabase()
+        {
+            //Use this only from swagger
+            return Task.Run(() => this.service.DeleteAllFromDatabase());
+        }
     }
 }
