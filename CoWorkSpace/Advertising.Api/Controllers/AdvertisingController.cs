@@ -5,9 +5,11 @@ using Advertising.Api.Dtos;
 using Advertising.Api.Extensions;
 using System.Security.Claims;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Advertising.Api.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdvertisingController : ControllerBase
