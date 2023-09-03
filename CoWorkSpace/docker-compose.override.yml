@@ -33,6 +33,7 @@ services:
     container_name: advertising.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - "GrpcSettings:SpacesUri=http://spaces.grpc"
     depends_on:
      - spaces.grpc
     ports:
