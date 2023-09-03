@@ -46,6 +46,11 @@ namespace CDN.Persistance.Repositories
             return imageEntity.ToModel();
         }
 
+        public void DeleteAllFromDatabase()
+        {
+            this.context.GetCollection().DeleteMany(_ => true);
+        }
+
         #endregion
     }
 }

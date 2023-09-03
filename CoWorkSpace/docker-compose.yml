@@ -13,6 +13,9 @@ services:
   spacesdb:
     image: mongo
 
+  imagesdb:
+    image: mongo
+
   spaces.api:
     image: ${DOCKER_REGISTRY-}spacesapi
     build:
@@ -24,6 +27,18 @@ services:
     build:
       context: .
       dockerfile: Spaces.Grpc/Dockerfile
+      
+  cdn.api:
+    image: ${DOCKER_REGISTRY-}cdnapi
+    build:
+      context: .
+      dockerfile: CDN.Api/Dockerfile
+
+  cdn.grpc:
+    image: ${DOCKER_REGISTRY-}cdngrpc
+    build:
+      context: .
+      dockerfile: CDN.Grpc/Dockerfile
 
   identityserver.api:
     image: ${DOCKER_REGISTRY-}identityserverapi
@@ -34,6 +49,7 @@ services:
 volumes:
   mongo_data: 
   mssql_data:
+  imagesmongo_data:
 
 
 

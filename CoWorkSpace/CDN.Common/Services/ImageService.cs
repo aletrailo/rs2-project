@@ -32,6 +32,11 @@ namespace CDN.Common.Services
             return await this.repository.AddAsync(imageCreationInfo);
         }
 
+        public void DeleteAllFromDatabase()
+        {
+            this.repository.DeleteAllFromDatabase();
+        }
+
         #endregion
     }
 }

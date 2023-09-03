@@ -1,5 +1,6 @@
 ﻿using Spaces.Common.Interfaces;
 using Spaces.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -11,34 +12,41 @@ namespace Spaces.Common.Services
 
         public SpaceService(ISpaceRepository spaceRepository)
         {
-                this.repository = spaceRepository;
+            this.repository = spaceRepository;
         }
+
+        #region ISpaceService Members
+
+        public async Task<IEnumerable<Space>> GetAllAsync()
+        {
+            return await this.repository.GetAllSpaces();
+        }
+
+        public Task AddAsync(CreationInfo creationInfo, Guid imageId)
+        {
+            return this.repository.AddSpaceAsync(creationInfo, imageId);
+        }
+
+        public async Task<Space> GetByIdAsync(string Id)
+        {
+            Space space = await this.repository.GetSpaceByIdAsync(Id);
+            return space;
+        }
+
+        public Task<bool> UpdateAsync(Space space)
+        {
+            return this.repository.UpdateSpaceAsync(space);
+        }
+
 
         public Task<bool> DeleteAsync(string Id)
         {
             return this.repository.DeleteSpaceAsync(Id);
         }
 
-        #region ISpaceService Members
-
-        public Task<IEnumerable<Space>> GetAllAsync()
+        public void DeleteAllFromDatabase()
         {
-            return this.repository.GetAllSpaces();
-        }
-
-        public Task<Space> GetByIdAsync(string Id)
-        {
-            return this.repository.GetSpaceByIdAsync(Id);
-        }
-
-        public Task AddAsync(CreationInfo creationInfo)
-        {
-            return this.repository.AddSpaceAsync(creationInfo);
-        }
-
-        public Task<bool> UpdateAsync(Space space)
-        {
-            return this.repository.UpdateSpaceAsync(space);
+            this.repository.DeleteAllromDatabase();
         }
 
         #endregion

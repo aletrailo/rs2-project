@@ -35,7 +35,7 @@ namespace IdentityServer.Api.Extensions
 
         private static void MigrateDatabase(ApplicationContext context)
         {
-            context.Database.Migrate();
+           context.Database.Migrate();
         }
     }
 }

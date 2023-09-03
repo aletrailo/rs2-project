@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Protos\space.proto" />
+    <None Remove="Protos\image.proto" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,13 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Spaces.Api\Spaces.Api.csproj" />
-    <ProjectReference Include="..\Spaces.Common\Spaces.Common.csproj" />
-    <ProjectReference Include="..\Spaces.Persistance\Spaces.Persistance.csproj" />
+    <ProjectReference Include="..\CDN.Common\CDN.Common.csproj" />
+    <ProjectReference Include="..\CDN.Persistance\CDN.Persistance.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\space.proto" GrpcServices="Server" />
+    <Protobuf Include="Protos\image.proto" GrpcServices="Server" />
   </ItemGroup>
 
 </Project>
