@@ -13,5 +13,6 @@ namespace Spaces.Common.Interfaces
         Task<Space> GetSpaceByIdAsync(string Id);
         Task<IEnumerable<Space>> GetAllReservedByAsync(string username);
         Task<IEnumerable<Space>> GetAllOwnedByAsync(string username);
+
     }
 }

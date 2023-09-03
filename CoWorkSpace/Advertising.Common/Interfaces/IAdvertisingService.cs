@@ -12,5 +12,7 @@ namespace Advertising.Common.Interfaces
         Task<bool> BookASpaceAsync(UsernameSpaceIdInfo usernameSpaceIdInfo);
 
         Task<bool> DeleteAdAsync(UsernameSpaceIdInfo usernameSpaceIdInfo);
+
+        Task<bool> EndUpUsingSpaceAsync(string spaceId);
     }
 }

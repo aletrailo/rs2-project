@@ -70,6 +70,31 @@ namespace Spaces.Grpc.Services
             }
         }
 
+        public override async Task<EndUpUsingSpaceResponse> EndUpUsingSpace(EndUpUsingSpaceRequest request, ServerCallContext context)
+        {
+            string spaceId = request.Spaceid;
+
+            try
+            {
+                SpaceModel space = await this.spaceService.GetByIdAsync(spaceId);
+
+                if (space == null)
+                {
+                    return new EndUpUsingSpaceResponse { Response = false };
+                }
+                space.IsFree = true;
+                space.ReservedBy = null;
+                await this.spaceService.UpdateAsync(space);
+                return new EndUpUsingSpaceResponse { Response = true };
+
+            }
+            catch (Exception ex)
+            {
+                return new EndUpUsingSpaceResponse { Response = false };
+            }
+        }
+
+
         public override async Task<DeleteAdResponse> DeleteAd(DeleteAdRequest request, ServerCallContext context)
         {
             string username = request.Deleteinfo.Username;
@@ -90,8 +115,6 @@ namespace Spaces.Grpc.Services
             {
                 return new DeleteAdResponse { Response = false };
             }
-
-
 
         }
 

@@ -74,5 +74,12 @@ namespace Advertising.Api.Controllers
 
         }
 
+        [HttpPost("[action]")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<ActionResult<bool>> EndUpUsingSpaceAsync(string spaceId)
+        {
+            return Ok(await service.EndUpUsingSpaceAsync(spaceId));
+        }
+
     }
 }

@@ -76,7 +76,6 @@ namespace Spaces.Persistance.Repositories
         {
             return (await this.context.GetCollection().Find(p => p.Owner == username).ToListAsync()).ToModel();
         }
-
         #endregion
     }
 }

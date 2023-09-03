@@ -7,6 +7,7 @@ service SpaceProtoService {
 	rpc InsertSpace (InsertSpaceRequest) returns (InsertSpaceResponse);
 	rpc BookASpace (BookASpaceRequest) returns (BookASpaceResponse);
 	rpc DeleteAd (DeleteAdRequest) returns (DeleteAdResponse);
+	rpc EndUpUsingSpace (EndUpUsingSpaceRequest) returns (EndUpUsingSpaceResponse);
 }
 
 
@@ -64,5 +65,13 @@ message DeleteAdRequest{
 }
 
 message DeleteAdResponse{
+	bool response = 1;
+}
+
+message EndUpUsingSpaceRequest{
+	string spaceid = 1;
+}
+
+message EndUpUsingSpaceResponse{
 	bool response = 1;
 }
