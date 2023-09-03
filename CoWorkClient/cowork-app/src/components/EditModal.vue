@@ -13,14 +13,16 @@
                 <div class="card-text">
                     <div style="display: flex; margin-bottom: 10px;">
                         <span style="width: 80px;">slika</span>
-                        <div style="width: 310px; max-height: 300px;overflow: scroll;">
-                        <div v-if="!this.edit"><img :src="ad.image" style="width: 300px;" /></div>
-                        <div v-else>
-                            <div v-if="this.previewImage"  class="mb-2"  style="width: 300px;">
-                                <img :src="this.previewImage" style="max-width: 300px;"/>
+                        <div>
+                            <div v-if="!this.edit" style="width: 310px;">
+                                <img :src="ad.image" style="width: 300px;" />
                             </div>
-                            <input type="file" @change="handleFileChange"/>
-                        </div>
+                            <div v-else>
+                                <div v-if="this.previewImage" class="mb-2" style="width: 310px; max-height: 300px;overflow: scroll;">
+                                    <img :src="this.previewImage" style="max-width: 300px;" />
+                                </div>
+                                <input type="file" @change="handleFileChange" />
+                            </div>
                         </div>
                     </div>
                     <div style="display: flex;margin-bottom: 10px;">
@@ -44,8 +46,8 @@
                     </div>
                     <div style="display: flex;margin-bottom: 10px;">
                         <span style="width: 80px;">Cena <i class="bi bi-cash"></i>:</span>
-                    <div v-if="!this.edit" style="color: gray;"> {{ ad.pricePerHour }} po satu</div>
-                    <div v-else><input class="form-control" type="text" v-model="editedAd.pricePerHour" style="width:80px;display: inline; margin-right: 5px;"/>po satu</div>
+                        <div v-if="!this.edit" style="color: gray;"> {{ ad.pricePerHour }} po satu</div>
+                        <div v-else><input class="form-control" type="text" v-model="editedAd.pricePerHour" style="width:80px;display: inline; margin-right: 5px;" />po satu</div>
                     </div>
                 </div>
             </div>
@@ -59,7 +61,9 @@
 </template>
 
 <script>
-import { convertBase64 } from '@/store/shared/convertBase64'
+import {
+    convertBase64
+} from '@/store/shared/convertBase64'
 
 export default {
     props: {

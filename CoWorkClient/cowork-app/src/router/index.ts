@@ -74,8 +74,9 @@ const routes: Array<RouteRecordRaw> = [
       title: 'Informacije o prostoru'
     }
   },
-  { path: '/:pathMatch(.*)*', 
-    name: 'NotFound', 
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
     component: NotFound,
     meta: {
       title: '404'
@@ -91,19 +92,21 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const title = to.meta.title
-  if(title){
+  if (title) {
     document.title = String(title)
   }
 
-  const isAuthenticated =store.getters.isAuthenticated
-  
-  if(to.name === 'SingUp'){
+  if (localStorage.getItem('access_token') && localStorage.getItem('refresh_token') && localStorage.getItem('username') &&
+    localStorage.getItem('email') && localStorage.getItem('role')) {
     next()
   }
-  else if ( !isAuthenticated && to.name !== 'LogIn') {
+  else if (to.name === 'SingUp') {
+    next()
+  }
+  else if (!store.getters.isAuthenticated && to.name !== 'LogIn') {
     next({ name: 'LogIn' });
   }
-  else{
+  else {
     next()
   }
 })

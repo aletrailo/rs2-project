@@ -1,6 +1,6 @@
 <template>
 <div v-if="reservedByMe.length">
-    <div class="col py-2" v-for="space in reservedByMe" :key="space.spaceId">
+    <div class="col py-2" v-for="space in reservedByMe" :key="space.id">
         <div class="card" style="height: 100%;">
             <img v-if="space.image!==null" :src="space.image" class="card-img-top" alt="...">
             <div class="card-body">
@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="button" @click="cancelReservation(space.spaceId)" class="btn btn-outline-secondary" style="width: 100%;">Otkazi rezervaciju</button>
+                <button type="button" @click="cancelReservation(space.id)" class="btn btn-outline-secondary" style="width: 100%;">Otkazi rezervaciju</button>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@ export default defineComponent({
     name: "ListSpaces",
     methods:{
         cancelReservation(spaceId){
-            this.$store.dispatch('cancelReservation', {spaceId: spaceId})
+           this.$store.dispatch('cancelReservation', {spaceId: spaceId})
         }
     },
     computed: {

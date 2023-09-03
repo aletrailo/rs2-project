@@ -6,15 +6,17 @@
   <notifications position="bottom right" classes="vue-notification" />
 </template>
 
-<script setup type>
-import { useStore } from 'vuex';
-import { onMounted } from 'vue';
-
-const store = useStore();
-
-onMounted(() => {
-  store.dispatch('initializeAuth');
-});
+<script>
+/* eslint-disable */
+import {
+    mapState
+} from 'vuex'
+export default {
+    name: 'App',
+    beforeCreate() {
+      this.$store.dispatch('initializeAuth')
+    }
+}
 </script>
 
 

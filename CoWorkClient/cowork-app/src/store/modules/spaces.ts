@@ -2,6 +2,7 @@ import { Commit, Dispatch } from 'vuex';
 import auth from './auth';
 import axiosInstance from '../axiosInstance';
 import { successMessage, errorMessage } from '../shared/message'
+import router from '@/router';
 
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:8001/' : '/';
 
@@ -144,6 +145,7 @@ const actions = {
             const response = await axiosInstance.post(url, {}, { headers: headers });
             if (response.status === 200) {
                 successMessage('Uspesno rezervisan prostor!');
+                router.push({name: 'UserProfile'})
             } else {
                 errorMessage('Neuspesno rezervisanje prostora.')
             }
@@ -151,8 +153,8 @@ const actions = {
             errorMessage(String(error))
         }
     },
-    async cancelReservation({ dispatch }: { dispatch: Dispatch }, { spaceId }: { spaceId: number }) {
-        const url = baseUrl + 'url'
+    async cancelReservation({ dispatch }: { dispatch: Dispatch }, { spaceId }: { spaceId: string }) {
+        const url = 'http://localhost:8000/' + 'api/Advertising/EndUpUsingSpace?' + new URLSearchParams({ spaceId: spaceId })
 
         const headers = {
             "Content-Type": "application/json",
@@ -160,10 +162,10 @@ const actions = {
         }
 
         try {
-            const response = await axiosInstance.put(url, spaceId, { headers: headers });
+            const response = await axiosInstance.post(url, {} , { headers: headers });
             if (response.status === 200) {
                 dispatch('getAllReservedBy')
-                successMessage('Izmena je uspesna!')
+                successMessage('Prostor je uspesno otkazan!')
             } else {
                 errorMessage('Neuspesna izmena.')
             }

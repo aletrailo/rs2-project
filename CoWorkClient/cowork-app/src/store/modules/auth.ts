@@ -4,11 +4,10 @@ import router from '@/router';
 import { IJwtPayload } from '../shared/jwt-payload';
 import { Role } from '../shared/role';
 import axiosInstance from '../axiosInstance';
-import { errorMessage } from '../shared/message'
-
+import { errorMessage } from '../shared/message';
 
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/';
-const headers = { "Content-Type": "application/json" }
+const headers = { "Content-Type": "application/json" };
 
 interface Auth {
     userName?: string,
@@ -82,6 +81,12 @@ const getters = {
         return state.auth.roles.find((registeredRole: Role) => registeredRole === role) !== undefined;
     },
     isAuthenticated(): boolean {
+        console.log('START isAuthenticated')
+        console.log(state)
+        console.log(state.accessToken !== undefined)
+        console.log(state.refreshToken !== undefined)
+        console.log(state.auth.userName !== undefined)
+        console.log('END isAuthenticated')
         return state.accessToken !== undefined && state.refreshToken !== undefined && state.auth.userName !== undefined && state.auth.roles !== undefined && state.auth.email !== undefined
     }
 }
@@ -107,8 +112,8 @@ const actions = {
             if (response.status === 200) {
                 const data = await response.data;
                 const { accessToken, refreshToken } = data;
-                dispatch('setTokens', { accessToken, refreshToken });
-                router.push({ name: 'CoWorkHome' })
+                await dispatch('setTokens', { accessToken, refreshToken });
+                router.push({ name: 'CoWorkHome' });
             } else {
                 errorMessage("Problem prilikom prijavljivanja")
             }
@@ -175,6 +180,3 @@ export default {
     actions,
     getters,
 }
-
-
-
