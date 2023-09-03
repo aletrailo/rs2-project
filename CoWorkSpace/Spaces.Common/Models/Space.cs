@@ -14,6 +14,8 @@ namespace Spaces.Common.Models
 
         public Guid ImageId { get; set; }
 
+        public string Image { get; set; }
+
         public bool IsFree { get; set; }
 
         public int PricePerHour { get; set; }

@@ -15,6 +15,11 @@
       },
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5284"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
+      "publishAllPorts": true
     }
   }
 }

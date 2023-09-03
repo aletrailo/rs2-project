@@ -43,6 +43,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=mongodb://spacesdb:27017"
+      - "GrpcSettings:ImagesUri=http://cdn.grpc"
     depends_on:
       - spacesdb
       - cdn.grpc
@@ -54,10 +55,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=mongodb://spacesdb:27017"
+      - "GrpcSettings:ImagesUri=http://cdn.grpc"
     depends_on:
       - spacesdb
-      - cdn.grpc
-      
+      - cdn.grpc 
     ports:
       - "8002:80"
 
@@ -65,8 +66,9 @@ services:
     container_name: cdn.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - CDNDbSettings:ConnectionString=mongodb://spacesdb:27017
     depends_on:
-      - imagesdb
+      - spacesdb
     ports:
       - "7001:80"
 
@@ -74,9 +76,9 @@ services:
     container_name: cdn.grpc
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - CDNDbSettings:ConnectionString=mongodb://spacesdb:27017
     depends_on:
-      - imagesdb
-      - cdn.api
+      - spacesdb
     ports:
       - "7002:80"
 

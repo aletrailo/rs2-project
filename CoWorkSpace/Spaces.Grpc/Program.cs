@@ -1,6 +1,5 @@
 
-using Spaces.Common.Interfaces;
-using Spaces.Common.Services;
+using CDN.Grpc.Protos;
 using Spaces.Grpc.Extensions;
 using Spaces.Grpc.Services;
 
@@ -12,6 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddGrpc();
 builder.Services.AddCommonServices(builder.Configuration);
+
+// Add Grpc services to the container.
+builder.Services.AddGrpcClient<ImageProtoService.ImageProtoServiceClient>(
+    options => options.Address = new Uri(builder.Configuration.GetValue<string>("GrpcSettings:ImagesUri")!)
+);
 
 var app = builder.Build();
 

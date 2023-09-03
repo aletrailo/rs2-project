@@ -19,7 +19,7 @@ namespace Spaces.Common.Services
 
         public async Task<IEnumerable<Space>> GetAllAsync()
         {
-            return await this.repository.GetAllSpaces(); ;
+            return await this.repository.GetAllSpaces();
         }
 
         public Task AddAsync(CreationInfo creationInfo, Guid imageId)

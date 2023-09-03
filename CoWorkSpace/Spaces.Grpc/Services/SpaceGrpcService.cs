@@ -1,31 +1,49 @@
 ﻿using Grpc.Core;
 using Spaces.Common.Interfaces;
+using Spaces.Common.Models;
 using Spaces.Grpc.Extensions;
 using Spaces.Grpc.Protos;
 
 using SpaceModel = Spaces.Common.Models.Space;
+using SpaceGrpcModel = Spaces.Grpc.Protos.Space;
 using CreationInfoModel = Spaces.Common.Models.CreationInfo;
-using Spaces.Common.Models;
 
 namespace Spaces.Grpc.Services
 {
     public sealed class SpaceGrpcService : SpaceProtoService.SpaceProtoServiceBase
     {
         private readonly ISpaceService spaceService;
+        private readonly ICDNImageService cdnImageService;
 
-        public SpaceGrpcService(ISpaceService spaceService)
+        public SpaceGrpcService(ISpaceService spaceService, ICDNImageService cdnImageService)
         {
             this.spaceService = spaceService;
+            this.cdnImageService = cdnImageService;
         }
 
         #region SpaceProtoServiceBase Overrides
 
         public override async Task<GetSpacesResponse> GetSpaces(GetSpacesRequest request, ServerCallContext context)
         {
-            IEnumerable<SpaceModel> spaceModels = await this.spaceService.GetAllAsync();
-
             var response = new GetSpacesResponse();
-            response.Spaces.AddRange(spaceModels.ToGrpsModel());
+            
+            foreach (var spaceModel in await this.spaceService.GetAllAsync())
+            {
+                string imageBlob = (await this.cdnImageService.GetAsync(spaceModel.ImageId)).Blob;
+
+                response.Spaces.Add(new SpaceGrpcModel
+                {
+                    Id = spaceModel.Id,
+                    Name = spaceModel.Name,
+                    Address = spaceModel.Address,
+                    Description = spaceModel.Description,
+                    ImageId = spaceModel.ImageId.ToString(),
+                    Image = imageBlob,
+                    Isfree = spaceModel.IsFree,
+                    Priceperhour = spaceModel.PricePerHour,
+                    Owner = spaceModel.Owner
+                });
+            }
 
             return response;
         }
@@ -33,16 +51,23 @@ namespace Spaces.Grpc.Services
         public override async Task<InsertSpaceResponse> InsertSpace(InsertSpaceRequest request,ServerCallContext context)
         {
 
-            var ci=request.Space.ToModel();
+            CreationInfoModel creationInfoModel = request.Space.ToModel();
 
             try
             {
-                await this.spaceService.AddAsync(ci);
+                Guid imageId = Guid.NewGuid();
+                var cdnImageCreationInfo = new CDNImageCreationInfo
+                {
+                    BlobId = imageId,
+                    Blob = creationInfoModel.Image
+                };
+                await this.cdnImageService.AddAsync(cdnImageCreationInfo);
+                await this.spaceService.AddAsync(creationInfoModel, imageId);
+
                 return new InsertSpaceResponse { Response = true };
             }
-            catch (Exception ex)
+            catch
             {
-                
                 return new InsertSpaceResponse { Response = false };
             }
         }
