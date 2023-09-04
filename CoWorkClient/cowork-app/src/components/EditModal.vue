@@ -3,7 +3,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">{{this.edit? 'Izmena' : 'Pregled'}}</h5>
+                <h5 class="fw-bold">{{this.edit? 'Izmena' : 'Pregled'}}</h5>
                 <span>
                     <button v-if="!this.edit" type="button" class="btn"><i @click="this.edit=!this.edit" class="bi bi-pen"></i></button>
                     <button type="button" class="btn-close" @click="closeModal" style="padding: 0; margin:0"></button>
@@ -12,7 +12,7 @@
             <div class="modal-body">
                 <div class="card-text">
                     <div style="display: flex; margin-bottom: 10px;">
-                        <span style="width: 80px;">slika</span>
+                        <span class="fw-bold" style="width: 80px;">Slika:</span>
                         <div>
                             <div v-if="!this.edit" style="width: 310px;">
                                 <img :src="ad.image" style="width: 300px;" />
@@ -26,26 +26,26 @@
                         </div>
                     </div>
                     <div style="display: flex;margin-bottom: 10px;">
-                        <span style="width: 80px;">Naziv:</span>
+                        <span class="fw-bold" style="width: 80px;">Naziv:</span>
                         <div v-if="!this.edit">{{ad.name}}</div>
                         <div v-else><input class="form-control" v-model="editedAd.name" type="text"></div>
                     </div>
                     <div style="display: flex;margin-bottom: 10px;">
-                        <span style="width: 80px;">Adresa:</span>
-                        <div v-if="!this.edit" class="fw-bold"> <i class="bi bi-geo-alt-fill"></i> {{ ad.address }}</div>
+                        <span class="fw-bold" style="width: 80px;">Adresa<i class="bi bi-geo-alt-fill"></i>:</span>
+                        <div v-if="!this.edit" class="fst-normal">  {{ ad.address }}</div>
                         <div v-else><input class="form-control" v-model="editedAd.address" type="text"></div>
                     </div>
                     <div style="display: flex;margin-bottom: 10px;">
-                        <span style="width: 80px;">Opis:</span>
+                        <span class="fw-bold" style="width: 80px;">Opis:</span>
                         <div v-if="!this.edit"> {{ ad.description }}</div>
                         <div v-else><input class="form-control" v-model="editedAd.description" type="text"></div>
                     </div>
                     <div style="display: flex;margin-bottom: 10px;">
-                        <span style="width: 80px;">Status:</span>
+                        <span class="fw-bold" style="width: 80px;">Status:</span>
                         <div> {{ ad.isFree? 'slobodan' : 'zauzet' }}</div>
                     </div>
                     <div style="display: flex;margin-bottom: 10px;">
-                        <span style="width: 80px;">Cena <i class="bi bi-cash"></i>:</span>
+                        <span class="fw-bold" style="width: 80px;">Cena <i class="bi bi-cash"></i>:</span>
                         <div v-if="!this.edit" style="color: gray;"> {{ ad.pricePerHour }} po satu</div>
                         <div v-else><input class="form-control" type="text" v-model="editedAd.pricePerHour" style="width:80px;display: inline; margin-right: 5px;" />po satu</div>
                     </div>
