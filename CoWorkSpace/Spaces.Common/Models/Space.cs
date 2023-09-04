@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 
 namespace Spaces.Common.Models
 {
@@ -13,7 +12,9 @@ namespace Spaces.Common.Models
 
         public string Description { get; set; }
 
-        public string Image { get; set; } //url slike prostora
+        public Guid ImageId { get; set; }
+
+        public string Image { get; set; }
 
         public bool IsFree { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using Spaces.Common.Interfaces;
+﻿using Spaces.Api.Services;
+using Spaces.Common.Interfaces;
 using Spaces.Common.Services;
 using Spaces.Persistance.Context;
 using Spaces.Persistance.Helpers;
@@ -15,6 +16,7 @@ namespace Spaces.Api.Extensions
             services.AddTransient<ISpaceContext, SpaceContext>();
             services.AddTransient<ISpaceRepository, SpaceRepository>();
             services.AddTransient<ISpaceService, SpaceService>();
+            services.AddTransient<ICDNImageService, CDNImageService>();
         }
     }
 }

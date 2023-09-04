@@ -10,6 +10,8 @@
 
         public string Description { get; set; }
 
+        public Guid ImageId { get; set; }
+
         public string Image { get; set; }
 
         public bool IsFree { get; set; }
