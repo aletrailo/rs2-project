@@ -24,8 +24,8 @@ namespace Advertising.Api.Services
 
             var adSpaces = new List<AdSpace>();
 
-            foreach(var space in getSpacesResponse.Spaces)
-                adSpaces.Add(new AdSpace { SpaceId=space.Id ,Name = space.Name, Address = space.Address , Description=space.Description, Image=space.Image, IsFree=space.Isfree , PricePerHour = space.Priceperhour, Owner=space.Owner });
+            foreach (var space in getSpacesResponse.Spaces)
+                adSpaces.Add(new AdSpace { SpaceId = space.Id, Name = space.Name, Address = space.Address, Description = space.Description, Image = space.Image, IsFree = space.Isfree, PricePerHour = space.Priceperhour, Owner = space.Owner });
 
             return adSpaces;
         }
@@ -35,7 +35,7 @@ namespace Advertising.Api.Services
 
             try
             {
-                var spaceInfo = new SpaceInfo { Name = adSpaceInfo.Name, Address = adSpaceInfo.Address, Description = adSpaceInfo.Description, Image = adSpaceInfo.Image, Isfree = adSpaceInfo.IsFree , Priceperhour = adSpaceInfo.PricePerHour, Owner = adSpaceInfo.Owner};
+                var spaceInfo = new SpaceInfo { Name = adSpaceInfo.Name, Address = adSpaceInfo.Address, Description = adSpaceInfo.Description, Image = adSpaceInfo.Image, Isfree = adSpaceInfo.IsFree, Priceperhour = adSpaceInfo.PricePerHour, Owner = adSpaceInfo.Owner };
                 var request = new InsertSpaceRequest
                 {
                     Space = spaceInfo
@@ -46,17 +46,17 @@ namespace Advertising.Api.Services
             }
             catch (RpcException ex)
             {
-                
-                return false; 
+
+                return false;
             }
 
         }
 
-        public async Task<bool> BookASpaceAsync(ReservationInfo reservationInfo)
+        public async Task<bool> BookASpaceAsync(UsernameSpaceIdInfo usernameSpaceIdInfo)
         {
             try
             {
-                var reservation = new Reservation { Spaceid = reservationInfo.spaceId, Username = reservationInfo.username };
+                var reservation = new UsernameSpaceId { Spaceid = usernameSpaceIdInfo.spaceId, Username = usernameSpaceIdInfo.username };
                 var request = new BookASpaceRequest
                 {
                     Reservation = reservation
@@ -65,12 +65,52 @@ namespace Advertising.Api.Services
 
                 return bookASpaceResponse.Response;
 
-            }catch (RpcException ex)
+            } catch (RpcException ex)
             {
                 return false;
             }
         }
 
+        public async Task<bool> DeleteAdAsync(UsernameSpaceIdInfo usernameSpaceIdInfo)
+        {
+            try
+            {
+                var deleteInfo = new UsernameSpaceId { Spaceid = usernameSpaceIdInfo.spaceId, Username = usernameSpaceIdInfo.username };
+                var request = new DeleteAdRequest
+                {
+                    Deleteinfo = deleteInfo
+                };
+                DeleteAdResponse deleteAdResponse = await this.spaceProtoServiceClient.DeleteAdAsync(request);
+
+                return deleteAdResponse.Response;
+
+            }
+            catch (RpcException ex)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> EndUpUsingSpaceAsync(string spaceId)
+        {
+            try
+            {
+                var request = new EndUpUsingSpaceRequest
+                {
+                    Spaceid = spaceId
+                };
+                EndUpUsingSpaceResponse endUpUsingSpaceResponse = await this.spaceProtoServiceClient.EndUpUsingSpaceAsync(request);
+
+                return endUpUsingSpaceResponse.Response;
+            }
+            catch (RpcException ex)
+            {
+                return false;
+            }
+
+
+
+        }
         #endregion
     }
 }

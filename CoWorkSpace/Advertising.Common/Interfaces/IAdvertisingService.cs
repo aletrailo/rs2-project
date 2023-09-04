@@ -9,6 +9,10 @@ namespace Advertising.Common.Interfaces
         Task<IEnumerable<AdSpace>> GetAllAsync();
         Task<bool> AddAsync(AdSpaceInfo adSpaceInfo);
 
-        Task<bool> BookASpaceAsync(ReservationInfo reservationInfo);
+        Task<bool> BookASpaceAsync(UsernameSpaceIdInfo usernameSpaceIdInfo);
+
+        Task<bool> DeleteAdAsync(UsernameSpaceIdInfo usernameSpaceIdInfo);
+
+        Task<bool> EndUpUsingSpaceAsync(string spaceId);
     }
 }

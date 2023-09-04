@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Advertising.Api.Dtos;
 using Advertising.Api.Extensions;
 using System.Security.Claims;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Advertising.Api.Controllers
 {
+    [Authorize(Roles = "Admin,User")]
     [Route("api/[controller]")]
     [ApiController]
     public class AdvertisingController : ControllerBase
@@ -19,32 +22,66 @@ namespace Advertising.Api.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<IEnumerable<AdSpace>> GetAllAsync()
+        [ProducesResponseType(typeof(IEnumerable<AdSpace>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<AdSpace>> GetAllAsync()
         {
-            return await this.service.GetAllAsync();
+            return Ok(await this.service.GetAllAsync());
         }
+
 
         [HttpPost("[action]")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        public async Task<IActionResult> AddAnAdAsync(AdInfoDto adInfoDto)
+        public async Task<ActionResult<bool>> AddAnAdAsync([Required]  AdInfoDto adInfoDto)
         {
 
+            var username = User.FindFirst(ClaimTypes.Name).Value;
 
-            string username = User.FindFirst(ClaimTypes.Name).Value;
-
+            if (username is null) {
+                return Unauthorized();
+            }
+            
             AdSpaceInfo adSpaceInfo = adInfoDto.ToModel(username);
             return Ok(await service.AddAsync(adSpaceInfo));
         }
 
         [HttpPost("[action]")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        public async Task<IActionResult> BookASpaceAsync(string spaceId)
+        public async Task<ActionResult<bool>> BookASpaceAsync(string spaceId)
         {
             var username = User.FindFirst(ClaimTypes.Name).Value;
-            
-            ReservationInfo reservationInfo=new ReservationInfo(username, spaceId);
-            return Ok(await service.BookASpaceAsync(reservationInfo));
+
+            if (username is null) {
+                return Unauthorized();
+            }
+
+            UsernameSpaceIdInfo usernameSpaceIdInfo = new UsernameSpaceIdInfo(username, spaceId);
+            return Ok(await service.BookASpaceAsync(usernameSpaceIdInfo));
 
         }
+
+        [HttpDelete("[action]")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<ActionResult<bool>> DeleteAdAsync(string spaceId)
+        {
+            var username = User.FindFirst(ClaimTypes.Name).Value;
+
+            if (username is null)
+            {
+                return Unauthorized();
+            }
+
+            UsernameSpaceIdInfo usernameSpaceIdInfo = new UsernameSpaceIdInfo(username, spaceId);
+            return Ok(await service.DeleteAdAsync(usernameSpaceIdInfo));
+
+
+        }
+
+        [HttpPost("[action]")]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<ActionResult<bool>> EndUpUsingSpaceAsync(string spaceId)
+        {
+            return Ok(await service.EndUpUsingSpaceAsync(spaceId));
+        }
+
     }
 }

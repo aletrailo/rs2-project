@@ -1,31 +1,24 @@
-import { Commit, Dispatch, Module } from 'vuex';
+import { Commit, Dispatch } from 'vuex';
 import { JwtPayloadKeys } from '../shared/jwt-payload-keys';
 import router from '@/router';
-const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/';
-const headers = { "Content-Type": "application/json" }
 import { IJwtPayload } from '../shared/jwt-payload';
 import { Role } from '../shared/role';
+import axiosInstance from '../axiosInstance';
+import { errorMessage } from '../shared/message';
 
-
-interface User {
-    id: string | null,
-    firstName: string | null,
-    lastName: string | null,
-    email: string | null,
-}
+const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/';
+const headers = { "Content-Type": "application/json" };
 
 interface Auth {
-    username: string,
-    email: string,
-    role: Role | Role[];
+    userName?: string,
+    email?: string,
+    roles?: Role | Role[];
 }
 
 interface AuthState {
-    accessToken: string | null;
-    refreshToken: string | null;
-    user: User,
+    accessToken?: string;
+    refreshToken?: string;
     auth: Auth,
-    users: User[]
 }
 
 function parsePayload(jwtString: string): IJwtPayload {
@@ -35,25 +28,21 @@ function parsePayload(jwtString: string): IJwtPayload {
 }
 
 const state: AuthState = {
-
-    accessToken: null,
-    refreshToken: null,
-    user: {} as User,
-    auth: {} as Auth,
-    users: [] as User[]
-
+    auth: {} as Auth
 }
+
 const mutations = {
     setAccessToken(state: AuthState, token: string) {
         state.accessToken = token;
+        localStorage.setItem('access_token', state.accessToken);
         const payload = parsePayload(state.accessToken)
-        state.auth.username = payload[JwtPayloadKeys.Username]
+        state.auth.userName = payload[JwtPayloadKeys.Username]
         state.auth.email = payload[JwtPayloadKeys.Email];
-        state.auth.role = payload[JwtPayloadKeys.Role];
+        state.auth.roles = payload[JwtPayloadKeys.Role];
 
-        localStorage.setItem('username', state.auth.username)
+        localStorage.setItem('username', state.auth.userName)
         localStorage.setItem('email', state.auth.email)
-        localStorage.setItem('role', JSON.stringify(state.auth.role))
+        localStorage.setItem('role', JSON.stringify(state.auth.roles))
     },
     setRefreshToken(state: AuthState, token: string) {
         state.refreshToken = token;
@@ -71,102 +60,94 @@ const mutations = {
             state.refreshToken = refreshToken;
         }
         if (username) {
-            state.auth.username = username;
+            state.auth.userName = username;
         }
         if (email) {
             state.auth.email = email;
         }
         if (role && role !== null) {
-            state.auth.role = JSON.parse(role)
+            state.auth.roles = JSON.parse(role)
         }
-    },
-    SET_DATA(state: AuthState, data: any) {
-        state.user = data
-    },
-    SET_USERS(state: AuthState, data: any) {
-        state.users = data
     }
-
 }
 
-const actions= {
-    initializeAuth({ commit }:{commit: Commit}) {
+const getters = {
+    hasRole: (state: AuthState) => (role: Role) => {
+        if (!state.auth.roles)
+            return false
+        if (typeof state.auth.roles === 'string') {
+            return state.auth.roles === role
+        }
+        return state.auth.roles.find((registeredRole: Role) => registeredRole === role) !== undefined;
+    },
+    isAuthenticated(): boolean {
+        console.log('START isAuthenticated')
+        console.log(state)
+        console.log(state.accessToken !== undefined)
+        console.log(state.refreshToken !== undefined)
+        console.log(state.auth.userName !== undefined)
+        console.log('END isAuthenticated')
+        return state.accessToken !== undefined && state.refreshToken !== undefined && state.auth.userName !== undefined && state.auth.roles !== undefined && state.auth.email !== undefined
+    }
+}
+
+const actions = {
+    initializeAuth({ commit }: { commit: Commit }) {
         commit('initializeTokensFromLocalStorage');
     },
-    setTokens({ commit }:{commit: Commit}, { accessToken, refreshToken }: any) {
+    setTokens({ commit }: { commit: Commit }, { accessToken, refreshToken }: any) {
         commit('setAccessToken', accessToken);
         commit('setRefreshToken', refreshToken);
         localStorage.setItem('access_token', accessToken);
         localStorage.setItem('refresh_token', refreshToken);
     },
-        async logIn({ commit, state, dispatch }:{commit: Commit, state: AuthState, dispatch: Dispatch}, { username, password }:any) {
+    async logIn({ dispatch }: { dispatch: Dispatch }, { username, password }: any) {
         const url = baseUrl + 'api/v1/Authentication/LogIn'
         const loginData = {
             userName: username,
             password: password
         }
         try {
-            const response = await fetch(url, { method: 'POST', body: JSON.stringify(loginData), headers: headers });
-            if (response.ok) {
-                const data = await response.json();
+            const response = await axiosInstance.post(url, JSON.stringify(loginData), { headers: headers })
+            if (response.status === 200) {
+                const data = await response.data;
                 const { accessToken, refreshToken } = data;
-                // Save tokens in the store
-                dispatch('setTokens', { accessToken, refreshToken });
-                router.push({ name: 'CoWorkHome' })
-
+                await dispatch('setTokens', { accessToken, refreshToken });
+                router.push({ name: 'CoWorkHome' });
             } else {
-                console.error('Login failed.');
+                errorMessage("Problem prilikom prijavljivanja")
             }
         } catch (error) {
-            console.error('An error occurred during login:', error);
+            errorMessage(String(error))
         }
     },
-        async singIn({ commit, state, dispatch }:{commit: Commit, state: AuthState, dispatch: Dispatch}, { firstName, lastName, userName, password, email, phoneNumber }: any) {
-        const url = baseUrl + 'api/v1/Authentication/RegisterUser'
-        const singInData =
-        {
-            firstName: firstName,
-            lastName: lastName,
-            userName: userName,
-            password: password,
-            email: email,
-            phoneNumber: phoneNumber
+    async getRefreshToken({ state, dispatch }: { state: AuthState, dispatch: Dispatch }) {
+        const url = baseUrl + 'api/v1/Authentication/Refresh'
+        const refreshTokenData = {
+            userName: state.auth.userName,
+            refreshToken: state.refreshToken
         }
+
         try {
-            const response = await fetch(url, { method: 'POST', body: JSON.stringify(singInData), headers: headers });
+            const response = await axiosInstance.post(url, JSON.stringify(refreshTokenData), { headers: headers })
+            if (response.status === 200) {
+                const data = await response.data;
+                const { accessToken, refreshToken } = data;
+                dispatch('setTokens', { accessToken, refreshToken });
 
-            if (response.ok) {
-                dispatch('logIn', { username: userName, password: password })
+                console.log("Uspesno postavljen REFRESH token")
             } else {
-                console.error('Registration failed.');
+                console.error("Problem prilikom dobijanja refresh tokena")
             }
         } catch (error) {
-            console.error('An error occurred during registration:', error);
+            console.error(String(error))
         }
     },
-    getUser({ commit, state }: {commit: Commit, state: AuthState}) {
-        const url = baseUrl + 'api/v1/User/' + state.auth.username
-
-        const headers = { Authorization: `Bearer ${state.accessToken}`, }
-
-        fetch(url, {
-            method: 'GET', mode: 'cors', headers: headers
-        })
-            .then((response) => {
-                if (!response.ok)
-                    throw response
-                return response.json()
-            })
-            .then(data => { commit('SET_DATA', data) })
-            .catch(error => {
-                console.error(error)
-            })
-    },
-        async logOut({ commit, state }: {commit: Commit, state: AuthState}) {
+    async logOut({ state }: { state: AuthState }) {
         const url = baseUrl + 'api/v1/Authentication/Logout'
 
         const logOutData = {
-            "userName": state.auth.username,
+            "userName": state.auth.userName,
             "refreshToken": state.refreshToken
         }
 
@@ -177,46 +158,25 @@ const actions= {
 
 
         try {
-            const response = await fetch(url, { method: 'POST', body: JSON.stringify(logOutData), headers: headers });
+            const response = await axiosInstance.post(url, JSON.stringify(logOutData), { headers: headers });
             if (response.status === 202) {
                 const keys = Object.keys(localStorage)
                 for (const key of keys) {
                     localStorage.removeItem(key);
                 }
-
                 router.push({ name: 'LogIn' })
             } else {
-                console.error('Neuspesno  odjavljivanje.');
+                errorMessage("Neuspesno odjavljivanje")
             }
         } catch (error) {
-            console.error('An error occurred during logout:', error);
+            errorMessage(String(error))
         }
     },
-    getAllUsers({ commit, state }: {commit: Commit, state: AuthState}) {
-        const url = baseUrl + 'api/v1/User'
-        const headers = { Authorization: `Bearer ${state.accessToken}`, }
-        fetch(url, {
-            method: 'GET', mode: 'cors', headers: headers
-        })
-            .then((response) => {
-                if (!response.ok)
-                    throw response
-                return response.json()
-            })
-            .then(data => { commit('SET_USERS', data) })
-            .catch(error => {
-                console.error(error)
-            })
-    }
 }
-
-
 export default {
-    namespace : true,
+    namespace: true,
     state,
     mutations,
-    actions
-  }
-
-
-
+    actions,
+    getters,
+}

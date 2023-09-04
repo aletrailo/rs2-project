@@ -6,6 +6,8 @@ service SpaceProtoService {
 	rpc GetSpaces (GetSpacesRequest) returns (GetSpacesResponse);
 	rpc InsertSpace (InsertSpaceRequest) returns (InsertSpaceResponse);
 	rpc BookASpace (BookASpaceRequest) returns (BookASpaceResponse);
+	rpc DeleteAd (DeleteAdRequest) returns (DeleteAdResponse);
+	rpc EndUpUsingSpace (EndUpUsingSpaceRequest) returns (EndUpUsingSpaceResponse);
 }
 
 
@@ -31,7 +33,7 @@ message SpaceInfo{
 	string Owner = 7;
 }
 
-message Reservation{
+message UsernameSpaceId{
 	string spaceid = 1;
 	string username = 2;
 }
@@ -52,9 +54,25 @@ message InsertSpaceResponse{
 }
 
 message BookASpaceRequest{
-	Reservation reservation = 1;
+	 UsernameSpaceId reservation = 1;
 }
 
 message BookASpaceResponse{
+	bool response = 1;
+}
+
+message DeleteAdRequest{
+	UsernameSpaceId deleteinfo = 1;
+}
+
+message DeleteAdResponse{
+	bool response = 1;
+}
+
+message EndUpUsingSpaceRequest{
+	string spaceid = 1;
+}
+
+message EndUpUsingSpaceResponse{
 	bool response = 1;
 }

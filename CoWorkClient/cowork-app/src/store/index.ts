@@ -1,19 +1,19 @@
 
-import { createStore, Store } from 'vuex';
-import authModule from './modules/auth';
+import { createStore } from 'vuex';
+import auth from './modules/auth';
 import advertisement from './modules/advertisement';
-const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/';
+import spaces from './modules/spaces';
+import users from './modules/users';
+import singUp from './modules/singUp';
 
-export interface RootState {
-  user: string
-}
-
-const store: Store<RootState> = createStore({
+const store = createStore({
   modules: {
-    auth: authModule,
-    advertisement: advertisement
+    auth,
+    advertisement,
+    spaces,
+    users,
+    singUp
   },
-
 });
 
 export default store;

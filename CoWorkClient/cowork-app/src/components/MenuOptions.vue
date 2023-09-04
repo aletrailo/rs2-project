@@ -22,9 +22,9 @@
                 <div style="display: flow-root; margin-top: 1.5rem; ">
                     <div style="border-top-width: 1px; ">
                         <div class="item">
-                            <router-link :to="{name: 'UserProfile'}"><i class="bi bi-person"></i>{{user.userName}} </router-link>
+                            <router-link :to="{name: 'UserProfile'}"><i class="bi bi-person"></i>{{userName}} </router-link>
                         </div>
-                        <div class="item">
+                        <div class="item" v-if="AdminRole">
                             <router-link :to="{name: 'UsersList'}">
                                 <i class="bi bi-people"></i> Spisak korisnika
                             </router-link>
@@ -46,6 +46,7 @@
 import {
     defineComponent
 } from 'vue';
+import { Role } from '@/store/shared/role';
 
 export default defineComponent({
     name: "MenuOptions",
@@ -60,8 +61,11 @@ export default defineComponent({
         },
     },
     computed: {
-        user() {
-            return this.$store.state.auth.user
+        userName() {
+            return this.$store.state.auth.auth.userName
+        },
+        AdminRole(){
+            return this.$store.getters.hasRole(Role.Admin)
         }
     }
 

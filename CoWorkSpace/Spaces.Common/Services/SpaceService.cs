@@ -49,6 +49,16 @@ namespace Spaces.Common.Services
             this.repository.DeleteAllromDatabase();
         }
 
+        public Task<IEnumerable<Space>> GetAllReservedByAsync(string username)
+        {
+            return this.repository.GetAllReservedByAsync(username);
+        }
+
+        public Task<IEnumerable<Space>> GetAllOwnedByAsync(string username)
+        {
+            return this.repository.GetAllOwnedByAsync(username);
+        }
+
         #endregion
     }
 }

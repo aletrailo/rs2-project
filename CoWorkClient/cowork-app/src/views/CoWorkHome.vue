@@ -1,10 +1,9 @@
 <template>
 <MenuOptions />
-
 <section class="text-center" style="background-color: #f4f4f4;">
     <div class="row">
         <div class="col-lg-6 col-md-8 mx-auto py-2">
-            <h1 class="fw-light"> <span style="color: yellow;">Co</span>working Space</h1>
+            <h1 class="fw-light"> Co<span style="color: yellow;">work</span> Space</h1>
             <p class="lead text-muted">Make work more enjoyable</p>
             <p>
                 <router-link :to="{ name: 'SpaceAdvertisement' }"><button type="button" class="btn btn-outline-secondary">Posedujete prostor? Oglasite ga!</button></router-link>
@@ -13,11 +12,10 @@
     </div>
 </section>
 <div class="container">
-
     <div class="row row-cols-1 row-cols-md-4 g-8 py-4">
-        <div class="col" v-for="ad in advertisements" :key="ad">
+        <div class="col py-2" v-for="ad in advertisements" :key="ad">
             <div class="card" style="height: 100%;">
-                <img src="../assets/novo.png" class="card-img-top" alt="...">
+                <img v-if="ad.image!==null" :src="ad.image" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title fw-bolder">{{ ad.name }}</h5>
                     <div class="card-text">
@@ -28,7 +26,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <button type="button" class="btn btn-outline-secondary">pogledajte detalje</button>
+                    <router-link :to="{name: 'AdInfo', params: {id:ad.spaceId  }}"><button type="button" class="btn btn-outline-secondary">pogledajte detalje</button></router-link>
                 </div>
             </div>
         </div>
@@ -52,7 +50,7 @@ export default {
     },
     computed: {
         user() {
-            return this.$store.state.auth.user
+            return this.$store.state.users.user
         },
         advertisements() {
             return this.$store.state.advertisement.advertisements

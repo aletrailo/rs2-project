@@ -80,14 +80,67 @@ namespace Spaces.Grpc.Services
             try
             {
                 SpaceModel space = await this.spaceService.GetByIdAsync(spaceId);
+                if (space == null)
+                {
+                    return new BookASpaceResponse { Response = false };
+                }
                 space.IsFree = false;
                 space.ReservedBy = username;
                 await this.spaceService.UpdateAsync(space);
                 return new BookASpaceResponse { Response = true };
-            }catch(Exception ex)
+            }
+            catch(Exception ex)
             {
                 return new BookASpaceResponse { Response = false };
             }
+        }
+
+        public override async Task<EndUpUsingSpaceResponse> EndUpUsingSpace(EndUpUsingSpaceRequest request, ServerCallContext context)
+        {
+            string spaceId = request.Spaceid;
+
+            try
+            {
+                SpaceModel space = await this.spaceService.GetByIdAsync(spaceId);
+
+                if (space == null)
+                {
+                    return new EndUpUsingSpaceResponse { Response = false };
+                }
+                space.IsFree = true;
+                space.ReservedBy = null;
+                await this.spaceService.UpdateAsync(space);
+                return new EndUpUsingSpaceResponse { Response = true };
+
+            }
+            catch (Exception ex)
+            {
+                return new EndUpUsingSpaceResponse { Response = false };
+            }
+        }
+
+
+        public override async Task<DeleteAdResponse> DeleteAd(DeleteAdRequest request, ServerCallContext context)
+        {
+            string username = request.Deleteinfo.Username;
+            string spaceId = request.Deleteinfo.Spaceid;
+
+            try
+            {
+                SpaceModel space = await this.spaceService.GetByIdAsync(spaceId);
+                if (!space.Owner.Equals(username) || space==null )
+                {
+                    return new DeleteAdResponse { Response = false };
+                }
+                await this.spaceService.DeleteAsync(spaceId);
+                return new DeleteAdResponse { Response = true };
+                
+            }
+            catch(Exception ex)
+            {
+                return new DeleteAdResponse { Response = false };
+            }
+
         }
 
         #endregion

@@ -3,6 +3,7 @@ using Spaces.Api.Dtos;
 using Spaces.Api.Extensions;
 using Spaces.Common.Interfaces;
 using Spaces.Common.Models;
+using System.Security.Claims;
 
 namespace Spaces.Api.Controllers
 {
@@ -20,7 +21,8 @@ namespace Spaces.Api.Controllers
         }
 
         [HttpGet("all")]
-        public async Task<IEnumerable<SpaceDto>> GetAllAsync()
+        [ProducesResponseType(typeof(IEnumerable<SpaceDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<SpaceDto>>> GetAllAsync()
         {
             var spaceDtos = new List<SpaceDto>();
 
@@ -46,7 +48,7 @@ namespace Spaces.Api.Controllers
         }
 
         [HttpPost("[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
         public async Task AddAsync(CreationInfoDto creationInfoDto)
         {
             Guid imageId = Guid.NewGuid();
@@ -63,8 +65,8 @@ namespace Spaces.Api.Controllers
         }
 
         [HttpPut("[action]")]
-        [ProducesResponseType(typeof(bool),StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateAsync(SpaceDto spaceDto)
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<ActionResult<bool>> UpdateAsync(SpaceDto spaceDto)
         {
             //TODO: Add CDN.Grpc update
             var space = spaceDto.ToModel();
@@ -74,17 +76,47 @@ namespace Spaces.Api.Controllers
         //getbyid
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(SpaceDto), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetByIdAsync(String Id)
+        public async Task<ActionResult<SpaceDto>> GetByIdAsync(String Id)
         {
             return Ok(await service.GetByIdAsync(Id));
         }
+
         
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<SpaceDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<SpaceDto>>> GetAllReservedByAsync()
+        {
+            var username = User.FindFirst(ClaimTypes.Name).Value;
+
+            if (username is null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok((await service.GetAllReservedByAsync(username)).ToDto());
+        }
+
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<SpaceDto>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<SpaceDto>>> GetAllOwnedByAsync()
+        {
+            var username = User.FindFirst(ClaimTypes.Name).Value;
+
+            if (username is null)
+            {
+                return Unauthorized();
+            }
+
+            return Ok((await service.GetAllOwnedByAsync(username)).ToDto());
+        }
+
         [HttpDelete("[action]")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteAsync(SpaceDto spaceDto)
+        public async Task<ActionResult<bool>> DeleteAsync(string Id)
         {
-            //TODO: Add CDN.Grpc update
-            return Ok(await service.DeleteAsync(spaceDto.ToModel().Id));
+
+            return Ok(await service.DeleteAsync(Id));
+
         }
 
         [HttpDelete("drop-database")]
