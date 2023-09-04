@@ -47,6 +47,20 @@ namespace CDN.Grpc.Services
             return response;
         }
 
+        public override async Task<UpdateImageResponse> UpdateImage(UpdateImageRequest request, ServerCallContext context)
+        {
+            await this.imageService.UpdateAsync(request.Image.ToModel());
+
+            return new UpdateImageResponse();
+        }
+
+        public override async Task<DeleteImageResponse> DeleteImage(DeleteImageRequest request, ServerCallContext context)
+        {
+            await this.imageService.DeleteAsync(Guid.Parse(request.BlobId));
+
+            return new DeleteImageResponse();
+        }
+
         #endregion
     }
 }

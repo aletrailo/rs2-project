@@ -9,5 +9,9 @@ namespace Spaces.Common.Interfaces
         Task<CDNImage> GetAsync(Guid id);
 
         Task AddAsync(CDNImageCreationInfo cdnImageCreationInfo);
+
+        Task UpdateAsync(CDNImage cdnImage);
+
+        Task DeleteAsync(Guid blobId);
     }
 }

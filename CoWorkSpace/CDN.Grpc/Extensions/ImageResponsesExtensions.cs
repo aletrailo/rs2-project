@@ -22,6 +22,16 @@ namespace Spaces.Grpc.Extensions
             return models.Select(model => model.ToGrpcModel());
         }
 
+        internal static ImageModel ToModel(this ImageGrpc grpcModel)
+        {
+            return new ImageModel
+            {
+                Id = grpcModel.Id,
+                BlobId = Guid.Parse(grpcModel.BlobId),
+                Blob = grpcModel.Blob
+            };
+        }
+
         internal static ImageCreationInfoModel ToModel(this ImageCreationInfoGrpc imageCreationInfoGrpc)
         {
             return new ImageCreationInfoModel

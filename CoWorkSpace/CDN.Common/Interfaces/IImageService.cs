@@ -13,6 +13,10 @@ namespace CDN.Common.Interfaces
 
         Task<Image> AddAsync(ImageCreationInfo imageCreationInfo);
 
+        Task UpdateAsync(Image image);
+
+        Task DeleteAsync(Guid blobId);
+
         void DeleteAllFromDatabase();
     }
 }

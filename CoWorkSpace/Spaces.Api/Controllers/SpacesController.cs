@@ -68,7 +68,13 @@ namespace Spaces.Api.Controllers
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<ActionResult<bool>> UpdateAsync(SpaceDto spaceDto)
         {
-            var space = spaceDto.ToModel();
+            Space space = spaceDto.ToModel();
+
+            CDNImage cdnImage = await this.cdnImageService.GetAsync(space.ImageId);
+            cdnImage.Blob = space.Image;
+
+            await this.cdnImageService.UpdateAsync(cdnImage);
+
             return Ok(await service.UpdateAsync(space));
         }
 
@@ -156,6 +162,10 @@ namespace Spaces.Api.Controllers
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<ActionResult<bool>> DeleteAsync(string Id)
         {
+            Guid blobId = (await this.service.GetByIdAsync(Id)).ImageId;
+
+            await this.cdnImageService.DeleteAsync(blobId);
+
             return Ok(await service.DeleteAsync(Id));
 
         }

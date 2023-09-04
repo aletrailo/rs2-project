@@ -6,6 +6,8 @@ service ImageProtoService {
 	rpc GetImage (GetImageRequest) returns (GetImageResponse);
 	rpc GetImages (GetImagesRequest) returns (GetImagesResponse);
 	rpc InsertImage (InsertImageRequest) returns (InsertImageResponse);
+	rpc UpdateImage (UpdateImageRequest) returns (UpdateImageResponse);
+	rpc DeleteImage (DeleteImageRequest) returns (DeleteImageResponse);
 }
 
 
@@ -41,4 +43,18 @@ message InsertImageRequest {
 
 message InsertImageResponse {
 	Image image = 1;
+}
+
+message UpdateImageRequest {
+	Image image = 1;
+}
+
+message UpdateImageResponse {
+}
+
+message DeleteImageRequest {
+	string blobId = 1;
+}
+
+message DeleteImageResponse {
 }

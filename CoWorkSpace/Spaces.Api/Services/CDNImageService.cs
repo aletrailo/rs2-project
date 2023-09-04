@@ -40,6 +40,22 @@ namespace Spaces.Api.Services
             return response.Image.ToModel();
         }
 
+        public async Task UpdateAsync(CDNImage cdnImage)
+        {
+            var request = new UpdateImageRequest();
+            request.Image = cdnImage.ToGrpcModel();
+
+            await this.imageProtoServiceClient.UpdateImageAsync(request);
+        }
+
+        public async Task DeleteAsync(Guid blobId)
+        {
+            var request = new DeleteImageRequest();
+            request.BlobId = blobId.ToString();
+
+            await this.imageProtoServiceClient.DeleteImageAsync(request);
+        }
+
         #endregion
     }
 }

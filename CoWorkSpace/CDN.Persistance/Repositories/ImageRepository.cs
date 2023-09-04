@@ -46,6 +46,17 @@ namespace CDN.Persistance.Repositories
             return imageEntity.ToModel();
         }
 
+        public async Task UpdateAsync(Image image)
+        {
+            ImageEntity imageEntity = image.ToEntity();
+            await this.context.GetCollection().ReplaceOneAsync(entity => entity.BlobId == imageEntity.BlobId, imageEntity);
+        }
+
+        public async Task DeleteAsync(Guid blobId)
+        {
+            await this.context.GetCollection().DeleteOneAsync(entity => entity.BlobId == blobId);
+        }
+
         public void DeleteAllFromDatabase()
         {
             this.context.GetCollection().DeleteMany(_ => true);

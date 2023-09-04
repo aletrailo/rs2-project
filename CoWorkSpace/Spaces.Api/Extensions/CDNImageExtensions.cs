@@ -15,5 +15,15 @@ namespace Spaces.Api.Extensions
                 Blob = clientModel.Blob
             };
         }
+
+        internal static ImageClientModel ToGrpcModel(this CDNImage model)
+        {
+            return new ImageClientModel
+            {
+                Id = model.Id,
+                BlobId = model.BlobId.ToString(),
+                Blob = model.Blob
+            };
+        }
     }
 }

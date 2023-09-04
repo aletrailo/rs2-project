@@ -32,6 +32,16 @@ namespace CDN.Common.Services
             return await this.repository.AddAsync(imageCreationInfo);
         }
 
+        public async Task UpdateAsync(Image image)
+        {
+            await this.repository.UpdateAsync(image);
+        }
+
+        public async Task DeleteAsync(Guid blobId)
+        {
+            await this.repository.DeleteAsync(blobId);
+        }
+
         public void DeleteAllFromDatabase()
         {
             this.repository.DeleteAllFromDatabase();

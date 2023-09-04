@@ -34,6 +34,18 @@ namespace CDN.Api.Controllers
             return (await this.service.AddAsync(imageCreationInfoDto.ToModel())).ToDto();
         }
 
+        [HttpPut]
+        public async Task UpdateAsync(ImageDto imageDto)
+        {
+            await this.service.UpdateAsync(imageDto.ToModel());
+        }
+
+        [HttpDelete("{blobId}")]
+        public async Task DeleteAsync(Guid blobId)
+        {
+            await this.service.DeleteAsync(blobId);
+        }
+
         [HttpDelete("drop-database")]
         public Task Dropdatabase()
         {
