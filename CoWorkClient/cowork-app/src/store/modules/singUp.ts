@@ -1,11 +1,11 @@
 import { Dispatch } from 'vuex';
 const baseUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:4000/' : '/';
 import axiosInstance from '../axiosInstance';
-import auth from './auth';
 import { errorMessage } from '../shared/message'
 
-
-const headers = { Authorization: `Bearer ${auth.state.accessToken}`, }
+const headers = {
+    "Content-Type": "application/json"
+}
 
 interface SingUp {
     firstName?: string,

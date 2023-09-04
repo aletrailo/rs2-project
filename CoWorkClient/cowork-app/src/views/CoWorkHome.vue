@@ -3,7 +3,7 @@
 <section class="text-center" style="background-color: #f4f4f4;">
     <div class="row">
         <div class="col-lg-6 col-md-8 mx-auto py-2">
-            <h1 class="fw-light"> Co<span style="color: yellow;">work</span> Space</h1>
+            <h1 class="fw-light"> Co<span style="color: #b4b4b4;">work</span> Space</h1>
             <p class="lead text-muted">Make work more enjoyable</p>
             <p>
                 <router-link :to="{ name: 'SpaceAdvertisement' }"><button type="button" class="btn btn-outline-secondary">Posedujete prostor? Oglasite ga!</button></router-link>
