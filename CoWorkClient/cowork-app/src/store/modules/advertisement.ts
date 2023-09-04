@@ -70,6 +70,7 @@ const actions = {
         try {
             const response = await axiosInstance.post(url, JSON.stringify(state.ad), {headers: headers });
             if (response.status === 200) {
+                state.ad = {} as ad
                 router.push({ name: 'CoWorkHome' })
                 successMessage("Uspesno dodat oglas")
             } else {

@@ -32,6 +32,7 @@ const actions = {
             const response = await axiosInstance.post(url, JSON.stringify(state.singUpData), { headers: headers });
             if (response.status === 201) {
                 dispatch('logIn', { username: state.singUpData.userName, password: state.singUpData.password })
+                state.singUpData = {} as SingUp
             } else {
                 errorMessage('Neuspesna regisracija.')
             }

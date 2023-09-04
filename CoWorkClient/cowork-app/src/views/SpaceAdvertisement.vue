@@ -29,7 +29,7 @@
                             <label for="address" class="form-label">Adresa</label>
                             <input type="text" v-model="ad.address" class="form-control" id="address" required/>
                         </div>
-                        <div class="fw-bold mb-2">
+                        <div class="fw-bold mb-2"><i class="bi bi-card-text"></i>
                             <label for="inputAddress2" class="form-label">Opis</label>
                             <input type="text" v-model="ad.description" class="form-control" id="inputAddress2" required/>
                         </div>

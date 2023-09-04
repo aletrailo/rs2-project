@@ -36,7 +36,7 @@
                         <div v-else><input class="form-control" v-model="editedAd.address" type="text"></div>
                     </div>
                     <div style="display: flex;margin-bottom: 10px;">
-                        <span class="fw-bold" style="width: 80px;">Opis:</span>
+                        <span class="fw-bold" style="width: 80px;">Opis <i class="bi bi-card-text"></i>:</span>
                         <div v-if="!this.edit"> {{ ad.description }}</div>
                         <div v-else><input class="form-control" v-model="editedAd.description" type="text"></div>
                     </div>

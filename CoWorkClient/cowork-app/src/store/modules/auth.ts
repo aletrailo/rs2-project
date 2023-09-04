@@ -81,12 +81,6 @@ const getters = {
         return state.auth.roles.find((registeredRole: Role) => registeredRole === role) !== undefined;
     },
     isAuthenticated(): boolean {
-        console.log('START isAuthenticated')
-        console.log(state)
-        console.log(state.accessToken !== undefined)
-        console.log(state.refreshToken !== undefined)
-        console.log(state.auth.userName !== undefined)
-        console.log('END isAuthenticated')
         return state.accessToken !== undefined && state.refreshToken !== undefined && state.auth.userName !== undefined && state.auth.roles !== undefined && state.auth.email !== undefined
     }
 }
