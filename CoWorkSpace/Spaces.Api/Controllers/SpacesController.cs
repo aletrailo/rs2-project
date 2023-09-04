@@ -68,7 +68,6 @@ namespace Spaces.Api.Controllers
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<ActionResult<bool>> UpdateAsync(SpaceDto spaceDto)
         {
-            //TODO: Add CDN.Grpc update
             var space = spaceDto.ToModel();
             return Ok(await service.UpdateAsync(space));
         }
@@ -78,7 +77,10 @@ namespace Spaces.Api.Controllers
         [ProducesResponseType(typeof(SpaceDto), StatusCodes.Status200OK)]
         public async Task<ActionResult<SpaceDto>> GetByIdAsync(String Id)
         {
-            return Ok(await service.GetByIdAsync(Id));
+            Space space = await service.GetByIdAsync(Id);
+            space.Image = (await this.cdnImageService.GetAsync(space.ImageId)).Blob;
+
+            return Ok(space.ToDto());
         }
 
         
@@ -93,7 +95,27 @@ namespace Spaces.Api.Controllers
                 return Unauthorized();
             }
 
-            return Ok((await service.GetAllReservedByAsync(username)).ToDto());
+            var spaceDtos = new List<SpaceDto>();
+
+            foreach (Space space in await this.service.GetAllReservedByAsync(username))
+            {
+                CDNImage cdnImage = await this.cdnImageService.GetAsync(space.ImageId);
+                spaceDtos.Add(new SpaceDto
+                {
+                    Id = space.Id,
+                    Name = space.Name,
+                    Address = space.Address,
+                    Description = space.Description,
+                    ImageId = space.ImageId,
+                    Image = cdnImage.Blob,
+                    IsFree = space.IsFree,
+                    PricePerHour = space.PricePerHour,
+                    Owner = space.Owner,
+                    ReservedBy = space.ReservedBy
+                });
+            }
+
+            return Ok(spaceDtos);
         }
 
         [HttpGet("[action]")]
@@ -107,14 +129,33 @@ namespace Spaces.Api.Controllers
                 return Unauthorized();
             }
 
-            return Ok((await service.GetAllOwnedByAsync(username)).ToDto());
+            var spaceDtos = new List<SpaceDto>();
+
+            foreach (Space space in await this.service.GetAllOwnedByAsync(username))
+            {
+                CDNImage cdnImage = await this.cdnImageService.GetAsync(space.ImageId);
+                spaceDtos.Add(new SpaceDto
+                {
+                    Id = space.Id,
+                    Name = space.Name,
+                    Address = space.Address,
+                    Description = space.Description,
+                    ImageId = space.ImageId,
+                    Image = cdnImage.Blob,
+                    IsFree = space.IsFree,
+                    PricePerHour = space.PricePerHour,
+                    Owner = space.Owner,
+                    ReservedBy = space.ReservedBy
+                });
+            }
+
+            return Ok(spaceDtos);
         }
 
         [HttpDelete("[action]")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<ActionResult<bool>> DeleteAsync(string Id)
         {
-
             return Ok(await service.DeleteAsync(Id));
 
         }
