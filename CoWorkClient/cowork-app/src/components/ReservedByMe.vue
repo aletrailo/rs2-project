@@ -13,13 +13,13 @@
                 </div>
             </div>
             <div class="card-footer">
-                <button type="button" @click="cancelReservation(space.id)" class="btn btn-outline-secondary" style="width: 100%;">Otkazi rezervaciju</button>
+                <button type="button" @click="cancelReservation(space.id)" class="btn btn-outline-secondary" style="width: 100%;">Otkaži rezervaciju</button>
             </div>
         </div>
     </div>
 </div>
 <div v-else>
-    Ne protoji prostor koji ste vi rezervisali za koriscenje
+    Ne protoji prostor koji ste Vi rezervisali za korišćenje.
 </div>
 </template>
 

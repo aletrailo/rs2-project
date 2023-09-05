@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="card-footer" v-if="space.isFree">
-                        <button @click="bookSpace" type="button" class="btn btn-warning" style="width: 100%; color: white;">Rezervisi</button>
+                        <button @click="bookSpace" type="button" class="btn btn-warning" style="width: 100%; color: white;">Rezerviši</button>
                     </div>
                 </div>
             </div>

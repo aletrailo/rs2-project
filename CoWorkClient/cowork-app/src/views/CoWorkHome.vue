@@ -23,7 +23,7 @@
     <div style="width: 20px; border-right: 1px solid gray;"></div>
     <div style="width: 20px;"></div>
     <div>
-        <div><b>Prikazi samo slobodne prostore?</b></div>
+        <div><b>Prikaži samo slobodne prostore?</b></div>
         <div><input type="checkbox" v-model="onlyFree" style="display: block;margin: auto;height: 20px;width: 20px;" />
         </div>
     </div>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="card-footer">
-                    <router-link :to="{name: 'AdInfo', params: {id:ad.spaceId  }}"><button type="button" class="btn btn-outline-secondary">pogledajte detalje</button></router-link>
+                    <router-link :to="{name: 'AdInfo', params: {id:ad.spaceId  }}"><button type="button" class="btn btn-outline-secondary">Pogledajte detalje</button></router-link>
                 </div>
             </div>
         </div>

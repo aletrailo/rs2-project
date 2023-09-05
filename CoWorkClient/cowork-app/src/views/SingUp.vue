@@ -16,7 +16,7 @@
                                     <input v-model="data.lastName" type="text" id="lastName" class="form-control" required />
                                 </div>
                                 <div class="mb-3">
-                                    <label for="userName" class="form-label text-white">Korisnicko ime *</label>
+                                    <label for="userName" class="form-label text-white">Korisničko ime *</label>
                                     <input v-model="data.userName" type="text" id="userName" class="form-control" required />
                                 </div>
                                 <div class="mb-3">

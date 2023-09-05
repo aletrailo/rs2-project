@@ -53,7 +53,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" @click="closeModal">Odustani</button>
-                <button type="button" class="btn btn-primary" @click="saveChanges">Sacuvaj izmene</button>
+                <button type="button" class="btn btn-primary" @click="saveChanges">Sačuvaj izmene</button>
             </div>
         </div>
     </div>

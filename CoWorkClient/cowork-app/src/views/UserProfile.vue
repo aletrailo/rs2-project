@@ -10,10 +10,10 @@
 <div class="container" style="padding-top: 40px;">
     <div class="row  justify-content-md-center">
         <div class="col-4">
-            <h3>Licni podaci</h3>
+            <h3>Lični podaci</h3>
             <div style="border-radius: 4px; padding: 10px; background-color: #f1eeea;">
                 <div class="mb-3 row">
-                    <div class="col-sm-4" style="font-weight: lighter;">Korisnicko ime</div>
+                    <div class="col-sm-4" style="font-weight: lighter;">Korisničko ime</div>
                     <div class="col-sm-8">
                         {{user.userName}}
                     </div>

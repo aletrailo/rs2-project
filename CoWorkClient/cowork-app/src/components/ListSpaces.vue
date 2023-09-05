@@ -15,13 +15,13 @@
             </div>
             <div class="card-footer">
                 <button type="button"  @click="openModal(space)" class="btn btn-outline-secondary">Detaljnije/Izmena</button>
-                <button type="button" class="btn  btn-danger" @click="deleteSpace(space.id)" style="float: right;">Obrisi</button>
+                <button type="button" class="btn  btn-danger" @click="deleteSpace(space.id)" style="float: right;">Obriši</button>
             </div>
         </div>
     </div>
 </div>
 <div v-else>
-    Nema prostora koji vi oglasavate
+    Nema prostora koji Vi oglašavate.
 </div>
 </template>
 
