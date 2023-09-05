@@ -1,0 +1,25 @@
+﻿namespace Spaces.Api.Dtos
+{
+    public sealed class SpaceDto
+    {
+        public string Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Address { get; set; }
+
+        public string Description { get; set; }
+
+        public Guid ImageId { get; set; }
+
+        public string Image { get; set; }
+
+        public bool IsFree { get; set; }
+
+        public int PricePerHour { get; set; }
+
+        public string Owner { get; set; } = string.Empty;
+
+        public string ReservedBy { get; set; } = string.Empty;
+    }
+}

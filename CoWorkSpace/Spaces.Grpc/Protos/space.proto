@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+option csharp_namespace = "Spaces.Grpc.Protos";
+
+service SpaceProtoService {
+	rpc GetSpaces (GetSpacesRequest) returns (GetSpacesResponse);
+	rpc InsertSpace (InsertSpaceRequest) returns (InsertSpaceResponse);
+	rpc BookASpace (BookASpaceRequest) returns (BookASpaceResponse);
+	rpc DeleteAd (DeleteAdRequest) returns (DeleteAdResponse);
+	rpc EndUpUsingSpace (EndUpUsingSpaceRequest) returns (EndUpUsingSpaceResponse);
+}
+
+
+message Space {
+	string Id = 1;
+	string Name = 2;
+	string Address = 3;
+	string Description = 4;
+	string ImageId = 5;
+	string Image = 6;
+	bool Isfree = 7;
+	int32 Priceperhour = 8;
+	string Owner = 9;
+}
+
+message SpaceInfo{
+	string name = 1;
+	string address = 2;
+	string description = 3;
+	string image = 4;
+	bool isfree = 5;
+	int32 Priceperhour = 6;
+	string Owner = 7;
+}
+
+message UsernameSpaceId{
+	string spaceid = 1;
+	string username = 2;
+}
+
+message GetSpacesRequest {
+}
+
+message GetSpacesResponse {
+	repeated Space spaces = 1;
+}
+
+message InsertSpaceRequest{
+	SpaceInfo space = 1;
+}
+
+message InsertSpaceResponse{
+	bool response = 1;
+}
+
+message BookASpaceRequest{
+	 UsernameSpaceId reservation = 1;
+}
+
+message BookASpaceResponse{
+	bool response = 1;
+}
+
+message DeleteAdRequest{
+	UsernameSpaceId deleteinfo = 1;
+}
+
+message DeleteAdResponse{
+	bool response = 1;
+}
+
+message EndUpUsingSpaceRequest{
+	string spaceid = 1;
+}
+
+message EndUpUsingSpaceResponse{
+	bool response = 1;
+}

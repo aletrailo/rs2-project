@@ -1,0 +1,55 @@
+version: '3.4'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
+  advertising.api:
+    image: ${DOCKER_REGISTRY-}advertisingapi
+    build:
+      context: .
+      dockerfile: Advertising.Api/Dockerfile
+
+  spacesdb:
+    image: mongo
+
+  imagesdb:
+    image: mongo
+
+  spaces.api:
+    image: ${DOCKER_REGISTRY-}spacesapi
+    build:
+      context: .
+      dockerfile: Spaces.Api/Dockerfile
+
+  spaces.grpc:
+    image: ${DOCKER_REGISTRY-}spacesgrpc
+    build:
+      context: .
+      dockerfile: Spaces.Grpc/Dockerfile
+      
+  cdn.api:
+    image: ${DOCKER_REGISTRY-}cdnapi
+    build:
+      context: .
+      dockerfile: CDN.Api/Dockerfile
+
+  cdn.grpc:
+    image: ${DOCKER_REGISTRY-}cdngrpc
+    build:
+      context: .
+      dockerfile: CDN.Grpc/Dockerfile
+
+  identityserver.api:
+    image: ${DOCKER_REGISTRY-}identityserverapi
+    build:
+      context: .
+      dockerfile: IdentityServer.Api/Dockerfile
+
+volumes:
+  mongo_data: 
+  mssql_data:
+  imagesmongo_data:
+
+
+
