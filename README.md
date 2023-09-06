@@ -40,16 +40,20 @@ Da bi se aplikacija pokrenula u razvojnom okruzenju potrebno je imati instaliran
 2.	Docker desktop (latest, aplikacija je razvijana na v24.0.5 engine-u)
 3.	Visual Studio Code
 4.	NodeJS (Aplikacija je razvijana na v18.17.0) I odgovarajuci npm (Aplikacija je razvijana na v 9.6.7)
-Pre pokretanja aplikacija potrebno je klonirati repository-um sa lokacije:  GitHub repository-um.
+
 Kada se klonira repo, potrebno je prebaciti se (chekcout) na master granu.
 
 ### Pokretanje backend mikroservisa:
 
 Otvoriti u Visual Studio klonirani repository I otvoriti coWorkSpace.sln.
+
 _*Preporučeno je odraditi Clean + Rebuild solution._
+
 Prebaciti startup na docker-compose I kliknuti start.
 
 ### Pokretanje frontend mikroservisa:
 Otvoriti preko Visual Studio Code klonirani repostirory I upaliti Terminal.
+
 U terminal pozvati naredbu npm install kako bi se preuzeli svi potrebni paketi. Ukoliko sve prodje kako treba, pozvati npm run serve kako bi se startovala aplikacija.
+
 Ukoliko sve prodje kako treba, aplikacija osluškuje na http://localhost:8800
